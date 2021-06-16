@@ -18,8 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin'])->prefix(strtolower('admin'))->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/posts', [AdminController::class, 'allPosts'])->name('posts');
+    Route::get('/posts/approved', [AdminController::class, 'approvedPosts'])->name('approved.posts');
+    Route::get('/posts/waiting', [AdminController::class, 'waitingPosts'])->name('waiting.posts');
 });
 
 Auth::routes();
