@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/posts', [AdminController::class, 'allPosts'])->name('posts');
     Route::get('/posts/approved', [AdminController::class, 'approvedPosts'])->name('approved.posts');
@@ -31,6 +32,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/definitions/waiting', [AdminController::class, 'waitingDefinitions'])->name('waiting.definitions');
 });
 
-Auth::routes();
+Route::get('/home', [PostController::class, 'index'])->name('index');
+Route::middleware('auth')->prefix('post')->group(function () {
+    Route::get('/create', [PostController::class, 'create'])->name('create.post');
+    Route::post('/store', [PostController::class, 'store'])->name('store.post');
+});
+Route::get('/home', [PostController::class, 'index'])->name('index');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();

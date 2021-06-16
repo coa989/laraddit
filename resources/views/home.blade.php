@@ -4,20 +4,27 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
+            @foreach($posts as $post)
+            <div class="card my-5">
+                <div class="card-header">
+                    <h4>{{ $post->title }}</h4>
+                    <p>{{ $post->user->name }} {{ $post->created_at->diffForHumans() }}</p>
+                </div>
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                    <img src="{{ $post->image_url }}" alt="">
+                </div>
+                <div class="card-footer">
+                    <p>
+                        <a href=""> points &#183;</a>
+                        <a href=""> comments</a>
+                    </p>
+                    <a href=""><i class="fas fa-arrow-up mr-4"></i></a>
+                    <a href=""><i class="fas fa-arrow-down"></i></a>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
+    {{ $posts->links() }}
 </div>
 @endsection
