@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Definition;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -31,21 +32,26 @@ class AdminController extends Controller
         return view('admin.posts.waiting', ['posts' => $posts]);
     }
 
+    public function showPost(Post $post)
+    {
+        return view('admin.posts.show', ['post' => $post]);
+    }
+
     public function allDefinitions()
     {
-        $definitions = Definition::all();
+        $definitions = Definition::with('user')->paginate(8);
         return view('admin.definitions.index', ['definitions' => $definitions]);
     }
 
     public function approvedDefinitions()
     {
-        $definitions = Definition::where('approved', true)->get();
-        return view('admin.definitions.index', ['definitions' => $definitions]);
+        $definitions = Definition::where('approved', true)->paginate(8);
+        return view('admin.definitions.approved', ['definitions' => $definitions]);
     }
 
     public function waitingDefinitions()
     {
-        $definitions = Definition::where('approved', false)->get();
-        return view('admin.definitions.index', ['definitions' => $definitions]);
+        $definitions = Definition::where('approved', false)->paginate(8);
+        return view('admin.definitions.waiting', ['definitions' => $definitions]);
     }
 }
