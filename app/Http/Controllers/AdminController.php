@@ -37,6 +37,18 @@ class AdminController extends Controller
         return view('admin.posts.show', ['post' => $post]);
     }
 
+    public function approvePost(Post $post)
+    {
+        $post->update(['approved' => true]);
+        return back();
+    }
+
+    public function rejectPost(Post $post)
+    {
+        $post->update(['rejected' => true]);
+        return back();
+    }
+
     public function allDefinitions()
     {
         $definitions = Definition::with('user')->paginate(8);

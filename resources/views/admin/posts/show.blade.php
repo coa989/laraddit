@@ -11,12 +11,13 @@
                 <p class="card-text">{{ $post->created_at->diffForHumans() }}</p>
                 <div class="card-footer">
                     @if(!$post->approved)
-                        <a href=""><button class="btn btn-success">Approve</button></a>
+                        <a href="{{ route('approve.post', $post) }}"><button class="btn btn-success">Approve</button></a>
+                    @else
+                        <a href="{{ route('reject.post') }}"><button class="btn btn-secondary">Reject</button></a>
                     @endif
                     <a href=""><button class="btn btn-primary">Edit</button></a>
                     <a href=""><button class="btn btn-danger">Delete</button></a>
                 </div>
-
             </div>
         </div>
     </div>

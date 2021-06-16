@@ -23,6 +23,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/posts', [AdminController::class, 'allPosts'])->name('posts');
     Route::get('/posts/approved', [AdminController::class, 'approvedPosts'])->name('approved.posts');
     Route::get('/posts/waiting', [AdminController::class, 'waitingPosts'])->name('waiting.posts');
+    Route::get('/posts/approve/{post}', [AdminController::class, 'approvePost'])->name('approve.post');
+    Route::get('/posts/reject/{post}', [AdminController::class, 'rejectPost'])->name('reject.post');
     Route::get('/posts/show/{post}', [AdminController::class, 'showPost'])->name('show.post');
     Route::get('/definitions', [AdminController::class, 'allDefinitions'])->name('definitions');
     Route::get('/definitions/approved', [AdminController::class, 'approvedDefinitions'])->name('approved.definitions');
