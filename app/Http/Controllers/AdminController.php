@@ -37,15 +37,15 @@ class AdminController extends Controller
         return view('admin.posts.show', ['post' => $post]);
     }
 
+    public function destroyPost(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('posts');
+    }
+
     public function approvePost(Post $post)
     {
         $post->update(['approved' => true]);
-        return back();
-    }
-
-    public function rejectPost(Post $post)
-    {
-        $post->update(['rejected' => true]);
         return back();
     }
 

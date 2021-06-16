@@ -12,11 +12,13 @@
                 <div class="card-footer">
                     @if(!$post->approved)
                         <a href="{{ route('approve.post', $post) }}"><button class="btn btn-success">Approve</button></a>
-                    @else
-                        <a href="{{ route('reject.post') }}"><button class="btn btn-secondary">Reject</button></a>
                     @endif
                     <a href=""><button class="btn btn-primary">Edit</button></a>
-                    <a href=""><button class="btn btn-danger">Delete</button></a>
+                        <form action="{{ route('destroy.post', $post) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
                 </div>
             </div>
         </div>

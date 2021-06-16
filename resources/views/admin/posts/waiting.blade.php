@@ -26,7 +26,7 @@
                         <th scope="row">{{ __('tags') }}</th>
                         <th scope="row">{{ $post->created_at }}</th>
                         <th scope="row">{{ $post->updated_at }}</th>
-                        <th scope="row"><a href=""><button class="btn btn-primary">View</button></a></th>
+                        <th scope="row"><a href="{{ route('show.post', $post) }}"><button class="btn btn-primary">View</button></a></th>
                     </tr>
                 @endforeach
                 </tbody>
