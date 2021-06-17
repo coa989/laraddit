@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -21,13 +22,16 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-//        $image       = $request->file('image');
-//        $filename    = $image->getClientOriginalName();
-//
-//        $image_resize = Image::make($image->getRealPath());
-//        $image_resize->resize(300, 300);
-//        $image_resize->save(public_path('images/ServiceImages/' .$filename));
-        $image_path = $request->image->store('images');
+        // TODO: change file name???
+        $image = $request->image;
+        $filename = $image->getClientOriginalName();
+
+        $image_resize = Image::make($image->getRealPath());
+        $image_resize->resize(500, 580);
+        $image_resize->save(public_path('storage/images/'. $filename));
+
+        $image_path = 'storage/images/'. $filename;
+
         $slug = Str::slug($request->title);
 
         Post::create([

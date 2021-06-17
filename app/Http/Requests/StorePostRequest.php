@@ -28,4 +28,11 @@ class StorePostRequest extends FormRequest
             'image' => ['required', 'image', 'mimes:jpeg,jpg,gif,svg', 'max:2048']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'image.uploaded' => 'Maximum size of image is 2MB',
+        ];
+    }
 }
