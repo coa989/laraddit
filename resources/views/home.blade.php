@@ -19,8 +19,15 @@
                         <a href=""> points &#183;</a>
                         <a href=""> comments</a>
                     </p>
+
                     <a href=""><i class="fas fa-arrow-up mr-4"></i></a>
                     <a href=""><i class="fas fa-arrow-down"></i></a>
+                        <p class="mt-4">
+                            Tags:
+                            @foreach($post->tags as $tag)
+                                <a href="">{{ $tag->name }}</a>
+                            @endforeach
+                        </p>
                 </div>
             </div>
             @endforeach

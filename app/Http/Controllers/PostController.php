@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -11,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')->latest()->paginate(10);
+        $posts = Post::with('user', 'tags')->latest()->paginate(10);
         return view('home', ['posts' => $posts]);
     }
 
@@ -34,12 +35,25 @@ class PostController extends Controller
 
         $slug = Str::slug($request->title);
 
-        Post::create([
+        $post = Post::create([
             'user_id' => auth()->id(),
             'image_path' => $image_path,
             'title' => $request->title,
             'slug' => $slug
         ]);
+
+        if ($request->tags) {
+            $tags = explode(',', str_replace(' ', '', $request->tags));
+            foreach ($tags as $tag) {
+                $find_tag = Tag::where('name', strtolower($tag))->first();
+                if ($find_tag){
+                    $post->tags()->attach($find_tag->id);
+                } else {
+                    $new_tag = Tag::create(['name' => $tag]);
+                    $post->tags()->attach($new_tag->id);
+                }
+            }
+        }
 
         return back();
     }
