@@ -21,16 +21,15 @@
                             </form>
                         @endif
                             <p>
-                                <a href=""> points &#183;</a>
-                                <a href=""> comments</a>
+                                <a href="{{ route('show.post', $post) }}">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }} points &#183;</a>
                             </p>
                             <form action="{{ route('like.post', $post) }}" method="post">
                                 @csrf
-                                <button class="btn" type="submit"><i class="fas fa-arrow-up mr-4"> {{ $post->likes()->count() }}</i></button>
+                                <button class="btn" type="submit"><i class="fas fa-arrow-up mr-4"> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
                             </form>
-                            <form action="" method="post">
+                            <form action="{{ route('dislike.post', $post) }}" method="post">
                                 @csrf
-                                <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"></i></button>
+                                <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                             </form>
                             <p class="mt-4">
                                 Tags:
@@ -40,6 +39,21 @@
                             </p>
                     </div>
                 </div>
+            </div>
+            <div class="container">
+                <form action="{{ route('comment.post', $post) }}" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <p class="mt-2">{{ $post->comments()->count() }} Comments</p>
+                        <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
+                        @error('body')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <button class="btn btn-success mt-2" type="submit">Post</button>
+                </form>
             </div>
         </div>
     </div>

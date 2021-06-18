@@ -37,6 +37,8 @@ Route::middleware('auth')->prefix('post')->group(function () {
     Route::get('/show/{post}', [PostController::class, 'show'])->name('show.post');
     Route::post('/store', [PostController::class, 'store'])->name('store.post');
     Route::post('/like/{post}', [PostController::class, 'like'])->name('like.post');
+    Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike.post');
+    Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment.post');
 });
 
 Auth::routes();

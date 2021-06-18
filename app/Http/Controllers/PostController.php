@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StorePostRequest;
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
@@ -82,6 +84,29 @@ class PostController extends Controller
 
     public function dislike(Post $post)
     {
+        if (Like::where('user_id', auth()->id())->where('likeable_id', $post->id)->first()) {
+            return back();
+        }
 
+        Like::create([
+            'user_id' => auth()->id(),
+            'likeable_id' => $post->id,
+            'likeable_type' => get_class($post),
+            'is_dislike' => 1
+        ]);
+
+        return back();
+    }
+
+    public function comment(StoreCommentRequest $request, Post $post)
+    {
+        Comment::create([
+            'user_id' => auth()->id(),
+            'commentable_id' => $post->id,
+            'body' => $request->body,
+            'commentable_type' => get_class($post),
+        ]);
+
+        return back();
     }
 }

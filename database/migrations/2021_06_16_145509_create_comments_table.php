@@ -16,9 +16,10 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('post_id');
+            $table->foreignId('commentable_id');
             $table->string('body');
-            $table->string('post_type');
+            $table->string('commentable_type');
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }
