@@ -8,7 +8,6 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -69,7 +68,10 @@ class PostController extends Controller
 
     public function like(Post $post)
     {
-        if (Like::where('user_id', auth()->id())->where('likeable_id', $post->id)->first()) {
+        if (Like::where('user_id', auth()->id())
+            ->where('likeable_id', $post->id)
+            ->where('likeable_type', get_class($post))
+            ->first()) {
             return back();
         }
 
@@ -84,7 +86,10 @@ class PostController extends Controller
 
     public function dislike(Post $post)
     {
-        if (Like::where('user_id', auth()->id())->where('likeable_id', $post->id)->first()) {
+        if (Like::where('user_id', auth()->id())
+            ->where('likeable_id', $post->id)
+            ->where('likeable_type', get_class($post))
+            ->first()) {
             return back();
         }
 
@@ -112,7 +117,10 @@ class PostController extends Controller
 
     public function likeComment(Comment $comment)
     {
-        if (Like::where('user_id', auth()->id())->where('likeable_id', $comment->id)->first()) {
+        if (Like::where('user_id', auth()->id())
+            ->where('likeable_id', $comment->id)
+            ->where('likeable_type', get_class($comment))
+            ->first()) {
             return back();
         }
 
@@ -127,7 +135,10 @@ class PostController extends Controller
 
     public function dislikeComment(Comment $comment)
     {
-        if (Like::where('user_id', auth()->id())->where('likeable_id', $comment->id)->first()) {
+        if (Like::where('user_id', auth()->id())
+            ->where('likeable_id', $comment->id)
+            ->where('likeable_type', get_class($comment))
+            ->first()) {
             return back();
         }
 
