@@ -9,6 +9,8 @@ class Definition extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'title', 'body', 'slug'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -21,7 +23,7 @@ class Definition extends Model
 
     public function comments()
     {
-        return $this-$this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     public function tags()

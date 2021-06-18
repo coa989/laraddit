@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,18 @@ Route::middleware('auth')->prefix('post')->group(function () {
     Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment.post');
     Route::post('/comment/like/{comment}', [PostController::class, 'likeComment'])->name('like.post.comment');
     Route::post('/comment//dislike/{comment}', [PostController::class, 'dislikeComment'])->name('dislike.post.comment');
+});
+
+Route::get('/definitions', [DefinitionController::class, 'index'])->name('index.definition');
+Route::middleware('auth')->prefix('definition')->group(function (){
+    Route::get('/create', [DefinitionController::class, 'create'])->name('create.definition');
+    Route::get('/show/{definition}', [DefinitionController::class, 'show'])->name('show.definition');
+    Route::post('/store', [DefinitionController::class, 'store'])->name('store.definition');
+    Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like.definition');
+    Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike.definition');
+    Route::post('/comment/{definition}', [DefinitionController::class, 'comment'])->name('comment.definition');
+    Route::post('/comment/like/{comment}', [DefinitionController::class, 'likeComment'])->name('like.definition.comment');
+    Route::post('/comment//dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.definition.comment');
 });
 
 Auth::routes();

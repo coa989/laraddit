@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="form-group">
-            <form action="{{ route('store.post') }}" method="post" class="" enctype="multipart/form-data">
+            <form action="{{ route('store.definition') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -15,9 +15,9 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="image">Browse image to upload</label>
-                    <input type="file" class="form-control-file @error('image') is-invalid @enderror" name="image">
-                    @error('image')
+                    <label for="body">Body</label>
+                    <textarea name="body" class="form-control @error('title') is-invalid @enderror">{{ old('body') }}</textarea>
+                    @error('body')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
