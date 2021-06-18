@@ -24,8 +24,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
     Route::get('/posts/approved', [AdminController::class, 'approvedPosts'])->name('approved.posts');
     Route::get('/posts/waiting', [AdminController::class, 'waitingPosts'])->name('waiting.posts');
     Route::get('/posts/approve/{post}', [AdminController::class, 'approvePost'])->name('approve.post');
-    Route::get('/posts/show/{post}', [AdminController::class, 'showPost'])->name('admin.show.post');
-    Route::delete('/posts/delete/{post}', [AdminController::class, 'destroyPost'])->name('admin.destroy.post');
+    Route::get('/post/show/{post}', [AdminController::class, 'showPost'])->name('admin.show.post');
+    Route::delete('/post/delete/{post}', [AdminController::class, 'destroyPost'])->name('admin.destroy.post');
     Route::get('/definitions', [AdminController::class, 'allDefinitions'])->name('definitions');
     Route::get('/definitions/approved', [AdminController::class, 'approvedDefinitions'])->name('approved.definitions');
     Route::get('/definitions/waiting', [AdminController::class, 'waitingDefinitions'])->name('waiting.definitions');
@@ -39,6 +39,8 @@ Route::middleware('auth')->prefix('post')->group(function () {
     Route::post('/like/{post}', [PostController::class, 'like'])->name('like.post');
     Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike.post');
     Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment.post');
+    Route::post('/comment/like/{comment}', [PostController::class, 'likeComment'])->name('like.post.comment');
+    Route::post('/comment//dislike/{comment}', [PostController::class, 'dislikeComment'])->name('dislike.post.comment');
 });
 
 Auth::routes();

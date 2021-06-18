@@ -9,7 +9,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Slug</th>
                     <th scope="col">Author</th>
-                    <th scope="col">Image Url</th>
+                    <th scope="col">Image Path</th>
                     <th scope="col">Tags</th>
                     <th scope="col">Created</th>
                     <th scope="col">Updated</th>
@@ -22,8 +22,8 @@
                         <th scope="row">{{ $post->title }}</th>
                         <th scope="row">{{ $post->slug }}</th>
                         <th scope="row">{{ $post->user->name }}</th>
-                        <th scope="row">{{ $post->image_url }}</th>
-                        <th scope="row">{{ __('tags') }}</th>
+                        <th scope="row">{{ $post->image_path }}</th>
+                        <th scope="row">@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</th>
                         <th scope="row">{{ $post->created_at }}</th>
                         <th scope="row">{{ $post->updated_at }}</th>
                         <th scope="row"><a href="{{ route('admin.show.post', $post) }}"><button class="btn btn-primary">View</button></a></th>

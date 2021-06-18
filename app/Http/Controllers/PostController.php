@@ -109,4 +109,35 @@ class PostController extends Controller
 
         return back();
     }
+
+    public function likeComment(Comment $comment)
+    {
+        if (Like::where('user_id', auth()->id())->where('likeable_id', $comment->id)->first()) {
+            return back();
+        }
+
+        Like::create([
+            'user_id' => auth()->id(),
+            'likeable_id' => $comment->id,
+            'likeable_type' => get_class($comment),
+        ]);
+
+        return back();
+    }
+
+    public function dislikeComment(Comment $comment)
+    {
+        if (Like::where('user_id', auth()->id())->where('likeable_id', $comment->id)->first()) {
+            return back();
+        }
+
+        Like::create([
+            'user_id' => auth()->id(),
+            'likeable_id' => $comment->id,
+            'likeable_type' => get_class($comment),
+            'is_dislike' => 1
+        ]);
+
+        return back();
+    }
 }
