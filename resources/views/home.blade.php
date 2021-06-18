@@ -8,7 +8,7 @@
         @foreach($posts as $post)
             <div class="card my-4">
                 <div class="card-header">
-                    <h4>{{ $post->title }}</h4>
+                    <a href="{{ route('show.post', $post) }}"><h4>{{ $post->title }}</h4></a>
                     <p>{{ $post->user->name }} {{ $post->created_at->diffForHumans() }}</p>
                 </div>
                 <div class="card-body">
@@ -19,9 +19,14 @@
                         <a href=""> points &#183;</a>
                         <a href=""> comments</a>
                     </p>
-
-                    <a href=""><i class="fas fa-arrow-up mr-4"></i></a>
-                    <a href=""><i class="fas fa-arrow-down"></i></a>
+                    <form action="{{ route('like.post', $post) }}" method="post">
+                        @csrf
+                        <button class="btn" type="submit"><i class="fas fa-arrow-up mr-4"> {{ $post->likes()->count() }}</i></button>
+                    </form>
+                    <form action="" method="post">
+                        @csrf
+                        <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"></i></button>
+                    </form>
                         <p class="mt-4">
                             Tags:
                             @foreach($post->tags as $tag)

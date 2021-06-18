@@ -15,9 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PostController::class, 'index'])->name('index');
+
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
@@ -25,8 +24,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
     Route::get('/posts/approved', [AdminController::class, 'approvedPosts'])->name('approved.posts');
     Route::get('/posts/waiting', [AdminController::class, 'waitingPosts'])->name('waiting.posts');
     Route::get('/posts/approve/{post}', [AdminController::class, 'approvePost'])->name('approve.post');
-    Route::get('/posts/show/{post}', [AdminController::class, 'showPost'])->name('show.post');
-    Route::delete('/posts/delete/{post}', [AdminController::class, 'destroyPost'])->name('destroy.post');
+    Route::get('/posts/show/{post}', [AdminController::class, 'showPost'])->name('admin.show.post');
+    Route::delete('/posts/delete/{post}', [AdminController::class, 'destroyPost'])->name('admin.destroy.post');
     Route::get('/definitions', [AdminController::class, 'allDefinitions'])->name('definitions');
     Route::get('/definitions/approved', [AdminController::class, 'approvedDefinitions'])->name('approved.definitions');
     Route::get('/definitions/waiting', [AdminController::class, 'waitingDefinitions'])->name('waiting.definitions');
@@ -35,8 +34,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
 Route::get('/home', [PostController::class, 'index'])->name('index');
 Route::middleware('auth')->prefix('post')->group(function () {
     Route::get('/create', [PostController::class, 'create'])->name('create.post');
+    Route::get('/show/{post}', [PostController::class, 'show'])->name('show.post');
     Route::post('/store', [PostController::class, 'store'])->name('store.post');
+    Route::post('/like/{post}', [PostController::class, 'like'])->name('like.post');
 });
-Route::get('/home', [PostController::class, 'index'])->name('index');
 
 Auth::routes();

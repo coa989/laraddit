@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -12,7 +14,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user', 'tags')->latest()->paginate(10);
+        $posts = Post::where('approved', true)->with('user', 'tags')->latest()->paginate(10);
         return view('home', ['posts' => $posts]);
     }
 
@@ -23,7 +25,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        // TODO: change file name???
+        // TODO: change file name to generic one???
         $image = $request->image;
         $filename = $image->getClientOriginalName();
 
@@ -55,6 +57,31 @@ class PostController extends Controller
             }
         }
 
+        return redirect('/home');
+    }
+
+    public function show(Post $post)
+    {
+        return view('posts.show', ['post' => $post]);
+    }
+
+    public function like(Post $post)
+    {
+        if (Like::where('user_id', auth()->id())->where('likeable_id', $post->id)->first()) {
+            return back();
+        }
+
+        Like::create([
+            'user_id' => auth()->id(),
+            'likeable_id' => $post->id,
+            'likeable_type' => get_class($post)
+        ]);
+
         return back();
+    }
+
+    public function dislike(Post $post)
+    {
+
     }
 }
