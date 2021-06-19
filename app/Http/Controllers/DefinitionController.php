@@ -144,4 +144,15 @@ class DefinitionController extends Controller
 
         return back();
     }
+
+    public function tag(Tag $tag)
+    {
+        $tagsId = $tag->id;
+
+        $definitions = Definition::whereHas('tags', function ($query) use($tagsId) {
+            $query->where('definition_tag.tag_id', $tagsId);
+        })->get();
+
+        return view('definitions.index', ['definitions' => $definitions]);
+    }
 }

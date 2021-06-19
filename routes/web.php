@@ -56,7 +56,8 @@ Route::middleware('auth')->prefix('definition')->group(function (){
     Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike.definition');
     Route::post('/comment/{definition}', [DefinitionController::class, 'comment'])->name('comment.definition');
     Route::post('/comment/like/{comment}', [DefinitionController::class, 'likeComment'])->name('like.definition.comment');
-    Route::post('/comment//dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.definition.comment');
+    Route::post('/comment/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.definition.comment');
+    Route::get('/tag/{tag}', [DefinitionController::class, 'tag'])->name('tag.definition');
 });
 
 Auth::routes();
