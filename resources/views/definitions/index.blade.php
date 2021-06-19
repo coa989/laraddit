@@ -4,7 +4,6 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <a href="{{ route('create.definition') }}"><button class="btn btn-success">Add New Definition</button></a>
                 @foreach($definitions as $definition)
                     <div class="card my-4">
                         <div class="card-header">
