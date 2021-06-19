@@ -66,4 +66,21 @@ class AdminController extends Controller
         $definitions = Definition::where('approved', false)->paginate(8);
         return view('admin.definitions.waiting', ['definitions' => $definitions]);
     }
+
+    public function showDefinition(Definition $definition)
+    {
+        return view('admin.definitions.show', ['definition' => $definition]);
+    }
+
+    public function destroyDefinition(Definition $definition)
+    {
+        $definition->delete();
+        return redirect()->route('definitions');
+    }
+
+    public function approveDefinition(Definition $definition)
+    {
+        $definition->update(['approved' => true]);
+        return back();
+    }
 }

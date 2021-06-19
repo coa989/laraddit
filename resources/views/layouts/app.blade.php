@@ -38,10 +38,10 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    <a class="navbar-brand" href="{{ route('index.definition') }}">Definitions</a>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <a class="navbar-brand" href="{{ route('index.definition') }}">Definitions</a>
 
                         <!-- Authentication Links -->
                         @guest

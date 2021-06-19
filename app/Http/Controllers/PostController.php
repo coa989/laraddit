@@ -65,7 +65,7 @@ class PostController extends Controller
     {
         return view('posts.show', ['post' => $post]);
     }
-
+    // TODO: Move to controller ???
     public function like(Post $post)
     {
         if (Like::where('user_id', auth()->id())

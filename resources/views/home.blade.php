@@ -17,7 +17,7 @@
                 <div class="card-footer">
                     <p>
                         <a href="{{ route('show.post', $post) }}">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }} points &#183;</a>
-                        <a href="">{{ $post->comments()->count() }} comments</a>
+                        <a href="{{ route('show.post', $post) }}">{{ $post->comments()->count() }} comments</a>
                     </p>
                     <form action="{{ route('like.post', $post) }}" method="post">
                         @csrf

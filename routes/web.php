@@ -24,12 +24,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
     Route::get('/posts', [AdminController::class, 'allPosts'])->name('posts');
     Route::get('/posts/approved', [AdminController::class, 'approvedPosts'])->name('approved.posts');
     Route::get('/posts/waiting', [AdminController::class, 'waitingPosts'])->name('waiting.posts');
-    Route::get('/posts/approve/{post}', [AdminController::class, 'approvePost'])->name('approve.post');
+    Route::get('/post/approve/{post}', [AdminController::class, 'approvePost'])->name('approve.post');
     Route::get('/post/show/{post}', [AdminController::class, 'showPost'])->name('admin.show.post');
-    Route::delete('/post/delete/{post}', [AdminController::class, 'destroyPost'])->name('admin.destroy.post');
+    Route::delete('/post/destroy/{post}', [AdminController::class, 'destroyPost'])->name('admin.destroy.post');
     Route::get('/definitions', [AdminController::class, 'allDefinitions'])->name('definitions');
     Route::get('/definitions/approved', [AdminController::class, 'approvedDefinitions'])->name('approved.definitions');
     Route::get('/definitions/waiting', [AdminController::class, 'waitingDefinitions'])->name('waiting.definitions');
+    Route::get('/definition/approve/{definition}', [AdminController::class, 'approveDefinition'])->name('approve.definition');
+    Route::get('/definition/show/{definition}', [AdminController::class, 'showDefinition'])->name('admin.show.definition');
+    Route::delete('/definition/destroy/{definition}', [AdminController::class, 'destroyDefinition'])->name('admin.destroy.definition');
 });
 
 Route::get('/home', [PostController::class, 'index'])->name('index');

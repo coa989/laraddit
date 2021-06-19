@@ -9,7 +9,7 @@ class Definition extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'title', 'body', 'slug'];
+    protected $fillable = ['user_id', 'title', 'body', 'slug', 'approved'];
 
     public function user()
     {
