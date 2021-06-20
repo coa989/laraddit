@@ -5,13 +5,15 @@
         <div class="row">
             <div class="card" style="width: 25rem;">
                 <div class="card-header">
-                    <h5 class="font-weight-bold">{{ $definition->title }}</h5>
-                    <p>{{ $definition->body }}</p>
+                    <a href="{{ route('show.definition', $definition) }}"><h4>{{ $definition->title }}</h4></a>
+                    <a href="{{ route('user.profile', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
+                    <a>{{ $definition->created_at->diffForHumans() }}</a>
                 </div>
                 <div class="card-body">
-                    <p> {{ $definition->user->name }}</p>
-                    <p class="card-text">{{ $definition->created_at->diffForHumans() }}</p>
-                    <div class="card-footer">
+                    <p>{{ $definition->body }}</p>
+                </div>
+                <div class="card-footer">
+                    @auth()
                         @if(auth()->user()->role_id === 2)
                             <a href=""><button class="btn btn-primary">Edit</button></a>
                             <form action="{{ route('destroy.definition', $definition) }}" method="post">
@@ -20,33 +22,33 @@
                                 <button class="btn btn-danger">Delete</button>
                             </form>
                         @endif
-                        <p>
-                            <a href="{{ route('show.definition', $definition) }}">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }} points</a>
-                        </p>
-                        <div class="btn-group">
-                            <form action="{{ route('like.definition', $definition) }}" method="post">
-                                @csrf
-                                <button class="btn" type="submit"><i class="fas fa-arrow-up mr-4"> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
-                            </form>
-                            <form action="{{ route('dislike.definition', $definition) }}" method="post">
-                                @csrf
-                                <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
-                            </form>
-                        </div>
-                        <p class="mt-4">
-                            Tags:
-                            @foreach($definition->tags as $tag)
-                                <a href="">{{ $tag->name }}</a>
-                            @endforeach
-                        </p>
+                    @endauth
+                    <p>
+                        <a href="{{ route('show.definition', $definition) }}">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }} points</a>
+                    </p>
+                    <div class="btn-group">
+                        <form action="{{ route('like.definition', $definition) }}" method="post">
+                            @csrf
+                            <button class="btn" type="submit"><i class="fas fa-arrow-up mr-4"> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                        </form>
+                        <form action="{{ route('dislike.definition', $definition) }}" method="post">
+                            @csrf
+                            <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                        </form>
                     </div>
+                    <p class="mt-4">
+                        Tags:
+                        @foreach($definition->tags as $tag)
+                            <a href="">{{ $tag->name }}</a>
+                        @endforeach
+                    </p>
                 </div>
             </div>
             <div class="container">
                 <form action="{{ route('comment.definition', $definition) }}" method="post">
                     @csrf
                     <div class="form-group">
-                        <p class="mt-2">{{ $definition->comments()->count() }} Comments</p>
+                        <p class="mt-2">{{ $definition->comments()->count() }} {{ Str::plural('comment', $definition->comments()->count()) }}</p>
                         <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
                         @error('body')
                         <div class="invalid-feedback">

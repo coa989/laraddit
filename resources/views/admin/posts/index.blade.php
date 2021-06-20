@@ -3,39 +3,56 @@
 @section('content')
     <div class="container " >
         <div class="row ">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Slug</th>
-                        <th scope="col">Author</th>
-                        <th scope="col">Image Path</th>
-                        <th scope="col">Tags</th>
-                        <th scope="col">Approved</th>
-                        <th scope="col">Created</th>
-                        <th scope="col">Updated</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($posts as $post)
-                    <tr>
-                        <th scope="row">{{ $post->title }}</th>
-                        <th scope="row">{{ $post->slug }}</th>
-                        <th scope="row">{{ $post->user->name }}</th>
-                        <th scope="row">{{ $post->image_path }}</th>
-                        <th scope="row">@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</th>
-                        <th scope="row">{{ $post->approved ? 'Yes' : 'No' }}</th>
-                        <th scope="row">{{ $post->created_at }}</th>
-                        <th scope="row">{{ $post->updated_at }}</th>
-                        <th scope="row"><a href="{{ route('show.post', $post) }}"><button class="btn btn-primary">View</button></a></th>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-center">
-                {{ $posts->links() }}
-            </div>
+            @if(!$posts->first())
+                <div class="container">
+                    <h3 class="text-center">No post!</h3>
+                </div>
+            @else
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Slug</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Image Path</th>
+                            <th scope="col">Tags</th>
+                            <th scope="col">Created</th>
+                            <th scope="col">Updated</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($posts as $post)
+                        <tr>
+                            <td>{{ $post->title }}</td>
+                            <td>{{ $post->slug }}</td>
+                            <td>{{ $post->user->name }}</td>
+                            <td>{{ $post->body }}</td>
+                            <td>@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</td>
+                            <td>{{ $post->created_at }}</td>
+                            <td>{{ $post->updated_at }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    @if(!$post->approved)
+                                        <a href="{{ route('approve.post', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                    @endif
+                                    <a href="{{ route('admin.show.post', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
+                                    <a href="{{ route('admin.show.post', $post) }}"><button class="btn btn-sm btn-secondary mr-1">Edit</button></a>
+                                    <form action="{{ route('admin.destroy.post', $post) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                    {{ $posts->links() }}
+                </div>
+            @endif
         </div>
     </div>
 

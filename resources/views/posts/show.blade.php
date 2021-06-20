@@ -9,20 +9,22 @@
                     <img src="{{ asset($post->image_path) }}" alt="" class="card-img"/>
                 </div>
                 <div class="card-body">
-                    <h5> {{ $post->user->name }}</h5>
-                    <p class="card-text">{{ $post->created_at->diffForHumans() }}</p>
+                    <p>
+                        <a href="{{ route('user.profile', $post->user) }}">{{ $post->user->name }} &#183;</a>
+                        <a>{{ $post->created_at->diffForHumans() }} &#183;</a>
+                        <a href="{{ route('show.post', $post) }}">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }} points</a>
+                    </p>
                     <div class="card-footer">
-                        @if(auth()->user()->role_id === 2)
-                            <a href=""><button class="btn btn-primary">Edit</button></a>
-                            <form action="{{ route('destroy.post', $post) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
-                        @endif
-                            <p>
-                                <a href="{{ route('show.post', $post) }}">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }} points</a>
-                            </p>
+                        @auth()
+                            @if(auth()->user()->role_id === 2)
+                                <a href=""><button class="btn btn-primary">Edit</button></a>
+                                <form action="{{ route('destroy.post', $post) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            @endif
+                        @endauth
                             <div class="btn-group">
                                 <form action="{{ route('like.post', $post) }}" method="post">
                                     @csrf
@@ -46,7 +48,7 @@
                 <form action="{{ route('comment.post', $post) }}" method="post">
                     @csrf
                     <div class="form-group">
-                        <p class="mt-2">{{ $post->comments()->count() }} Comments</p>
+                        <p class="mt-2">{{ $post->comments()->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</p>
                         <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
                         @error('body')
                         <div class="invalid-feedback">
