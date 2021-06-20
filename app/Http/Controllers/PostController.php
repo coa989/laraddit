@@ -15,10 +15,13 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::where('approved', true)->with('user', 'tags')->latest()->paginate(10);
+        $posts = Post::where('approved', true)->with('user', 'tags')
+            ->latest()
+            ->paginate(10);
+
         return view('home', ['posts' => $posts]);
     }
-
+    // TODO: Replace with view in route
     public function create()
     {
         return view('posts.create');
@@ -150,5 +153,16 @@ class PostController extends Controller
         ]);
 
         return back();
+    }
+
+    public function tag(Tag $tag)
+    {
+        $tagsId = $tag->id;
+
+        $posts = Post::whereHas('tags', function ($query) use($tagsId) {
+            $query->where('post_tag.tag_id', $tagsId);
+        })->latest()->paginate(10);
+
+        return view('home', ['posts' => $posts]);
     }
 }

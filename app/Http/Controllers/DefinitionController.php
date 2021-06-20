@@ -151,7 +151,7 @@ class DefinitionController extends Controller
 
         $definitions = Definition::whereHas('tags', function ($query) use($tagsId) {
             $query->where('definition_tag.tag_id', $tagsId);
-        })->get();
+        })->latest()->paginate(15);
 
         return view('definitions.index', ['definitions' => $definitions]);
     }
