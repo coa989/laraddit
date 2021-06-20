@@ -8,4 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class Definition extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'title', 'body', 'slug', 'approved'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function tags()
+    {
+        return  $this->belongsToMany(Tag::class);
+    }
+
 }

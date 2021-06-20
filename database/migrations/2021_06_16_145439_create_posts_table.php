@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('image_url');
+            $table->string('image_path');
             $table->string('title');
             $table->string('slug');
             $table->boolean('approved')->default(false);
