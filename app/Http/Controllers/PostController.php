@@ -29,6 +29,11 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
+        // TODO: Create exception page
+        if (auth()->user()->cannot('create', Post::class)) {
+            abort(403);
+        }
+
         $image = $request->image;
         $fileName = Str::random(8).'.'.$image->getClientOriginalName();
         $destinationPath = public_path('storage/images/');
