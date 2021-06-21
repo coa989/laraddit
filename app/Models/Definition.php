@@ -11,6 +11,11 @@ class Definition extends Model
 
     protected $fillable = ['user_id', 'title', 'body', 'slug', 'approved'];
 
+    public function scopeToday($builder)
+    {
+        return $builder->where('created_at', '>', today());
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
