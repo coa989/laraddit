@@ -10,9 +10,17 @@
                         <h2 v-pre class="card-title mb-0">{{ $user->name }}</h2>
                         <small class="card-subtitle mb-2 text">{{ $user->email }}</small>
                         <small class="card-subtitle mb-2 text-muted">{{ $user->created_at->diffForHumans() }}</small>
-                        <p> points</p>
-                        <p> points per post</p>
-                        <p> points per definition</p>
+                        <p>{{ $definitionPoints + $postPoints }} points</p>
+                        @if($user->posts()->get()->count())
+                            <p>{{round($postPoints / $user->posts()->get()->count(), 2) }} points per post</p>
+                        @else
+                            <p>0 points per post</p>
+                        @endif
+                        @if($user->definitions()->get()->count())
+                            <p>{{ round($definitionPoints / $user->definitions()->get()->count(), 2) }} points per definition</p>
+                        @else
+                            <p>0 points per definition</p>
+                        @endif
                     </div>
                     <div class="card-footer text-center">
                         <a href="{{ route('user.posts', $user) }}"><button class="btn ">Posts</button></a>

@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include ('partials.messages')
         <div class="form-group">
             <form action="{{ route('store.post') }}" method="post" class="" enctype="multipart/form-data">
                 @csrf

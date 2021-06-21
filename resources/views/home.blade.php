@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    @include ('partials.messages')
     <div class="row justify-content-center">
         <div class="col-md-8">
         @foreach($posts as $post)
@@ -12,7 +13,7 @@
                     <a>{{ $post->created_at->diffForHumans() }}</a>
                 </div>
                 <div class="card-body">
-                    <img src="{{ asset($post->image_path) }}" alt=""/>
+                    <img src="{{ asset($post->medium_image_path) }}" alt=""/>
                 </div>
                 <div class="card-footer">
                     <p>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Components\FlashMessages;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
@@ -13,6 +14,8 @@ use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
+    use FlashMessages;
+
     public function index()
     {
         $posts = Post::where('approved', true)->with('user', 'tags')
@@ -29,23 +32,41 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        // TODO: change file name to generic one???
+        // TODO: Create exception page
+        if (auth()->user()->cannot('create', Post::class)) {
+            self::danger('You have reached daily post upload limit! Please try again later.');
+            return back();
+        }
+
         $image = $request->image;
-        $filename = $image->getClientOriginalName();
+        $fileName = Str::random(8).'.'.$image->getClientOriginalName();
+        $destinationPath = public_path('storage/images/');
 
-        $image_resize = Image::make($image->getRealPath());
-        $image_resize->resize(500, 580);
-        $image_resize->save(public_path('storage/images/'. $filename));
+        Image::make($image->getRealPath())
+            ->save($destinationPath. $fileName);
 
-        $image_path = 'storage/images/'. $filename;
+        $imagePath = 'storage/images/' . $fileName;
+
+        $smallImage = Image::make($image->getRealPath());
+        $smallImage->resize(100, 100);
+        $smallImage->save($destinationPath. 'small' . $fileName);
+        $smallImagePath = 'storage/images/small' . $fileName;
+
+        $mediumImage = Image::make($image->getRealPath());
+        $mediumImage->resize(400, 480);
+        $mediumImage->save($destinationPath. 'medium' . $fileName);
+
+        $mediumImagePath = 'storage/images/medium' . $fileName;
 
         $slug = Str::slug($request->title);
 
         $post = Post::create([
             'user_id' => auth()->id(),
-            'image_path' => $image_path,
+            'image_path' => $imagePath,
             'title' => $request->title,
-            'slug' => $slug
+            'slug' => $slug,
+            'small_image_path' => $smallImagePath,
+            'medium_image_path' => $mediumImagePath,
         ]);
 
         if ($request->tags) {
@@ -61,6 +82,7 @@ class PostController extends Controller
             }
         }
 
+        self::success('Post created successfully! It will be visible when admin approves it.');
         return redirect('/home');
     }
 
@@ -84,6 +106,7 @@ class PostController extends Controller
             'likeable_type' => get_class($post)
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -103,6 +126,7 @@ class PostController extends Controller
             'is_dislike' => 1
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -115,6 +139,7 @@ class PostController extends Controller
             'commentable_type' => get_class($post),
         ]);
 
+        self::success('Your comment has been successfully added!');
         return back();
     }
 
@@ -133,6 +158,7 @@ class PostController extends Controller
             'likeable_type' => get_class($comment),
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -152,6 +178,7 @@ class PostController extends Controller
             'is_dislike' => 1
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
