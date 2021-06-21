@@ -14,7 +14,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Slug</th>
                         <th scope="col">Author</th>
-                        <th scope="col">Image Path</th>
+                        <th scope="col">Image</th>
                         <th scope="col">Tags</th>
                         <th scope="col">Created</th>
                         <th scope="col">Updated</th>
@@ -27,7 +27,7 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->slug }}</td>
                             <td>{{ $post->user->name }}</td>
-                            <td>{{ $post->body }}</td>
+                            <td><img src="{{ asset($post->small_image_path) }}" alt=""></td>
                             <td>@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</td>
                             <td>{{ $post->created_at }}</td>
                             <td>{{ $post->updated_at }}</td>
