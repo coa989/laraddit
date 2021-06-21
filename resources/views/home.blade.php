@@ -17,7 +17,8 @@
                 </div>
                 <div class="card-footer">
                     <p>
-                        <a href="{{ route('show.post', $post) }}">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }} points &#183;</a>
+                        <a href="{{ route('show.post', $post) }}">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }}
+                            {{ Str::plural('point', $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count()) }} &#183;</a>
                         <a href="{{ route('show.post', $post) }}">{{ $post->comments()->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</a>
                     </p>
                     <div class="btn-group">

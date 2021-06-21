@@ -13,7 +13,8 @@
                     <p>
                         <a href="{{ route('user.profile', $post->user) }}">{{ $post->user->name }} &#183;</a>
                         <a>{{ $post->created_at->diffForHumans() }} &#183;</a>
-                        <a href="{{ route('show.post', $post) }}">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }} points</a>
+                        <a href="{{ route('show.post', $post) }}">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }}
+                            {{ Str::plural('point', $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count()) }}</a>
                     </p>
                     <div class="card-footer">
                         @auth()

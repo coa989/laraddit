@@ -25,7 +25,8 @@
                         @endif
                     @endauth
                     <p>
-                        <a href="{{ route('show.definition', $definition) }}">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }} points</a>
+                        <a href="{{ route('show.definition', $definition) }}">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }}
+                            {{ Str::plural('point', $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count()) }}</a>
                     </p>
                     <div class="btn-group">
                         <form action="{{ route('like.definition', $definition) }}" method="post">

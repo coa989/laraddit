@@ -7,7 +7,7 @@
             <div class="col-md-8">
                 @if(!$posts->first())
                     <div class="container">
-                        <h3 class="text-center">No definitions!</h3>
+                        <h3 class="text-center">No Posts!</h3>
                     </div>
                 @else
                     @foreach($posts as $post)
@@ -18,7 +18,7 @@
                                 <a>{{ $post->created_at->diffForHumans() }}</a>
                             </div>
                             <div class="card-body">
-                                <img src="{{ asset($post->image_path) }}" alt=""/>
+                                <img src="{{ asset($post->image_path) }}" alt="" class="card-img"/>
                             </div>
                             <div class="card-footer">
                                 <p>
