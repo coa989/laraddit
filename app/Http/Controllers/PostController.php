@@ -32,7 +32,6 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        // TODO: Create exception page
         if (auth()->user()->cannot('create', Post::class)) {
             self::danger('You have reached daily post upload limit! Please try again later.');
             return back();

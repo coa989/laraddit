@@ -32,6 +32,11 @@ class DefinitionController extends Controller
 
     public function store(StoreDefinitionRequest $request)
     {
+        if (auth()->user()->cannot('create', Definition::class)) {
+            self::danger('You have reached daily definition upload limit! Please try again later.');
+            return back();
+        }
+
         $slug = Str::slug($request->title);
 
         $definition = Definition::create([
