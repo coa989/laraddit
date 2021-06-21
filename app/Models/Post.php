@@ -12,6 +12,11 @@ class Post extends Model
 
     protected $fillable = ['approved', 'user_id', 'title', 'slug', 'image_path', 'small_image_path', 'medium_image_path'];
 
+    public function scopeToday($builder)
+    {
+        return $builder->where('created_at', '>', today());
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
