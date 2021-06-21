@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Components\FlashMessages;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
+    use FlashMessages;
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -64,6 +66,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        self::success('Your account has been successfully created!');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

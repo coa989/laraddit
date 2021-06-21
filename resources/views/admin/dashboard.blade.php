@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container px-4 py-2" >
+        @include('partials.messages')
         <h2 class="font-weight-bold">POSTS</h2>
         <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
             <div class="col d-flex align-items-start">

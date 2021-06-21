@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Components\FlashMessages;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StoreDefinitionRequest;
 use App\Models\Comment;
@@ -12,6 +13,8 @@ use Illuminate\Support\Str;
 
 class DefinitionController extends Controller
 {
+    use FlashMessages;
+
     public function index()
     {
         $definitions = Definition::where('approved', true)
@@ -51,6 +54,7 @@ class DefinitionController extends Controller
             }
         }
 
+        self::success('Definition created successfully! It will be visible when admin approves it.');
         return redirect('definitions');
     }
 
@@ -74,6 +78,7 @@ class DefinitionController extends Controller
             'likeable_type' => get_class($definition)
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -93,6 +98,7 @@ class DefinitionController extends Controller
             'is_dislike' => 1
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -105,6 +111,7 @@ class DefinitionController extends Controller
             'commentable_type' => get_class($definition),
         ]);
 
+        self::success('Your comment has been successfully added!');
         return back();
     }
 
@@ -123,6 +130,7 @@ class DefinitionController extends Controller
             'likeable_type' => get_class($comment),
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -142,6 +150,7 @@ class DefinitionController extends Controller
             'is_dislike' => 1
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
