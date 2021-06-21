@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include ('partials.messages')
         <div class="row">
             <div class="card" style="width: 25rem;">
                 <div class="card-header">

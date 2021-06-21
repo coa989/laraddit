@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include ('partials.messages')
         <div class="row justify-content-center">
             <div class="col-md-8">
                 @if(!$definitions->first())

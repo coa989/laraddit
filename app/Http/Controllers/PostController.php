@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Components\FlashMessages;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
@@ -13,6 +14,8 @@ use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
+    use FlashMessages;
+
     public function index()
     {
         $posts = Post::where('approved', true)->with('user', 'tags')
@@ -29,9 +32,9 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        // TODO: Create exception page
         if (auth()->user()->cannot('create', Post::class)) {
-            abort(403);
+            self::danger('You have reached daily post upload limit! Please try again later.');
+            return back();
         }
 
         $image = $request->image;
@@ -78,6 +81,7 @@ class PostController extends Controller
             }
         }
 
+        self::success('Post created successfully! It will be visible when admin approves it.');
         return redirect('/home');
     }
 
@@ -101,6 +105,7 @@ class PostController extends Controller
             'likeable_type' => get_class($post)
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -120,6 +125,7 @@ class PostController extends Controller
             'is_dislike' => 1
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -132,6 +138,7 @@ class PostController extends Controller
             'commentable_type' => get_class($post),
         ]);
 
+        self::success('Your comment has been successfully added!');
         return back();
     }
 
@@ -150,6 +157,7 @@ class PostController extends Controller
             'likeable_type' => get_class($comment),
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
@@ -169,6 +177,7 @@ class PostController extends Controller
             'is_dislike' => 1
         ]);
 
+        self::success('Your reaction has been recorded!');
         return back();
     }
 
