@@ -29,23 +29,35 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        // TODO: change file name to generic one???
         $image = $request->image;
-        $filename = $image->getClientOriginalName();
+        $fileName = Str::random(8).'.'.$image->getClientOriginalName();
+        $destinationPath = public_path('storage/images/');
 
-        $image_resize = Image::make($image->getRealPath());
-        $image_resize->resize(500, 580);
-        $image_resize->save(public_path('storage/images/'. $filename));
+        Image::make($image->getRealPath())
+            ->save($destinationPath. $fileName);
 
-        $image_path = 'storage/images/'. $filename;
+        $imagePath = 'storage/images/' . $fileName;
+
+        $smallImage = Image::make($image->getRealPath());
+        $smallImage->resize(100, 100);
+        $smallImage->save($destinationPath. 'small' . $fileName);
+        $smallImagePath = 'storage/images/small' . $fileName;
+
+        $mediumImage = Image::make($image->getRealPath());
+        $mediumImage->resize(400, 480);
+        $mediumImage->save($destinationPath. 'medium' . $fileName);
+
+        $mediumImagePath = 'storage/images/medium' . $fileName;
 
         $slug = Str::slug($request->title);
 
         $post = Post::create([
             'user_id' => auth()->id(),
-            'image_path' => $image_path,
+            'image_path' => $imagePath,
             'title' => $request->title,
-            'slug' => $slug
+            'slug' => $slug,
+            'small_image_path' => $smallImagePath,
+            'medium_image_path' => $mediumImagePath,
         ]);
 
         if ($request->tags) {
