@@ -60,7 +60,8 @@
                         @else
                             @if(auth()->user()->role_id === 3)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('dashboard') }}">                                        {{ __('Dashboard') }}
+                                    <a class="nav-link" href="{{ route('dashboard') }}">
+                                        Dashboard
                                     </a>
                                 </li>
                             @endif
@@ -79,12 +80,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('user.profile', auth()->user()) }}">
+                                        My Profile
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
