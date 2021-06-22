@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DefinitionController as AdminDefinitionController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
     Route::get('/definition/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('approve.definition');
     Route::get('/definition/show/{definition}', [AdminDefinitionController::class, 'show'])->name('admin.show.definition');
     Route::delete('/definition/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('admin.destroy.definition');
+
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users');
+    Route::delete('/user/destroy/{user}', [AdminUserController::class, 'destroy'])->name('destroy.user');
+    Route::get('/users/authors', [AdminUserController::class, 'authors'])->name('users.authors');
+    Route::get('/users/guests', [AdminUserController::class, 'guests'])->name('users.guests');
+    Route::get('/user/change-role{user}', [AdminUserController::class, 'changeRole'])->name('change-role.user');
 });
 
 Route::get('/home', [PostController::class, 'index'])->name('index');

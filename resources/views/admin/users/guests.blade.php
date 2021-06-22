@@ -3,38 +3,34 @@
 @section('content')
     <div class="container " >
         <div class="row ">
-            @if(!$posts->first())
+            @if(!$guests->first())
                 <div class="container">
-                    <h3 class="text-center">No approved post!</h3>
+                    <h3 class="text-center">No Guests!</h3>
                 </div>
             @else
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Slug</th>
-                        <th scope="col">Author</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Tags</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Created</th>
                         <th scope="col">Updated</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($posts as $post)
+                    @foreach($guests as $guest)
                         <tr>
-                            <td>{{ $post->title }}</td>
-                            <td>{{ $post->slug }}</td>
-                            <td>{{ $post->user->name }}</td>
-                            <td><img src="{{ asset($post->small_image_path) }}" alt=""></td>
-                            <td>@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</td>
-                            <td>{{ $post->created_at }}</td>
-                            <td>{{ $post->updated_at }}</td>
+                            <td>{{ $guest->name }}</td>
+                            <td>{{ $guest->email }}</td>
+                            <td>{{ $guest->created_at }}</td>
+                            <td>{{ $guest->updated_at }}</td>
+                            <td>{{ $guest->role->name }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.show.post', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
-                                    <form action="{{ route('admin.destroy.post', $post) }}" method="post">
+                                    <a href="{{ route('change-role.user', $guest) }}"><button class="btn btn-sm btn-success mr-1">Change Role</button></a>
+                                    <form action="{{ route('destroy.user', $guest) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>
@@ -46,10 +42,11 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
-                    {{ $posts->links() }}
+                    {{ $guests->links() }}
                 </div>
             @endif
         </div>
     </div>
 
 @endsection
+

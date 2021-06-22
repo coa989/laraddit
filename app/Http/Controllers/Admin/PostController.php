@@ -22,7 +22,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->route('posts');
+        return back();
     }
 
     public function approve(Post $post)
