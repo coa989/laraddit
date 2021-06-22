@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\DefinitionController as AdminDefinitionController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,19 +22,21 @@ Route::get('/', [PostController::class, 'index'])->name('index');
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    Route::get('/posts', [AdminController::class, 'allPosts'])->name('posts');
-    Route::get('/posts/approved', [AdminController::class, 'approvedPosts'])->name('approved.posts');
-    Route::get('/posts/waiting', [AdminController::class, 'waitingPosts'])->name('waiting.posts');
-    Route::get('/post/approve/{post}', [AdminController::class, 'approvePost'])->name('approve.post');
-    Route::get('/post/show/{post}', [AdminController::class, 'showPost'])->name('admin.show.post');
-    Route::delete('/post/destroy/{post}', [AdminController::class, 'destroyPost'])->name('admin.destroy.post');
-    Route::get('/definitions', [AdminController::class, 'allDefinitions'])->name('definitions');
-    Route::get('/definitions/approved', [AdminController::class, 'approvedDefinitions'])->name('approved.definitions');
-    Route::get('/definitions/waiting', [AdminController::class, 'waitingDefinitions'])->name('waiting.definitions');
-    Route::get('/definition/approve/{definition}', [AdminController::class, 'approveDefinition'])->name('approve.definition');
-    Route::get('/definition/show/{definition}', [AdminController::class, 'showDefinition'])->name('admin.show.definition');
-    Route::delete('/definition/destroy/{definition}', [AdminController::class, 'destroyDefinition'])->name('admin.destroy.definition');
+    Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+
+    Route::get('/posts', [AdminPostController::class, 'index'])->name('posts');
+    Route::get('/posts/approved', [AdminPostController::class, 'approved'])->name('approved.posts');
+    Route::get('/posts/waiting', [AdminPostController::class, 'waiting'])->name('waiting.posts');
+    Route::get('/post/show/{post}', [AdminPostController::class, 'show'])->name('admin.show.post');
+    Route::get('/post/approve/{post}', [AdminPostController::class, 'approve'])->name('approve.post');
+    Route::delete('/post/destroy/{post}', [AdminPostController::class, 'destroy'])->name('admin.destroy.post');
+
+    Route::get('/definitions', [AdminDefinitionController::class, 'index'])->name('definitions');
+    Route::get('/definitions/approved', [AdminDefinitionController::class, 'approved'])->name('approved.definitions');
+    Route::get('/definitions/waiting', [AdminDefinitionController::class, 'waiting'])->name('waiting.definitions');
+    Route::get('/definition/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('approve.definition');
+    Route::get('/definition/show/{definition}', [AdminDefinitionController::class, 'show'])->name('admin.show.definition');
+    Route::delete('/definition/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('admin.destroy.definition');
 });
 
 Route::get('/home', [PostController::class, 'index'])->name('index');
@@ -62,6 +64,7 @@ Route::middleware('auth')->prefix('definition')->group(function (){
     Route::post('/comment/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.definition.comment');
     Route::get('/tag/{tag}', [DefinitionController::class, 'tag'])->name('tag.definition');
 });
+
 Route::middleware('auth')->prefix('user')->group(function () {
     Route::get('/profile/{user}', [UserController::class, 'show'])->name('user.profile');
     Route::get('/{user}/posts', [UserController::class, 'posts'])->name('user.posts');

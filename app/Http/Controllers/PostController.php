@@ -18,7 +18,8 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::where('approved', true)->with('user', 'tags')
+        $posts = Post::where('approved', true)
+            ->with('user', 'tags')
             ->latest()
             ->paginate(10);
 

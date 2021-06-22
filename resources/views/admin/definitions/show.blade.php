@@ -5,7 +5,7 @@
         <div class="row">
             <div class="card" style="width: 25rem;">
                 <h2 class="text-center">{{ $definition->title }}</h2>
-                <img src="{{ asset($definition->image_path) }}" alt=""/>
+                <p class="text-center font-weight-bold">{{ $definition->body }}</p>
                 <div class="card-body">
                     <h5> {{ $definition->user->name }}</h5>
                     <p class="card-text">{{ $definition->created_at->diffForHumans() }}</p>

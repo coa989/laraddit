@@ -66,7 +66,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        self::success('Your account has been successfully created!');
+        self::success('Your account has been successfully created! You will be able to upload things when admin approves you.');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
