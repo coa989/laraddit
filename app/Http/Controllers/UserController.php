@@ -40,7 +40,6 @@ class UserController extends Controller
             }
         } else {
             $definitionPoints = 0;
-
         }
 ;
         if ($posts->first()) {
