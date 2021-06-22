@@ -65,15 +65,17 @@
                                     </a>
                                 </li>
                             @endif
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Upload
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a href="{{ route('create.post') }}" class="dropdown-item">Post</a>
-                                    <a href="{{ route('create.definition') }}" class="dropdown-item">Definition</a>
-                                </div>
-                            </li>
+                            @if(auth()->user()->role_id !== 1)
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Upload
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a href="{{ route('create.post') }}" class="dropdown-item">Post</a>
+                                        <a href="{{ route('create.definition') }}" class="dropdown-item">Definition</a>
+                                    </div>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
