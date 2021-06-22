@@ -51,6 +51,7 @@ Route::get('/post/show/{post}', [PostController::class, 'show'])->name('show.pos
 Route::middleware('auth')->prefix('post')->group(function () {
     Route::get('/create', [PostController::class, 'create'])->name('create.post');
     Route::post('/store', [PostController::class, 'store'])->name('store.post');
+    Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy.post');
     Route::post('/like/{post}', [PostController::class, 'like'])->name('like.post');
     Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike.post');
     Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment.post');
@@ -64,6 +65,7 @@ Route::get('/definition/show/{definition}', [DefinitionController::class, 'show'
 Route::middleware('auth')->prefix('definition')->group(function (){
     Route::get('/create', [DefinitionController::class, 'create'])->name('create.definition');
     Route::post('/store', [DefinitionController::class, 'store'])->name('store.definition');
+    Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy.definition');
     Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like.definition');
     Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike.definition');
     Route::post('/comment/{definition}', [DefinitionController::class, 'comment'])->name('comment.definition');

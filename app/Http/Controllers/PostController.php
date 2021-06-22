@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -37,7 +38,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        if (auth()->user()->cannot('create', Post::class)) {
+        if (auth()->user()->cannot('store', Post::class)) {
             self::danger('You have reached daily post upload limit! Please try again later.');
             return back();
         }
@@ -112,6 +113,16 @@ class PostController extends Controller
 
         self::success('Your reaction has been recorded!');
         return back();
+    }
+
+    public function destroy(Post $post)
+    {
+        if (auth()->user()->cannot('delete', $post)) {
+            abort(403);
+        }
+
+        $post->delete();
+        return redirect('/home');
     }
 
     public function dislike(Post $post)
