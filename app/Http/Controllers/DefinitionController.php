@@ -27,6 +27,10 @@ class DefinitionController extends Controller
 
     public function create()
     {
+        if (auth()->user()->cannot('create', Definition::class)) {
+            abort(403);
+        }
+
         return view('definitions.create');
     }
 

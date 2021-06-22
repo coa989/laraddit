@@ -25,9 +25,13 @@ class PostController extends Controller
 
         return view('home', ['posts' => $posts]);
     }
-    // TODO: Replace with view in route
+
     public function create()
     {
+        if (auth()->user()->cannot('create', Post::class)) {
+            abort(403);
+        }
+
         return view('posts.create');
     }
 
