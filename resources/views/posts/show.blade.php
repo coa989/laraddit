@@ -19,12 +19,13 @@
                     <div class="card-footer">
                         @auth()
                             @if(auth()->user()->role_id === 2)
-                                <a href=""><button class="btn btn-primary">Edit</button></a>
-                                <form action="{{ route('destroy.post', $post) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                                @can('delete', $post)
+                                    <form action="{{ route('destroy.post', $post) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                @endcan
                             @endif
                         @endauth
                             <div class="btn-group">

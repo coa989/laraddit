@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,9 +75,9 @@ Route::middleware('auth')->prefix('definition')->group(function (){
 });
 
 Route::middleware('auth')->prefix('user')->group(function () {
-    Route::get('/profile/{user}', [UserController::class, 'show'])->name('user.profile');
-    Route::get('/{user}/posts', [UserController::class, 'posts'])->name('user.posts');
-    Route::get('/{user}/definitions', [UserController::class, 'definitions'])->name('user.definitions');
+    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('user.profile');
+    Route::get('/{user}/posts', [ProfileController::class, 'posts'])->name('user.posts');
+    Route::get('/{user}/definitions', [ProfileController::class, 'definitions'])->name('user.definitions');
 });
 
 Auth::routes();

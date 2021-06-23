@@ -21,6 +21,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
         return back();
     }
 
@@ -28,10 +29,12 @@ class UserController extends Controller
     {
         if ($user->role->name === 'Guest') {
             $user->update(['role_id' => 2]);
+
             return back();
         }
 
         $user->update(['role_id' => 1]);
+
         return back();
     }
 

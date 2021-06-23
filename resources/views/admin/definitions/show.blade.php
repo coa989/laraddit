@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('content')
     <div class="container">
@@ -13,7 +13,6 @@
                         @if(!$definition->approved)
                             <a href="{{ route('approve.definition', $definition) }}"><button class="btn btn-success">Approve</button></a>
                         @endif
-                        <a href=""><button class="btn btn-primary">Edit</button></a>
                         <form action="{{ route('admin.destroy.definition', $definition) }}" method="post">
                             @csrf
                             @method('DELETE')

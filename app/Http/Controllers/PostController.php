@@ -9,7 +9,6 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -88,7 +87,8 @@ class PostController extends Controller
         }
 
         self::success('Post created successfully! It will be visible when admin approves it.');
-        return redirect('/home');
+
+        return redirect()->route('index');
     }
 
     public function show(Post $post)
@@ -102,6 +102,7 @@ class PostController extends Controller
             ->where('likeable_id', $post->id)
             ->where('likeable_type', get_class($post))
             ->first()) {
+
             return back();
         }
 
@@ -112,6 +113,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 
@@ -122,7 +124,8 @@ class PostController extends Controller
         }
 
         $post->delete();
-        return redirect('/home');
+
+        return redirect()->route('index');
     }
 
     public function dislike(Post $post)
@@ -131,6 +134,7 @@ class PostController extends Controller
             ->where('likeable_id', $post->id)
             ->where('likeable_type', get_class($post))
             ->first()) {
+
             return back();
         }
 
@@ -142,6 +146,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 
@@ -155,6 +160,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your comment has been successfully added!');
+
         return back();
     }
 
@@ -164,6 +170,7 @@ class PostController extends Controller
             ->where('likeable_id', $comment->id)
             ->where('likeable_type', get_class($comment))
             ->first()) {
+
             return back();
         }
 
@@ -174,6 +181,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 
@@ -194,6 +202,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 

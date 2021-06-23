@@ -25,24 +25,28 @@ class DefinitionController extends Controller
     public function destroy(Definition $definition)
     {
         $definition->delete();
-        return redirect('/admin/dashboard');
+
+        return redirect()->route('dashboard');
     }
 
     public function approve(Definition $definition)
     {
         $definition->update(['approved' => true]);
+
         return back();
     }
 
     public function approved()
     {
         $definitions = Definition::where('approved', true)->paginate(8);
+
         return view('admin.definitions.approved', ['definitions' => $definitions]);
     }
 
     public function waiting()
     {
         $definitions = Definition::where('approved', false)->paginate(8);
+
         return view('admin.definitions.waiting', ['definitions' => $definitions]);
     }
 }
