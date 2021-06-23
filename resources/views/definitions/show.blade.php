@@ -16,12 +16,13 @@
                 <div class="card-footer">
                     @auth()
                         @if(auth()->user()->role_id === 2)
-                            <a href=""><button class="btn btn-primary">Edit</button></a>
-                            <form action="{{ route('destroy.definition', $definition) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
+                            @can('delete', $definition)
+                                <form action="{{ route('destroy.definition', $definition) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            @endcan
                         @endif
                     @endauth
                     <p>
