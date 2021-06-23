@@ -9,7 +9,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Post::all()) }}</h1>
                     <h5>ALL POSTS</h5>
-                    <a href="{{ route('posts') }}" class="btn btn-primary">
+                    <a href="{{ route('admin.posts') }}" class="btn btn-primary">
                         View
                     </a>
                 </div>
@@ -18,7 +18,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Post::where('approved', true)->get()) }}</h1>
                     <h5>APPROVED POSTS</h5>
-                    <a href="{{ route('approved.posts') }}" class="btn btn-success">
+                    <a href="{{ route('admin.approved.posts') }}" class="btn btn-success">
                         View
                     </a>
                 </div>
@@ -27,7 +27,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Post::where('approved', false)->get()) }}</h1>
                     <h5>WAITING POSTS</h5>
-                    <a href="{{ route('waiting.posts') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.waiting.posts') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>
@@ -41,7 +41,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Definition::all()) }}</h1>
                     <h5>ALL DEFINITIONS</h5>
-                    <a href="{{ route('definitions') }}" class="btn btn-primary">
+                    <a href="{{ route('admin.definitions') }}" class="btn btn-primary">
                         View
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Definition::where('approved', true)->get()) }}</h1>
                     <h5>APPROVED DEFINITIONS</h5>
-                    <a href="{{ route('approved.definitions') }}" class="btn btn-success">
+                    <a href="{{ route('admin.approved.definitions') }}" class="btn btn-success">
                         View
                     </a>
                 </div>
@@ -59,7 +59,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Definition::where('approved', false)->get()) }}</h1>
                     <h5>WAITING DEFINITIONS</h5>
-                    <a href="{{ route('waiting.definitions') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.waiting.definitions') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>
@@ -73,7 +73,7 @@
                 <div>
                     <h1>{{ count(\App\Models\User::all()) }}</h1>
                     <h5>ALL USERS</h5>
-                    <a href="{{ route('users') }}" class="btn btn-primary">
+                    <a href="{{ route('admin.users') }}" class="btn btn-primary">
                         View
                     </a>
                 </div>
@@ -82,7 +82,7 @@
                 <div>
                     <h1>{{ count(\App\Models\User::where('role_id', 2)->get()) }}</h1>
                     <h5>AUTHORS</h5>
-                    <a href="{{ route('users.authors') }}" class="btn btn-success">
+                    <a href="{{ route('admin.users.authors') }}" class="btn btn-success">
                         View
                     </a>
                 </div>
@@ -91,7 +91,7 @@
                 <div>
                     <h1>{{ count(\App\Models\User::where('role_id', 1)->get()) }}</h1>
                     <h5>GUESTS</h5>
-                    <a href="{{ route('users.guests') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.users.guests') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>

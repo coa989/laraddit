@@ -34,7 +34,7 @@
                             <td>
                                 <div class="btn-group">
                                     @if(!$post->approved)
-                                        <a href="{{ route('approve.post', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                        <a href="{{ route('admin.approve.post', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                     @endif
                                     <a href="{{ route('admin.show.post', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
                                     <form action="{{ route('admin.destroy.post', $post) }}" method="post">
