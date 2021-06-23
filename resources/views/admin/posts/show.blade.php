@@ -11,9 +11,9 @@
                 <p class="card-text">{{ $post->created_at->diffForHumans() }}</p>
                 <div class="card-footer">
                     @if(!$post->approved)
-                        <a href="{{ route('admin.approve.post', $post) }}"><button class="btn btn-success">Approve</button></a>
+                        <a href="{{ route('admin.post.approve', $post) }}"><button class="btn btn-success">Approve</button></a>
                     @endif
-                        <form action="{{ route('admin.destroy.post', $post) }}" method="post">
+                        <form action="{{ route('admin.post.destroy', $post) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger">Delete</button>

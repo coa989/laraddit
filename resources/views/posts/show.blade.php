@@ -20,7 +20,7 @@
                         @auth()
                             @if(auth()->user()->role_id === 2)
                                 @can('delete', $post)
-                                    <form action="{{ route('destroy.post', $post) }}" method="post">
+                                    <form action="{{ route('post.destroy', $post) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>
