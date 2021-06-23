@@ -30,7 +30,7 @@
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ route('admin.change-role.user', $author) }}"><button class="btn btn-sm btn-success mr-1">Change Role</button></a>
-                                    <form action="{{ route('admin.destroy.user', $author) }}" method="post">
+                                    <form action="{{ route('admin.user.destroy', $author) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>

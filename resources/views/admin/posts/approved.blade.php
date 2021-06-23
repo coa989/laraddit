@@ -33,8 +33,8 @@
                             <td>{{ $post->updated_at }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.show.post', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
-                                    <form action="{{ route('admin.destroy.post', $post) }}" method="post">
+                                    <a href="{{ route('admin.post.show', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
+                                    <form action="{{ route('admin.post.destroy', $post) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>
