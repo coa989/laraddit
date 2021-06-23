@@ -37,7 +37,6 @@
                                         <a href="{{ route('approve.definition', $definition) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                     @endif
                                     <a href="{{ route('admin.show.definition', $definition) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
-                                    <a href="{{ route('admin.show.definition', $definition) }}"><button class="btn btn-sm btn-secondary mr-1">Edit</button></a>
                                     <form action="{{ route('admin.destroy.definition', $definition) }}" method="post">
                                         @csrf
                                         @method('DELETE')

@@ -41,7 +41,7 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        return $user->posts()->today()->count() < 3;
+        return $user->posts()->today()->count() < 3 && $user->role_id !== 1;
     }
 
     /**

@@ -41,7 +41,7 @@ class DefinitionPolicy
      */
     public function create(User $user)
     {
-        return $user->definitions()->today()->count() < 3;
+        return $user->definitions()->today()->count() < 3 && $user->role_id !== 1;
     }
 
     /**

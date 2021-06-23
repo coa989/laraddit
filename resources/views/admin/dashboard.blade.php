@@ -66,4 +66,36 @@
             </div>
         </div>
     </div>
+    <div class="container px-4 py-2" >
+        <h2 class="font-weight-bold">USERS</h2>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h1>{{ count(\App\Models\User::all()) }}</h1>
+                    <h5>ALL USERS</h5>
+                    <a href="{{ route('users') }}" class="btn btn-primary">
+                        View
+                    </a>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h1>{{ count(\App\Models\User::where('role_id', 2)->get()) }}</h1>
+                    <h5>AUTHORS</h5>
+                    <a href="{{ route('users.authors') }}" class="btn btn-success">
+                        View
+                    </a>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h1>{{ count(\App\Models\User::where('role_id', 1)->get()) }}</h1>
+                    <h5>GUESTS</h5>
+                    <a href="{{ route('users.guests') }}" class="btn btn-secondary">
+                        View
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

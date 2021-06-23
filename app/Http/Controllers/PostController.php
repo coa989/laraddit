@@ -18,15 +18,20 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::where('approved', true)->with('user', 'tags')
+        $posts = Post::where('approved', true)
+            ->with('user', 'tags')
             ->latest()
             ->paginate(10);
 
         return view('home', ['posts' => $posts]);
     }
-    // TODO: Replace with view in route
+
     public function create()
     {
+        if (auth()->user()->cannot('create', Post::class)) {
+            abort(403);
+        }
+
         return view('posts.create');
     }
 
