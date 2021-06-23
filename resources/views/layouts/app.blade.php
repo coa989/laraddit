@@ -29,7 +29,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                    <a class="navbar-brand" href="{{ url('/home') }}">
+                    <a class="navbar-brand" href="{{ route('post.index') }}">
                         {{ config('app.name', 'Zagrc') }}
                     </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -38,7 +38,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <a class="navbar-brand" href="{{ route('index.definition') }}">Definitions</a>
+                    <a class="navbar-brand" href="{{ route('definition.index') }}">Definitions</a>
 
                     <!-- Right Side Of Navbar -->
 
@@ -60,7 +60,7 @@
                         @else
                             @if(auth()->user()->role_id === 3)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('dashboard') }}">
+                                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
                                         Dashboard
                                     </a>
                                 </li>
@@ -71,8 +71,8 @@
                                         Upload
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a href="{{ route('create.post') }}" class="dropdown-item">Post</a>
-                                        <a href="{{ route('create.definition') }}" class="dropdown-item">Definition</a>
+                                        <a href="{{ route('post.create') }}" class="dropdown-item">Post</a>
+                                        <a href="{{ route('definition.create') }}" class="dropdown-item">Definition</a>
                                     </div>
                                 </li>
                             @endif

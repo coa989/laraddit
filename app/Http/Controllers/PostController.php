@@ -37,7 +37,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        if (auth()->user()->cannot('create', Post::class)) {
+        if (auth()->user()->cannot('store', Post::class)) {
             self::danger('You have reached daily post upload limit! Please try again later.');
             return back();
         }
@@ -87,7 +87,8 @@ class PostController extends Controller
         }
 
         self::success('Post created successfully! It will be visible when admin approves it.');
-        return redirect('/home');
+
+        return redirect()->route('index');
     }
 
     public function show(Post $post)
@@ -101,6 +102,7 @@ class PostController extends Controller
             ->where('likeable_id', $post->id)
             ->where('likeable_type', get_class($post))
             ->first()) {
+
             return back();
         }
 
@@ -111,7 +113,19 @@ class PostController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
+    }
+
+    public function destroy(Post $post)
+    {
+        if (auth()->user()->cannot('delete', $post)) {
+            abort(403);
+        }
+
+        $post->delete();
+
+        return redirect()->route('index');
     }
 
     public function dislike(Post $post)
@@ -120,6 +134,7 @@ class PostController extends Controller
             ->where('likeable_id', $post->id)
             ->where('likeable_type', get_class($post))
             ->first()) {
+
             return back();
         }
 
@@ -131,6 +146,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 
@@ -144,6 +160,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your comment has been successfully added!');
+
         return back();
     }
 
@@ -153,6 +170,7 @@ class PostController extends Controller
             ->where('likeable_id', $comment->id)
             ->where('likeable_type', get_class($comment))
             ->first()) {
+
             return back();
         }
 
@@ -163,6 +181,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 
@@ -183,6 +202,7 @@ class PostController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 

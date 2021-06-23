@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,23 +21,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])->name('index');
 
-
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
+Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
 
     Route::get('/posts', [AdminPostController::class, 'index'])->name('posts');
     Route::get('/posts/approved', [AdminPostController::class, 'approved'])->name('approved.posts');
     Route::get('/posts/waiting', [AdminPostController::class, 'waiting'])->name('waiting.posts');
-    Route::get('/post/show/{post}', [AdminPostController::class, 'show'])->name('admin.show.post');
+    Route::get('/post/show/{post}', [AdminPostController::class, 'show'])->name('show.post');
     Route::get('/post/approve/{post}', [AdminPostController::class, 'approve'])->name('approve.post');
-    Route::delete('/post/destroy/{post}', [AdminPostController::class, 'destroy'])->name('admin.destroy.post');
+    Route::delete('/post/destroy/{post}', [AdminPostController::class, 'destroy'])->name('destroy.post');
 
     Route::get('/definitions', [AdminDefinitionController::class, 'index'])->name('definitions');
     Route::get('/definitions/approved', [AdminDefinitionController::class, 'approved'])->name('approved.definitions');
     Route::get('/definitions/waiting', [AdminDefinitionController::class, 'waiting'])->name('waiting.definitions');
     Route::get('/definition/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('approve.definition');
-    Route::get('/definition/show/{definition}', [AdminDefinitionController::class, 'show'])->name('admin.show.definition');
-    Route::delete('/definition/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('admin.destroy.definition');
+    Route::get('/definition/show/{definition}', [AdminDefinitionController::class, 'show'])->name('show.definition');
+    Route::delete('/definition/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('destroy.definition');
 
     Route::get('/users', [AdminUserController::class, 'index'])->name('users');
     Route::delete('/user/destroy/{user}', [AdminUserController::class, 'destroy'])->name('destroy.user');
@@ -46,36 +45,44 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function() {
     Route::get('/user/change-role{user}', [AdminUserController::class, 'changeRole'])->name('change-role.user');
 });
 
-Route::get('/home', [PostController::class, 'index'])->name('index');
-Route::get('/post/show/{post}', [PostController::class, 'show'])->name('show.post');
-Route::middleware('auth')->prefix('post')->group(function () {
-    Route::get('/create', [PostController::class, 'create'])->name('create.post');
-    Route::post('/store', [PostController::class, 'store'])->name('store.post');
-    Route::post('/like/{post}', [PostController::class, 'like'])->name('like.post');
-    Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike.post');
-    Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment.post');
-    Route::post('/comment/like/{comment}', [PostController::class, 'likeComment'])->name('like.post.comment');
-    Route::post('/comment//dislike/{comment}', [PostController::class, 'dislikeComment'])->name('dislike.post.comment');
-    Route::get('/tag/{tag}', [PostController::class, 'tag'])->name('tag.post');
+Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
+    Route::get('/home', [PostController::class, 'index'])->name('index');
+    Route::get('/show/{post}', [PostController::class, 'show'])->name('show');
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/create', [PostController::class, 'create'])->name('create');
+        Route::post('/store', [PostController::class, 'store'])->name('store');
+        Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
+        Route::post('/like/{post}', [PostController::class, 'like'])->name('like');
+        Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike');
+        Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment');
+        Route::post('/comment/like/{comment}', [PostController::class, 'likeComment'])->name('like.comment');
+        Route::post('/comment//dislike/{comment}', [PostController::class, 'dislikeComment'])->name('dislike.comment');
+        Route::get('/tag/{tag}', [PostController::class, 'tag'])->name('tag');
+    });
 });
 
-Route::get('/definitions', [DefinitionController::class, 'index'])->name('index.definition');
-Route::get('/definition/show/{definition}', [DefinitionController::class, 'show'])->name('show.definition');
-Route::middleware('auth')->prefix('definition')->group(function (){
-    Route::get('/create', [DefinitionController::class, 'create'])->name('create.definition');
-    Route::post('/store', [DefinitionController::class, 'store'])->name('store.definition');
-    Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like.definition');
-    Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike.definition');
-    Route::post('/comment/{definition}', [DefinitionController::class, 'comment'])->name('comment.definition');
-    Route::post('/comment/like/{comment}', [DefinitionController::class, 'likeComment'])->name('like.definition.comment');
-    Route::post('/comment/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.definition.comment');
-    Route::get('/tag/{tag}', [DefinitionController::class, 'tag'])->name('tag.definition');
+Route::group(['prefix' => 'definition', 'as' => 'definition.'], function () {
+    Route::get('/definitions', [DefinitionController::class, 'index'])->name('index');
+    Route::get('/show/{definition}', [DefinitionController::class, 'show'])->name('show');
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/create', [DefinitionController::class, 'create'])->name('create');
+        Route::post('/store', [DefinitionController::class, 'store'])->name('store');
+        Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy');
+        Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like');
+        Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike');
+        Route::post('/comment/{definition}', [DefinitionController::class, 'comment'])->name('comment');
+        Route::post('/comment/like/{comment}', [DefinitionController::class, 'likeComment'])->name('like.comment');
+        Route::post('/comment/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.comment');
+        Route::get('/tag/{tag}', [DefinitionController::class, 'tag'])->name('tag');
+    });
 });
 
-Route::middleware('auth')->prefix('user')->group(function () {
-    Route::get('/profile/{user}', [UserController::class, 'show'])->name('user.profile');
-    Route::get('/{user}/posts', [UserController::class, 'posts'])->name('user.posts');
-    Route::get('/{user}/definitions', [UserController::class, 'definitions'])->name('user.definitions');
+Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function () {
+    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile');
+    Route::get('/{user}/posts', [ProfileController::class, 'posts'])->name('posts');
+    Route::get('/{user}/definitions', [ProfileController::class, 'definitions'])->name('definitions');
 });
 
 Auth::routes();

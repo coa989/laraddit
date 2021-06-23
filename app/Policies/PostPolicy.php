@@ -41,7 +41,18 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        return $user->posts()->today()->count() < 3 && $user->role_id !== 1;
+        return $user->role_id !== 1;
+    }
+
+    /**
+     * Determine whether the user can store models.
+     *
+     * @param \App\Models\User $user
+     * @return mixed
+     */
+    public function store(User $user)
+    {
+        return $user->posts()->today()->count() < 3;
     }
 
     /**
@@ -53,7 +64,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        //
+//        return $user->id() === $post->user_id || $user->role_id === 3;
     }
 
     /**
@@ -65,7 +76,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        //
+        return $user->id === $post->user_id;
     }
 
     /**

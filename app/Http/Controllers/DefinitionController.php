@@ -36,8 +36,9 @@ class DefinitionController extends Controller
 
     public function store(StoreDefinitionRequest $request)
     {
-        if (auth()->user()->cannot('create', Definition::class)) {
+        if (auth()->user()->cannot('store', Definition::class)) {
             self::danger('You have reached daily definition upload limit! Please try again later.');
+
             return back();
         }
 
@@ -64,12 +65,24 @@ class DefinitionController extends Controller
         }
 
         self::success('Definition created successfully! It will be visible when admin approves it.');
-        return redirect('definitions');
+
+        return redirect()->route('index.definition');
     }
 
     public function show(Definition $definition)
     {
         return view('definitions.show', ['definition' => $definition]);
+    }
+
+    public function destroy(Definition $definition)
+    {
+        if (auth()->user()->cannot('delete', $definition)) {
+            abort(403);
+        }
+
+        $definition->delete();
+
+        return redirect()->route('index.definition');
     }
 
     public function like(Definition $definition)
@@ -88,6 +101,7 @@ class DefinitionController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 
@@ -97,6 +111,7 @@ class DefinitionController extends Controller
             ->where('likeable_id', $definition->id)
             ->where('likeable_type', get_class($definition))
             ->first()) {
+
             return back();
         }
 
@@ -108,6 +123,7 @@ class DefinitionController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 
@@ -121,6 +137,7 @@ class DefinitionController extends Controller
         ]);
 
         self::success('Your comment has been successfully added!');
+
         return back();
     }
 
@@ -130,6 +147,7 @@ class DefinitionController extends Controller
             ->where('likeable_id', $comment->id)
             ->where('likeable_type', get_class($comment))
             ->first()) {
+
             return back();
         }
 
@@ -140,6 +158,7 @@ class DefinitionController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 
@@ -149,6 +168,7 @@ class DefinitionController extends Controller
             ->where('likeable_id', $comment->id)
             ->where('likeable_type', get_class($comment))
             ->first()) {
+
             return back();
         }
 
@@ -160,6 +180,7 @@ class DefinitionController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
+
         return back();
     }
 

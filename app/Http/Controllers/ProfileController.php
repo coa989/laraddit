@@ -6,7 +6,7 @@ use App\Models\Definition;
 use App\Models\Post;
 use App\Models\User;
 
-class UserController extends Controller
+class ProfileController extends Controller
 {
     public function show(User $user)
     {

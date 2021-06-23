@@ -4,7 +4,7 @@
     <div class="container">
         @include ('partials.messages')
         <div class="form-group">
-            <form action="{{ route('store.definition') }}" method="post">
+            <form action="{{ route('definition.store') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>

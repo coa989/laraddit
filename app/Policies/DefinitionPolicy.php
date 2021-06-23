@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Definition;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -41,8 +42,20 @@ class DefinitionPolicy
      */
     public function create(User $user)
     {
-        return $user->definitions()->today()->count() < 3 && $user->role_id !== 1;
+        return $user->role_id !== 1;
     }
+
+    /**
+     * Determine whether the user can store models.
+     *
+     * @param \App\Models\User $user
+     * @return mixed
+     */
+    public function store(User $user)
+    {
+        return $user->posts()->today()->count() < 3;
+    }
+
 
     /**
      * Determine whether the user can update the model.
@@ -65,7 +78,7 @@ class DefinitionPolicy
      */
     public function delete(User $user, Definition $definition)
     {
-        //
+        return $user->id === $definition->user_id;
     }
 
     /**

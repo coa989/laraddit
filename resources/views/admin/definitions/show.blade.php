@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('content')
     <div class="container">
@@ -11,9 +11,8 @@
                     <p class="card-text">{{ $definition->created_at->diffForHumans() }}</p>
                     <div class="card-footer">
                         @if(!$definition->approved)
-                            <a href="{{ route('approve.definition', $definition) }}"><button class="btn btn-success">Approve</button></a>
+                            <a href="{{ route('admin.approve.definition', $definition) }}"><button class="btn btn-success">Approve</button></a>
                         @endif
-                        <a href=""><button class="btn btn-primary">Edit</button></a>
                         <form action="{{ route('admin.destroy.definition', $definition) }}" method="post">
                             @csrf
                             @method('DELETE')

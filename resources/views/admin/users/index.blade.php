@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('content')
     <div class="container " >
@@ -29,8 +29,8 @@
                             <td>{{ $user->role->name }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('change-role.user', $user) }}"><button class="btn btn-sm btn-success mr-1">Change Role</button></a>
-                                    <form action="{{ route('destroy.user', $user) }}" method="post">
+                                    <a href="{{ route('admin.change-role.user', $user) }}"><button class="btn btn-sm btn-success mr-1">Change Role</button></a>
+                                    <form action="{{ route('admin.destroy.user', $user) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>
