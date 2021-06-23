@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->boolean('approved')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

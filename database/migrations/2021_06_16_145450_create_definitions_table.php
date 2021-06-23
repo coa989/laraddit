@@ -20,6 +20,7 @@ class CreateDefinitionsTable extends Migration
             $table->string('body');
             $table->string('slug');
             $table->boolean('approved')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

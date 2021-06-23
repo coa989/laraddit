@@ -53,7 +53,7 @@ class DefinitionPolicy
      */
     public function store(User $user)
     {
-        return $user->posts()->today()->count() < 3;
+        return $user->definitions()->withTrashed()->today()->count() < 3 ;
     }
 
 

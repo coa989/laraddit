@@ -24,7 +24,7 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
     public function approve(Post $post)
