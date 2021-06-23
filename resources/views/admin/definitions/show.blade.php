@@ -11,7 +11,7 @@
                     <p class="card-text">{{ $definition->created_at->diffForHumans() }}</p>
                     <div class="card-footer">
                         @if(!$definition->approved)
-                            <a href="{{ route('approve.definition', $definition) }}"><button class="btn btn-success">Approve</button></a>
+                            <a href="{{ route('admin.approve.definition', $definition) }}"><button class="btn btn-success">Approve</button></a>
                         @endif
                         <form action="{{ route('admin.destroy.definition', $definition) }}" method="post">
                             @csrf
