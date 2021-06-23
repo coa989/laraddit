@@ -18,7 +18,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Post::where('approved', true)->get()) }}</h1>
                     <h5>APPROVED POSTS</h5>
-                    <a href="{{ route('admin.approved.posts') }}" class="btn btn-success">
+                    <a href="{{ route('admin.posts.approved') }}" class="btn btn-success">
                         View
                     </a>
                 </div>
@@ -27,7 +27,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Post::where('approved', false)->get()) }}</h1>
                     <h5>WAITING POSTS</h5>
-                    <a href="{{ route('admin.waiting.posts') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.posts.waiting') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Definition::where('approved', true)->get()) }}</h1>
                     <h5>APPROVED DEFINITIONS</h5>
-                    <a href="{{ route('admin.approved.definitions') }}" class="btn btn-success">
+                    <a href="{{ route('admin.definitions.approved') }}" class="btn btn-success">
                         View
                     </a>
                 </div>
@@ -59,7 +59,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Definition::where('approved', false)->get()) }}</h1>
                     <h5>WAITING DEFINITIONS</h5>
-                    <a href="{{ route('admin.waiting.definitions') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.definitions.waiting') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>
