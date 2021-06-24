@@ -3,9 +3,9 @@
 @section('content')
     <div class="container " >
         <div class="row ">
-            @if(!$posts->first())
+            @if(!$definitions->first())
                 <div class="container">
-                    <h3 class="text-center">No post waiting approval!</h3>
+                    <h3 class="text-center">No definition!</h3>
                 </div>
             @else
                 <table class="table">
@@ -22,22 +22,22 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($posts as $post)
+                    @foreach($definitions as $definition)
                         <tr>
-                            <td>{{ $post->title }}</td>
-                            <td>{{ $post->slug }}</td>
-                            <td><a href="{{ route('admin.users.show', $post->user) }}">{{ $post->user->name }}</a></td>
-                            <td><img src="{{ asset($post->small_image_path) }}"></td>
-                            <td>@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</td>
-                            <td>{{ $post->created_at->diffForHumans() }}</td>
-                            <td>{{ $post->updated_at->diffForHumans() }}</td>
+                            <td>{{ $definition->title }}</td>
+                            <td>{{ $definition->slug }}</td>
+                            <td><a href="{{ route('admin.users.show', $definition->user) }}">{{ $definition->user->name }}</a></td>
+                            <td><img src="{{ asset($definition->small_image_path) }}" alt=""></td>
+                            <td>@foreach($definition->tags as $tag) {{ $tag->name }} @endforeach</td>
+                            <td>{{ $definition->created_at->diffForHumans() }}</td>
+                            <td>{{ $definition->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="btn-group">
-                                    @if(!$post->approved)
-                                        <a href="{{ route('admin.post.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                    @if(!$definition->approved)
+                                        <a href="{{ route('admin.post.approve', $definition) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                     @endif
-                                    <a href="{{ route('admin.post.show', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
-                                    <form action="{{ route('admin.post.destroy', $post) }}" method="post">
+                                    <a href="{{ route('admin.post.show', $definition) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
+                                    <form action="{{ route('admin.post.destroy', $definition) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>
@@ -49,7 +49,9 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
-                    {{ $posts->links() }}
+                    @if($definitions->first())
+                        {{ $definitions->links() }}
+                    @endif
                 </div>
             @endif
         </div>

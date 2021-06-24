@@ -26,11 +26,11 @@
                         <tr>
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->slug }}</td>
-                            <td>{{ $post->user->name }}</td>
+                            <td><a href="{{ route('admin.users.show', $post->user) }}">{{ $post->user->name }}</a></td>
                             <td><img src="{{ asset($post->small_image_path) }}" alt=""></td>
                             <td>@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</td>
-                            <td>{{ $post->created_at }}</td>
-                            <td>{{ $post->updated_at }}</td>
+                            <td>{{ $post->created_at->diffForHumans() }}</td>
+                            <td>{{ $post->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ route('admin.post.show', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>

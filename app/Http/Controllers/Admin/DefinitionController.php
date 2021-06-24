@@ -26,7 +26,7 @@ class DefinitionController extends Controller
     {
         $definition->delete();
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.definitions');
     }
 
     public function approve(Definition $definition)

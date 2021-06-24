@@ -29,6 +29,7 @@
                             <td>{{ $author->role->name }}</td>
                             <td>
                                 <div class="btn-group">
+                                    <a href="{{ route('admin.users.show', $author) }}"><button class="btn btn-sm btn-secondary mr-1">View</button></a>
                                     <a href="{{ route('admin.change-role.user', $author) }}"><button class="btn btn-sm btn-success mr-1">Change Role</button></a>
                                     <form action="{{ route('admin.user.destroy', $author) }}" method="post">
                                         @csrf

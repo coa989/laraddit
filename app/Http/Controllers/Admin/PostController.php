@@ -10,7 +10,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')->paginate(8);
+        $posts = Post::with('user')
+            ->latest()
+            ->paginate(8);
 
         return view('admin.posts.index', ['posts' => $posts]);
     }
@@ -36,14 +38,18 @@ class PostController extends Controller
 
     public function approved()
     {
-        $posts = Post::where('approved', true)->paginate(8);
+        $posts = Post::where('approved', true)
+            ->latest()
+            ->paginate(8);
 
         return view('admin.posts.approved', ['posts' => $posts]);
     }
 
     public function waiting()
     {
-        $posts = Post::where('approved', false)->paginate(8);
+        $posts = Post::where('approved', false)
+            ->latest()
+            ->paginate(8);
 
         return view('admin.posts.waiting', ['posts' => $posts]);
     }

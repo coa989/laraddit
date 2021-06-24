@@ -57,7 +57,7 @@ class PostController extends Controller
         $smallImagePath = 'storage/images/small' . $fileName;
 
         $mediumImage = Image::make($image->getRealPath());
-        $mediumImage->resize(400, 480);
+        $mediumImage->resize(500, 600);
         $mediumImage->save($destinationPath. 'medium' . $fileName);
 
         $mediumImagePath = 'storage/images/medium' . $fileName;
