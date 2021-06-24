@@ -26,7 +26,7 @@
                         <tr>
                             <td>{{ $definition->title }}</td>
                             <td>{{ $definition->slug }}</td>
-                            <td>{{ $definition->user->name }}</td>
+                            <td>{{ $definition->user->name}}</td>
                             <td>{{ $definition->body }}</td>
                             <td>@foreach($definition->tags as $tag) {{ $tag->name }} @endforeach</td>
                             <td>{{ $definition->created_at }}</td>

@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::delete('/definition/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('definition.destroy');
 
     Route::get('/users', [AdminUserController::class, 'index'])->name('users');
+    Route::get('/users/show/{user}', [AdminUserController::class, 'show'])->name('users.show');
     Route::get('/users/authors', [AdminUserController::class, 'authors'])->name('users.authors');
     Route::get('/users/guests', [AdminUserController::class, 'guests'])->name('users.guests');
     Route::delete('/user/destroy/{user}', [AdminUserController::class, 'destroy'])->name('user.destroy');
