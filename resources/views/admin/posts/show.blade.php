@@ -59,7 +59,6 @@
                           </span>
                             </div>
                             <span>{{ $comment->body }}</span>
-
                         </div>
                         <div class="btn-group">
                             <form action="{{ route('post.like.comment', $comment) }}" method="post">
@@ -70,6 +69,9 @@
                                 @csrf
                                 <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                             </form>
+                            @if(!$comment->approved)
+                                <a href="{{ route('admin.post.comment.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
+                            @endif
                         </div>
                     @endforeach
                     {{--                <div class="box-footer" style="display: block;">--}}

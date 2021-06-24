@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Definition;
 use Illuminate\Http\Request;
 
@@ -48,5 +49,12 @@ class DefinitionController extends Controller
         $definitions = Definition::where('approved', false)->paginate(8);
 
         return view('admin.definitions.waiting', ['definitions' => $definitions]);
+    }
+
+    public function approveComment(Comment $comment)
+    {
+        $comment->update(['approved' => true]);
+
+        return back();
     }
 }

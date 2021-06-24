@@ -72,6 +72,9 @@
                                 @csrf
                                 <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                             </form>
+                            @if(!$comment->approved)
+                                <a href="{{ route('admin.definition.comment.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
+                            @endif
                         </div>
                     @endforeach
                     {{--                <div class="box-footer" style="display: block;">--}}

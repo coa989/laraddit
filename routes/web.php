@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/post/approve/{post}', [AdminPostController::class, 'approve'])->name('post.approve');
     Route::get('/post/show/{post}', [AdminPostController::class, 'show'])->name('post.show');
     Route::delete('/post/destroy/{post}', [AdminPostController::class, 'destroy'])->name('post.destroy');
+    Route::get('/post/comment/{comment}/approve', [AdminPostController::class, 'approveComment'])->name('post.comment.approve');
 
     Route::get('/definitions', [AdminDefinitionController::class, 'index'])->name('definitions');
     Route::get('/definitions/approved', [AdminDefinitionController::class, 'approved'])->name('definitions.approved');
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/definition/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('definition.approve');
     Route::get('/definition/show/{definition}', [AdminDefinitionController::class, 'show'])->name('definition.show');
     Route::delete('/definition/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('definition.destroy');
+    Route::get('/definition/comment/{comment}/approve', [AdminDefinitionController::class, 'approveComment'])->name('definition.comment.approve');
 
     Route::get('/users', [AdminUserController::class, 'index'])->name('users');
     Route::get('/users/{user}/posts', [AdminUserController::class, 'posts'])->name('users.posts');

@@ -52,7 +52,7 @@
                 <form action="{{ route('post.comment', $post) }}" method="post">
                     @csrf
                     <div class="form-group">
-                        <p class="mt-2">{{ $post->comments()->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</p>
+                        <p class="mt-2">{{ $post->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $post->comments()->where('approved', true)->count()) }}</p>
                         <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
                         @error('body')
                         <div class="invalid-feedback">
@@ -63,7 +63,7 @@
                     <button class="btn btn-success" type="submit">Post</button>
                 </form>
                 <div class="box-footer box-comments mt-3" style="display: block;">
-                    @foreach($post->comments as $comment)
+                    @foreach($post->comments->where('approved', true) as $comment)
                     <div class="box-comment">
                         <div class="comment-text">
                           <span class="username">
