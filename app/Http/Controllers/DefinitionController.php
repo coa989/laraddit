@@ -136,7 +136,7 @@ class DefinitionController extends Controller
             'commentable_type' => get_class($definition),
         ]);
 
-        self::success('Your comment has been successfully added!');
+        self::success('Your comment has been successfully added! It wil be visible when admin approves it.');
 
         return back();
     }

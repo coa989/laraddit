@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -52,5 +52,12 @@ class PostController extends Controller
             ->paginate(8);
 
         return view('admin.posts.waiting', ['posts' => $posts]);
+    }
+
+    public function approveComment(Comment $comment)
+    {
+        $comment->update(['approved' => true]);
+
+        return back();
     }
 }
