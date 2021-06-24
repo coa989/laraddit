@@ -49,7 +49,7 @@
                 <div class="dropdown-header bg-light py-2">
                     <strong>Settings</strong>
                 </div>
-                <a class="dropdown-item" href="{{ route('user.profile', auth()->user()) }}">
+                <a class="dropdown-item" href="{{ route('admin.users.show', auth()->user()) }}">
                     <svg class="c-icon mr-2">
                         <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                     </svg> Profile
