@@ -159,7 +159,7 @@ class PostController extends Controller
             'commentable_type' => get_class($post),
         ]);
 
-        self::success('Your comment has been successfully added! It wil be visible when admin approves it.');
+        self::success('Your comment has been successfully added! It will be visible when admin approves it.');
 
         return back();
     }

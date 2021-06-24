@@ -40,7 +40,7 @@
                         @if(!$post->approved)
                             <a href="{{route('admin.post.approve', $post)}}"><button class="btn btn-success btn-sm">Approve</button></a>
                         @endif
-                        <form action="{{ route('post.destroy', $post) }}" method="post">
+                        <form action="{{ route('admin.post.destroy', $post) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm ml-3">Delete</button>
@@ -54,7 +54,7 @@
                         <div class="box-comment">
                             <div class="comment-text">
                           <span class="username">
-                            <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
+                            <a href="{{ route('admin.users.show', $post->user) }}">{{ $comment->user->name }}</a>
                             <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
                           </span>
                             </div>
@@ -72,6 +72,11 @@
                             @if(!$comment->approved)
                                 <a href="{{ route('admin.post.comment.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
                             @endif
+                            <form action="{{ route('admin.post.comment.destroy', $comment) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
                         </div>
                     @endforeach
                     {{--                <div class="box-footer" style="display: block;">--}}

@@ -60,4 +60,21 @@ class PostController extends Controller
 
         return back();
     }
+
+    public function waitingComments()
+    {
+        $comments = Comment::where('commentable_type', 'App\Models\Post')
+            ->where('approved', false)
+            ->latest()
+            ->paginate(20);
+
+        return view('admin.posts.comments', ['comments' => $comments]);
+    }
+
+    public function destroyComment(Comment $comment)
+    {
+        $comment->delete();
+
+        return back();
+    }
 }

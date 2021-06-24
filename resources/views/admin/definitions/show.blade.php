@@ -75,6 +75,11 @@
                             @if(!$comment->approved)
                                 <a href="{{ route('admin.definition.comment.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
                             @endif
+                            <form action="{{ route('admin.post.comment.destroy', $comment) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
                         </div>
                     @endforeach
                     {{--                <div class="box-footer" style="display: block;">--}}

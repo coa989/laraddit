@@ -39,14 +39,18 @@ class DefinitionController extends Controller
 
     public function approved()
     {
-        $definitions = Definition::where('approved', true)->paginate(8);
+        $definitions = Definition::where('approved', true)
+            ->latest()
+            ->paginate(8);
 
         return view('admin.definitions.approved', ['definitions' => $definitions]);
     }
 
     public function waiting()
     {
-        $definitions = Definition::where('approved', false)->paginate(8);
+        $definitions = Definition::where('approved', false)
+            ->latest()
+            ->paginate(8);
 
         return view('admin.definitions.waiting', ['definitions' => $definitions]);
     }
@@ -54,6 +58,23 @@ class DefinitionController extends Controller
     public function approveComment(Comment $comment)
     {
         $comment->update(['approved' => true]);
+
+        return back();
+    }
+
+    public function waitingComments()
+    {
+        $comments = Comment::where('commentable_type', 'App\Models\Definition')
+            ->where('approved', false)
+            ->latest()
+            ->paginate(20);
+
+        return view('admin.definitions.comments', ['comments' => $comments]);
+    }
+
+    public function destroyComment(Comment $comment)
+    {
+        $comment->delete();
 
         return back();
     }
