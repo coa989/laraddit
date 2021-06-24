@@ -3,35 +3,34 @@
 @section('content')
     <div class="container " >
         <div class="row ">
-            @if(!$guests->first())
+            @if(!$comments->first())
                 <div class="container">
-                    <h3 class="text-center">No Guests!</h3>
+                    <h3 class="text-center">No comments waiting approval!</h3>
                 </div>
             @else
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Body</th>
                         <th scope="col">Created</th>
                         <th scope="col">Updated</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">Definition</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($guests as $guest)
+                    @foreach($comments as $comment)
                         <tr>
-                            <td>{{ $guest->name }}</td>
-                            <td>{{ $guest->email }}</td>
-                            <td>{{ $guest->created_at }}</td>
-                            <td>{{ $guest->updated_at }}</td>
-                            <td>{{ $guest->role->name }}</td>
+                            <td><a href="{{ route('admin.users.show', $comment->user) }}">{{ $comment->user->name }}</a></td>
+                            <td>{{ $comment->body }}</td>
+                            <td>{{ $comment->created_at->diffForHumans() }}</td>
+                            <td>{{ $comment->updated_at->diffForHumans() }}</td>
+                            <td><a href="{{ route('admin.definition.show', $comment->commentable_id) }}"><button class="btn btn-primary btn-sm">View</button></a></td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.users.show', $guest) }}"><button class="btn btn-sm btn-secondary mr-1">View</button></a>
-                                    <a href="{{ route('admin.change-role.user', $guest) }}"><button class="btn btn-sm btn-success mr-1">Change Role</button></a>
-                                    <form action="{{ route('admin.user.destroy', $guest) }}" method="post">
+                                    <a href="{{ route('admin.definition.comment.approve', $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                    <form action="{{ route('admin.post.comment.destroy', $comment) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>
@@ -43,11 +42,10 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
-                    {{ $guests->links() }}
+                    {{ $comments->links() }}
                 </div>
             @endif
         </div>
     </div>
 
 @endsection
-

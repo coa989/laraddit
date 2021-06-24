@@ -84,6 +84,20 @@ class UserController extends Controller
         return redirect()->route('admin.users');
     }
 
+    public function posts(User $user)
+    {
+        $posts = Post::where('user_id', $user->id)->latest()->paginate(30);
+
+        return view('admin.users.posts', ['posts' => $posts]);
+    }
+
+    public function definitions(User $user)
+    {
+        $definitions = Definition::where('user_id', $user->id)->latest()->paginate(30);
+
+        return view('admin.users.definitions', ['definitions' => $definitions]);
+    }
+
     public function changeRole(User $user)
     {
         if ($user->role->name === 'Guest') {

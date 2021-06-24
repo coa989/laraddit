@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'commentable_id', 'body', 'commentable_type'];
+    protected $fillable = ['user_id', 'commentable_id', 'body', 'commentable_type', 'approved'];
 
     public function user()
     {

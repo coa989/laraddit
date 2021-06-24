@@ -66,7 +66,7 @@ class DefinitionController extends Controller
 
         self::success('Definition created successfully! It will be visible when admin approves it.');
 
-        return redirect()->route('index.definition');
+        return redirect()->route('definition.index');
     }
 
     public function show(Definition $definition)
@@ -82,7 +82,7 @@ class DefinitionController extends Controller
 
         $definition->delete();
 
-        return redirect()->route('index.definition');
+        return redirect()->route('definition.index');
     }
 
     public function like(Definition $definition)
@@ -136,7 +136,7 @@ class DefinitionController extends Controller
             'commentable_type' => get_class($definition),
         ]);
 
-        self::success('Your comment has been successfully added!');
+        self::success('Your comment has been successfully added! It will be visible when admin approves it.');
 
         return back();
     }

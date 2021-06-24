@@ -5,7 +5,7 @@
         <div class="row ">
             @if(!$posts->first())
                 <div class="container">
-                    <h3 class="text-center">No post waiting approval!</h3>
+                    <h3 class="text-center">No post!</h3>
                 </div>
             @else
                 <table class="table">
@@ -27,7 +27,7 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->slug }}</td>
                             <td><a href="{{ route('admin.users.show', $post->user) }}">{{ $post->user->name }}</a></td>
-                            <td><img src="{{ asset($post->small_image_path) }}"></td>
+                            <td><img src="{{ asset($post->small_image_path) }}" alt=""></td>
                             <td>@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</td>
                             <td>{{ $post->created_at->diffForHumans() }}</td>
                             <td>{{ $post->updated_at->diffForHumans() }}</td>
@@ -49,7 +49,9 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
-                    {{ $posts->links() }}
+                    @if($posts->first())
+                        {{ $posts->links() }}
+                    @endif
                 </div>
             @endif
         </div>

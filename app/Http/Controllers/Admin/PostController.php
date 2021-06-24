@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')->paginate(8);
+        $posts = Post::with('user')
+            ->latest()
+            ->paginate(8);
 
         return view('admin.posts.index', ['posts' => $posts]);
     }
@@ -24,7 +26,7 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
     public function approve(Post $post)
@@ -36,15 +38,43 @@ class PostController extends Controller
 
     public function approved()
     {
-        $posts = Post::where('approved', true)->paginate(8);
+        $posts = Post::where('approved', true)
+            ->latest()
+            ->paginate(8);
 
         return view('admin.posts.approved', ['posts' => $posts]);
     }
 
     public function waiting()
     {
-        $posts = Post::where('approved', false)->paginate(8);
+        $posts = Post::where('approved', false)
+            ->latest()
+            ->paginate(8);
 
         return view('admin.posts.waiting', ['posts' => $posts]);
+    }
+
+    public function approveComment(Comment $comment)
+    {
+        $comment->update(['approved' => true]);
+
+        return back();
+    }
+
+    public function waitingComments()
+    {
+        $comments = Comment::where('commentable_type', 'App\Models\Post')
+            ->where('approved', false)
+            ->latest()
+            ->paginate(20);
+
+        return view('admin.posts.comments', ['comments' => $comments]);
+    }
+
+    public function destroyComment(Comment $comment)
+    {
+        $comment->delete();
+
+        return back();
     }
 }

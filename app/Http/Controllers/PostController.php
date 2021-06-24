@@ -57,7 +57,7 @@ class PostController extends Controller
         $smallImagePath = 'storage/images/small' . $fileName;
 
         $mediumImage = Image::make($image->getRealPath());
-        $mediumImage->resize(400, 480);
+        $mediumImage->resize(500, 600);
         $mediumImage->save($destinationPath. 'medium' . $fileName);
 
         $mediumImagePath = 'storage/images/medium' . $fileName;
@@ -159,7 +159,7 @@ class PostController extends Controller
             'commentable_type' => get_class($post),
         ]);
 
-        self::success('Your comment has been successfully added!');
+        self::success('Your comment has been successfully added! It will be visible when admin approves it.');
 
         return back();
     }
