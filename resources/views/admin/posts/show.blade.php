@@ -54,7 +54,7 @@
                         <div class="box-comment">
                             <div class="comment-text">
                           <span class="username">
-                            <a href="{{ route('admin.users.show', $post->user) }}">{{ $comment->user->name }}</a>
+                            <a href="{{ route('admin.users.show', $post->user) }}">{{ $post->user->name }}</a>
                             <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
                           </span>
                             </div>
