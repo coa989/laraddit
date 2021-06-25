@@ -88,7 +88,18 @@ class PostController extends Controller
     {
         return view('posts.show', ['post' => $post]);
     }
-    // TODO: Move to controller ???
+
+    public function destroy(Post $post)
+    {
+        if (auth()->user()->cannot('delete', $post)) {
+            abort(403);
+        }
+
+        $post->delete();
+
+        return redirect()->route('index');
+    }
+// TODO: Move to controller ???
     public function like(Post $post)
     {
         if (Like::where('user_id', auth()->id())
@@ -108,17 +119,6 @@ class PostController extends Controller
         self::success('Your reaction has been recorded!');
 
         return back();
-    }
-
-    public function destroy(Post $post)
-    {
-        if (auth()->user()->cannot('delete', $post)) {
-            abort(403);
-        }
-
-        $post->delete();
-
-        return redirect()->route('index');
     }
 
     public function dislike(Post $post)
