@@ -100,6 +100,10 @@ class UserController extends Controller
 
     public function changeRole(User $user)
     {
+        if ($user->role->name === 'Admin') {
+            abort(403);
+        }
+
         if ($user->role->name === 'Guest') {
             $user->update(['role_id' => 2]);
 

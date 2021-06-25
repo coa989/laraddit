@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="box-body" style="display: block;">
-                    <img class="img-responsive pad" src="{{ asset($post->medium_image_path) }}" alt="Photo">
+                    <img class="img-responsive pad" src="{{ asset($post->image_path) }}" alt="Photo">
                 </div>
                 <div>
                     <div class="btn-group">
@@ -54,7 +54,7 @@
                         <div class="box-comment">
                             <div class="comment-text">
                           <span class="username">
-                            <a href="{{ route('admin.users.show', $post->user) }}">{{ $comment->user->name }}</a>
+                            <a href="{{ route('admin.users.show', $post->user) }}">{{ $post->user->name }}</a>
                             <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
                           </span>
                             </div>

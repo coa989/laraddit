@@ -27,7 +27,7 @@
                             <td>{{ $definition->title }}</td>
                             <td>{{ $definition->slug }}</td>
                             <td><a href="{{ route('admin.users.show', $definition->user) }}">{{ $definition->user->name }}</a></td>
-                            <td><img src="{{ asset($definition->small_image_path) }}" alt=""></td>
+                            <td><img src="{{ asset($definition->thumbnail) }}" alt=""></td>
                             <td>@foreach($definition->tags as $tag) {{ $tag->name }} @endforeach</td>
                             <td>{{ $definition->created_at->diffForHumans() }}</td>
                             <td>{{ $definition->updated_at->diffForHumans() }}</td>
