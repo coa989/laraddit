@@ -58,7 +58,7 @@ class DefinitionController extends Controller
                 if ($find_tag){
                     $definition->tags()->attach($find_tag->id);
                 } else {
-                    $new_tag = Tag::create(['name' => $tag]);
+                    $new_tag = Tag::create(['name' => strtolower($tag)]);
                     $definition->tags()->attach($new_tag->id);
                 }
             }

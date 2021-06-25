@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="box-body" style="display: block;">
-                    <img class="img-responsive pad" src="{{ asset($post->medium_image_path) }}" alt="Photo">
+                    <img class="img-responsive pad" src="{{ asset($post->image_path) }}" alt="Photo">
                 </div>
                 <div>
                     <div class="btn-group">

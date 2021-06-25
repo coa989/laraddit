@@ -27,7 +27,7 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->slug }}</td>
                             <td><a href="{{ route('admin.users.show', $post->user) }}">{{ $post->user->name }}</a></td>
-                            <td><img src="{{ asset($post->small_image_path) }}" alt=""></td>
+                            <td><img src="{{ asset($post->thumbnail) }}" alt=""></td>
                             <td>@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</td>
                             <td>{{ $post->created_at->diffForHumans() }}</td>
                             <td>{{ $post->updated_at->diffForHumans() }}</td>

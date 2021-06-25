@@ -26,15 +26,6 @@ class PostController extends Controller
         return view('home', ['posts' => $posts]);
     }
 
-    public function create()
-    {
-        if (auth()->user()->cannot('create', Post::class)) {
-            abort(403);
-        }
-
-        return view('posts.create');
-    }
-
     public function store(StorePostRequest $request)
     {
         if (auth()->user()->cannot('store', Post::class)) {
@@ -43,22 +34,24 @@ class PostController extends Controller
         }
 
         $image = $request->image;
-        $fileName = Str::random(8).'.'.$image->getClientOriginalName();
+        $fileName = Str::random(25).'.'.$image->getClientOriginalExtension();
         $destinationPath = public_path('storage/images/');
 
         Image::make($image->getRealPath())
+            ->fit(700, 900)
             ->save($destinationPath. $fileName);
 
         $imagePath = 'storage/images/' . $fileName;
 
-        $smallImage = Image::make($image->getRealPath());
-        $smallImage->resize(100, 100);
-        $smallImage->save($destinationPath. 'small' . $fileName);
-        $smallImagePath = 'storage/images/small' . $fileName;
+        Image::make($image->getRealPath())
+        ->fit(100, 100)
+        ->save($destinationPath. 'thumbnail' . $fileName);
 
-        $mediumImage = Image::make($image->getRealPath());
-        $mediumImage->resize(500, 600);
-        $mediumImage->save($destinationPath. 'medium' . $fileName);
+        $thumbnail = 'storage/images/thumbnail' . $fileName;
+
+        Image::make($image->getRealPath())
+        ->fit(500, 600)
+        ->save($destinationPath. 'medium' . $fileName);
 
         $mediumImagePath = 'storage/images/medium' . $fileName;
 
@@ -69,7 +62,7 @@ class PostController extends Controller
             'image_path' => $imagePath,
             'title' => $request->title,
             'slug' => $slug,
-            'small_image_path' => $smallImagePath,
+            'thumbnail' => $thumbnail,
             'medium_image_path' => $mediumImagePath,
         ]);
 
@@ -80,7 +73,7 @@ class PostController extends Controller
                 if ($find_tag){
                     $post->tags()->attach($find_tag->id);
                 } else {
-                    $new_tag = Tag::create(['name' => $tag]);
+                    $new_tag = Tag::create(['name' => strtolower($tag)]);
                     $post->tags()->attach($new_tag->id);
                 }
             }

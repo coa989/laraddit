@@ -59,7 +59,7 @@ Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
     Route::get('/show/{post}', [PostController::class, 'show'])->name('show');
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/create', [PostController::class, 'create'])->name('create');
+        Route::view('/create', 'posts.create')->middleware('can:create,App\Models\Post')->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');
         Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
         Route::post('/like/{post}', [PostController::class, 'like'])->name('like');
@@ -76,7 +76,7 @@ Route::group(['prefix' => 'definition', 'as' => 'definition.'], function () {
     Route::get('/show/{definition}', [DefinitionController::class, 'show'])->name('show');
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/create', [DefinitionController::class, 'create'])->name('create');
+        Route::view('/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('create');
         Route::post('/store', [DefinitionController::class, 'store'])->name('store');
         Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy');
         Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like');
