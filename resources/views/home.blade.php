@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container ">
+<div class="container">
+    @include ('partials.messages')
     @foreach($posts as $post)
         <div class="row d-flex justify-content-center">
             <div class="col-sm-8 col-sm-offset-2">
