@@ -1,3 +1,5 @@
+
+
 @extends('layouts.app')
 
 @section('content')
@@ -23,16 +25,18 @@
                             <div class="card-footer">
                                 <p>
                                     <a href="">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }} points &#183;</a>
-                                    <a href="{{ route('definition.show', $definition) }}">{{ $definition->comments->count() }} {{ Str::plural('comment', $definition->comments()->count()) }}</a>
+                                    <a href="{{ route('definition.show', $definition) }}">
+                                        <i class="fas fa-comment"></i> {{ $definition->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $definition->comments()->count()) }}</i>
+                                    </a>
                                 </p>
                                 <div class="btn-group">
                                     <form action="{{ route('definition.like', $definition) }}" method="post">
                                         @csrf
-                                        <button class="btn" type="submit"><i class="fas fa-arrow-up mr-4"> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                        <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
                                     </form>
                                     <form action="{{ route('definition.dislike', $definition) }}" method="post">
                                         @csrf
-                                        <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                        <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                                     </form>
                                 </div>
                                 <p class="mt-4">
