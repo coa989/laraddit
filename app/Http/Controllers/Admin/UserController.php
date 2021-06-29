@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Definition;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -96,6 +96,13 @@ class UserController extends Controller
         $definitions = Definition::where('user_id', $user->id)->latest()->paginate(30);
 
         return view('admin.users.definitions', ['definitions' => $definitions]);
+    }
+
+    public function comments(User $user)
+    {
+        $comments = Comment::where('user_id', $user->id)->latest()->paginate(30);
+
+        return view('admin.users.comments', ['comments' => $comments]);
     }
 
     public function changeRole(User $user)

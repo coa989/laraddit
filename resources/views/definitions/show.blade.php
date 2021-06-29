@@ -28,7 +28,7 @@
                             </form>
                             <form action="{{ route('definition.dislike', $definition) }}" method="post">
                                 @csrf
-                                <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                <button class="btn" type="submit"><i class="fa fa-thumbs-down icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                             </form>
                         </div>
                         <p class="mt-4">
@@ -65,7 +65,9 @@
                                     <span>{{ $comment->body }}</span>
                                 </div>
                                 <div class="btn-group">
-                                    <a href=""><button class="btn text-muted">Reply</button></a>
+                                    <div id="replybutton">
+                                        <a href=""><button class="btn text-muted">Reply</button></a>
+                                    </div>
                                     <form action="{{ route('definition.like.comment', $comment) }}" method="post">
                                         @csrf
                                         <button class="btn" type="submit"><i class="fas fa-thumbs-up"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
@@ -73,6 +75,20 @@
                                     <form action="{{ route('definition.dislike.comment', $comment) }}" method="post">
                                         @csrf
                                         <button class="btn" type="submit"><i class="fas fa-thumbs-down"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                    </form>
+                                </div>
+                                <div id="reply">
+                                    <form action="{{ route('definition.comment', $definition) }}" method="post">
+                                        @csrf
+                                        <div class="form-group">
+                                            <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
+                                            @error('body')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <button class="btn btn-success" type="submit">Reply</button>
                                     </form>
                                 </div>
                             </div>

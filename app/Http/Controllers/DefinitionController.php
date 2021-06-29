@@ -25,15 +25,6 @@ class DefinitionController extends Controller
         return view('definitions.index', ['definitions' => $definitions]);
     }
 
-    public function create()
-    {
-        if (auth()->user()->cannot('create', Definition::class)) {
-            abort(403);
-        }
-
-        return view('definitions.create');
-    }
-
     public function store(StoreDefinitionRequest $request)
     {
         if (auth()->user()->cannot('store', Definition::class)) {

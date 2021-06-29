@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/users', [AdminUserController::class, 'index'])->name('users');
     Route::get('/users/{user}/posts', [AdminUserController::class, 'posts'])->name('users.posts');
     Route::get('/users/{user}/definitions', [AdminUserController::class, 'definitions'])->name('users.definitions');
+    Route::get('/users/{user}/comments', [AdminUserController::class, 'comments'])->name('users.comments');
     Route::get('/users/show/{user}', [AdminUserController::class, 'show'])->name('users.show');
     Route::get('/users/authors', [AdminUserController::class, 'authors'])->name('users.authors');
     Route::get('/users/guests', [AdminUserController::class, 'guests'])->name('users.guests');
