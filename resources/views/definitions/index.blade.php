@@ -26,7 +26,7 @@
                                 <p>
                                     <a href="">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }} points &#183;</a>
                                     <a href="{{ route('definition.show', $definition) }}">
-                                        <i class="fas fa-comment"></i> {{ $definition->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $definition->comments()->count()) }}</i>
+                                        <i class="fas fa-comment"></i> {{ $definition->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $definition->comments()->count()) }}
                                     </a>
                                 </p>
                                 <div class="btn-group">
@@ -36,7 +36,7 @@
                                     </form>
                                     <form action="{{ route('definition.dislike', $definition) }}" method="post">
                                         @csrf
-                                        <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                        <button class="btn" type="submit"><i class="fa fa-thumbs-down icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                                     </form>
                                 </div>
                                 <p class="mt-4">
