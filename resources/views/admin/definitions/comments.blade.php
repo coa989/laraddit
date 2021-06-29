@@ -30,7 +30,7 @@
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ route('admin.definition.comment.approve', $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
-                                    <form action="{{ route('admin.post.comment.destroy', $comment) }}" method="post">
+                                    <form action="{{ route('admin.definition.comment.destroy', $comment) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>

@@ -52,7 +52,7 @@
         <div class="btn-group mt-4">
             <a href="{{ route('admin.users.posts', $user) }}"><button class="btn btn-primary"> Posts</button></a>
             <a href="{{ route('admin.users.definitions', $user) }}"> <button class="btn btn-secondary">Definitions</button></a>
-            <a href=""><button class="btn btn-dark"> Comments</button></a>
+            <a href="{{ route('admin.users.comments', $user) }}"><button class="btn btn-dark"> Comments</button></a>
         </div>
     </div>
 </div>
