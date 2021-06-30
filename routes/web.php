@@ -69,6 +69,7 @@ Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
         Route::post('/comment/like/{comment}', [PostController::class, 'likeComment'])->name('like.comment');
         Route::post('/comment//dislike/{comment}', [PostController::class, 'dislikeComment'])->name('dislike.comment');
         Route::get('/tag/{tag}', [PostController::class, 'tag'])->name('tag');
+        Route::get('/hot', [PostController::class, 'hot'])->name('hot');
     });
 });
 
