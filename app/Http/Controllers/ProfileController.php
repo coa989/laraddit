@@ -41,7 +41,7 @@ class ProfileController extends Controller
         } else {
             $definitionPoints = 0;
         }
-;
+
         if ($posts->first()) {
             foreach ($posts as $post) {
                 $points[] = $post
