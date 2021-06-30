@@ -11,13 +11,13 @@
                             <div class="post-heading">
                                 <div class="pull-left meta">
                                     <div class="title h6">
-                                        <a href="{{ route('user.profile', $post->user) }}"><b>{{ $post->user->name }}</b></a>
+                                        <a href="{{ route('admin.users.show', $post->user) }}"><b>{{ $post->user->name }}</b></a>
                                         <a class="text-muted time">{{ $post->created_at->diffForHumans() }}</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="post-image">
-                                <h4><a href="{{ route('post.show', $post) }}">{{ $post->title }}</a></h4>
+                                <h4>{{ $post->title }}</h4>
                                 <img src=""><img src="{{ asset($post->image_path) }}" class="image" alt="image post">
                             </div>
                             <div class="post-description">
@@ -31,6 +31,11 @@
                                             {{ Str::plural('point', $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count()) }}
                                         </button>
                                     </div>
+                                    <form action="{{ route('admin.post.destroy', $post) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
                                 </div>
                                 <p class="mt-2">
                                     Tags:
