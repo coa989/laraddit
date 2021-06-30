@@ -8,6 +8,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
+use App\Models\PostSummary;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -68,16 +69,7 @@ class PostController extends Controller
         ]);
 
         if ($request->tags) {
-            $tags = explode(',', str_replace(' ', '', $request->tags));
-            foreach ($tags as $tag) {
-                $find_tag = Tag::where('name', strtolower($tag))->first();
-                if ($find_tag){
-                    $post->tags()->attach($find_tag->id);
-                } else {
-                    $new_tag = Tag::create(['name' => strtolower($tag)]);
-                    $post->tags()->attach($new_tag->id);
-                }
-            }
+            $this->tags($post, $request);
         }
 
         self::success('Post created successfully! It will be visible when admin approves it.');
@@ -103,7 +95,11 @@ class PostController extends Controller
 
     public function hot()
     {
+        $posts = Post::whereDate('created_at', Carbon::today())
+            ->orderBy('ratings', 'DESC')
+            ->paginate(10);
 
+        return view('posts.hot', ['posts' => $posts]);
     }
 
 // TODO: Move to controller ???

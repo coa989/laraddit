@@ -2,8 +2,10 @@
 
 namespace App\Observers;
 
+use App\Models\Definition;
 use App\Models\DefinitionSummary;
 use App\Models\Like;
+use App\Models\Post;
 use App\Models\PostSummary;
 
 class LikeObserver
@@ -17,19 +19,23 @@ class LikeObserver
     public function created(Like $like)
     {
         if ($like->likeable_type === 'App\Models\Post') {
-            $summary = PostSummary::where('post_id', $like->likeable_id)->first();
+            $summary = Post::where('id', $like->likeable_id)->first();
             if ($like->is_dislike) {
                 $summary->dislikes_count++;
+                $summary->ratings--;
             } else {
                 $summary->likes_count++;
+                $summary->ratings++;
             }
             $summary->save();
         } else {
-            $summary = DefinitionSummary::where('definition_id', $like->likeable_id)->first();
+            $summary = Definition::where('id', $like->likeable_id)->first();
             if ($like->is_dislike) {
                 $summary->dislikes_count++;
+                $summary->ratings--;
             } else {
                 $summary->likes_count++;
+                $summary->ratings++;
             }
             $summary->save();
         }
