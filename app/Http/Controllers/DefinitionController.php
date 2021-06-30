@@ -8,7 +8,9 @@ use App\Http\Requests\StoreDefinitionRequest;
 use App\Models\Comment;
 use App\Models\Definition;
 use App\Models\Like;
+use App\Models\Post;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class DefinitionController extends Controller
@@ -66,6 +68,16 @@ class DefinitionController extends Controller
 
         return redirect()->route('definition.index');
     }
+
+    public function hot()
+    {
+        $definitions = Definition::whereDate('created_at', Carbon::today())
+            ->orderBy('ratings', 'DESC')
+            ->paginate(10);
+
+        return view('definitions.hot', ['definitions' => $definitions]);
+    }
+
 
     public function like(Definition $definition)
     {
