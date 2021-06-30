@@ -8,6 +8,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
+use App\Models\PostSummary;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -103,7 +104,9 @@ class PostController extends Controller
 
     public function hot()
     {
+        $posts = Post::whereDate('created_at', Carbon::today())->orderBy('ratings', 'DESC')->paginate(10);
 
+        return view('posts.hot', ['posts' => $posts]);
     }
 
 // TODO: Move to controller ???

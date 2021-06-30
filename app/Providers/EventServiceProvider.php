@@ -35,8 +35,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Post::observe(PostObserver::class);
-        Definition::observe(DefinitionObserver::class);
         Like::observe(LikeObserver::class);
         Comment::observe(CommentObserver::class);
     }
