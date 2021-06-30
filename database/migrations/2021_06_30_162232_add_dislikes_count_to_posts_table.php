@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsDislikeToLikesTable extends Migration
+class AddDislikesCountToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddIsDislikeToLikesTable extends Migration
      */
     public function up()
     {
-        Schema::table('likes', function (Blueprint $table) {
-            $table->tinyInteger('is_dislike')->default(0);
+        Schema::table('posts', function (Blueprint $table) {
+            $table->integer('dislikes_count')->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ class AddIsDislikeToLikesTable extends Migration
      */
     public function down()
     {
-        Schema::table('likes', function (Blueprint $table) {
-            $table->dropColumn('is_dislike');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('dislikes_count');
         });
     }
 }

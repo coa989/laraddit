@@ -3,7 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Comment;
+use App\Models\Definition;
 use App\Models\DefinitionSummary;
+use App\Models\Post;
 use App\Models\PostSummary;
 
 class CommentObserver
@@ -29,12 +31,14 @@ class CommentObserver
     {
         if ($comment->approved) {
             if ($comment->commentable_type === 'App\Models\Post') {
-                $summary = PostSummary::where('post_id', $comment->commentable_id)->first();
+                $summary = Post::where('id', $comment->commentable_id)->first();
                 $summary->comments_count++;
+                $summary->ratings++;
                 $summary->save();
             } else {
-                $summary = DefinitionSummary::where('definition_id', $comment->commentable_id)->first();
+                $summary = Definition::where('id', $comment->commentable_id)->first();
                 $summary->comments_count++;
+                $summary->ratings++;
                 $summary->save();
             }
         }
