@@ -5,6 +5,18 @@
 @section('content')
     <div class="container">
         @include ('partials.messages')
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group mb-3">
+                            <a href="{{ route('definition.hot') }}"><button class="btn btn-lg btn-outline-secondary mr-1">Hot</button></a>
+                            <a href=""><button class="btn btn-lg btn-outline-secondary">Fresh</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 @if(!$definitions->first())

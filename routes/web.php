@@ -87,6 +87,7 @@ Route::group(['prefix' => 'definition', 'as' => 'definition.'], function () {
         Route::post('/comment/like/{comment}', [DefinitionController::class, 'likeComment'])->name('like.comment');
         Route::post('/comment/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.comment');
         Route::get('/tag/{tag}', [DefinitionController::class, 'tag'])->name('tag');
+        Route::get('/hot', [DefinitionController::class, 'hot'])->name('hot');
     });
 });
 
