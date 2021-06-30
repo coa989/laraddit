@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -19,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::where('approved', true)
-            ->with('user', 'tags')
+            ->with('user', 'tags', 'comments', 'likes')
             ->latest()
             ->paginate(10);
 
@@ -99,6 +100,12 @@ class PostController extends Controller
 
         return redirect()->route('index');
     }
+
+    public function hot()
+    {
+
+    }
+
 // TODO: Move to controller ???
     public function like(Post $post)
     {
