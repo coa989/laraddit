@@ -72,9 +72,7 @@
                                     <span>{{ $comment->body }}</span>
                                 </div>
                                 <div class="btn-group">
-                                    <div id="replybutton">
-                                        <a href=""><button class="btn text-muted">Reply</button></a>
-                                    </div>
+
                                     <form action="{{ route('definition.like.comment', $comment) }}" method="post">
                                         @csrf
                                         <button class="btn" type="submit"><i class="fas fa-thumbs-up"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
@@ -84,19 +82,24 @@
                                         <button class="btn" type="submit"><i class="fas fa-thumbs-down"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                                     </form>
                                 </div>
-                                <div id="reply">
-                                    <form action="{{ route('definition.comment', $definition) }}" method="post">
-                                        @csrf
-                                        <div class="form-group">
-                                            <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
-                                            @error('body')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
+                                <div class="container">
+                                    <div class="replybutton btn4 like mb-3">
+                                        <button class="btn btn-sm text-muted">Reply</button>
+                                    </div>
+                                    <div class="col-lg-12 reply" style="display: none">
+                                        <form action="{{ route('definition.comment', $definition) }}" method="post">
+                                            @csrf
+                                            <div class="form-group">
+                                                <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
+                                                @error('body')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
-                                            @enderror
-                                        </div>
-                                        <button class="btn btn-success" type="submit">Reply</button>
-                                    </form>
+                                            <button class="btn btn-success" type="submit">Reply</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -105,4 +108,12 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.replybutton').click(function() {
+                $(this).next('.reply').toggle();
+            });
+        });
+    </script>
 @endsection
