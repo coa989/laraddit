@@ -7,7 +7,7 @@
             <div class="col-md-8">
                 <div class="card my-4">
                     <div class="card-header">
-                        <a href="{{ route('admin.definition.show', $definition) }}"><h4>{{ $definition->title }}</h4></a>
+                        <a href="{{ route('admin.definitions.show', $definition) }}"><h4>{{ $definition->title }}</h4></a>
                         <a href="{{ route('admin.users.show', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
                         <a>{{ $definition->created_at->diffForHumans() }}</a>
                     </div>
@@ -24,9 +24,9 @@
                         </div>
                         <div class="btn btn-group-sm">
                             @if(!$definition->approved)
-                                <a href="{{ route('admin.definition.approve', $definition) }}"><button class="btn btn-sm btn-success btn-block">Approve</button></a>
+                                <a href="{{ route('admin.definitions.approve', $definition) }}"><button class="btn btn-sm btn-success btn-block">Approve</button></a>
                             @endif
-                            <form action="{{ route('admin.definition.destroy', $definition) }}" method="post">
+                            <form action="{{ route('admin.definitions.destroy', $definition) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-danger btn-block" type="submit">Delete</button>
@@ -60,9 +60,9 @@
                                 </div>
                                 <div class="btn-group">
                                     @if(!$comment->approved)
-                                        <a href="{{ route('admin.definition.comment.approve', $comment) }}"><button class="btn btn-success btn-sm btn-block">Approve</button></a>
+                                        <a href="{{ route('admin.definitions.comment.approve', $comment) }}"><button class="btn btn-success btn-sm btn-block">Approve</button></a>
                                     @endif
-                                    <form action="{{ route('admin.post.comment.destroy', $comment) }}" method="post">
+                                    <form action="{{ route('admin.posts.comment.destroy', $comment) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger btn-block">Delete</button>

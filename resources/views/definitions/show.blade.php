@@ -30,6 +30,13 @@
                                 @csrf
                                 <button class="btn" type="submit"><i class="fa fa-thumbs-down icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                             </form>
+                            @can('delete', $definition)
+                                <form action="{{ route('definition.destroy', $definition) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            @endcan
                         </div>
                         <p class="mt-4">
                             Tags:

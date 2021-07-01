@@ -26,11 +26,11 @@
                             <td>{{ $comment->body }}</td>
                             <td>{{ $comment->created_at->diffForHumans() }}</td>
                             <td>{{ $comment->updated_at->diffForHumans() }}</td>
-                            <td><a href="{{ route('admin.definition.show', $comment->commentable_id) }}"><button class="btn btn-primary btn-sm">View</button></a></td>
+                            <td><a href="{{ route('admin.definitions.show', $comment->commentable_id) }}"><button class="btn btn-primary btn-sm">View</button></a></td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.definition.comment.approve', $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
-                                    <form action="{{ route('admin.definition.comment.destroy', $comment) }}" method="post">
+                                    <a href="{{ route('admin.definitions.comment.approve', $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                    <form action="{{ route('admin.definitions.comment.destroy', $comment) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>

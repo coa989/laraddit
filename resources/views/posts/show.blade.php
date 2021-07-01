@@ -35,6 +35,13 @@
                                         <button class="btn">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }}
                                             {{ Str::plural('point', $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count()) }}
                                         </button>
+                                        @can('delete', $post)
+                                            <form action="{{ route('post.destroy', $post) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        @endcan
                                     </div>
                                 </div>
                                 <p class="mt-2">

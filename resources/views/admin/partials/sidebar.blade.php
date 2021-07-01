@@ -27,7 +27,7 @@
                 <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.posts') }}"><span class="c-sidebar-nav-icon"></span> All</a></li>
                 <li class="c-sidebar-nav-item "><a class="c-sidebar-nav-link" href="{{ route('admin.posts.approved') }}"><span class="c-sidebar-nav-icon"></span> Approved</a></li>
                 <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.posts.waiting') }}"><span class="c-sidebar-nav-icon"></span> Waiting Approval</a></li>
-                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.post.comments.waiting') }}"><span class="c-sidebar-nav-icon"></span> Comments Waiting Approval</a></li>
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{{ route('admin.posts.comments.waiting') }}"><span class="c-sidebar-nav-icon"></span> Comments Waiting Approval</a></li>
             </ul>
         </li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">

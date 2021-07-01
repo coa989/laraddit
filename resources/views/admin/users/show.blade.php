@@ -28,8 +28,8 @@
 {{--                    </div>--}}
                 </div>
                 <div class="btn-group">
-                    <a href="{{ route('admin.change-role.user', $user) }}"><button class="btn btn-success btn-sm mr-2"> Change Role</button></a>
-                    <form action="{{ route('admin.user.destroy', $user) }}" method="post">
+                    <a href="{{ route('admin.users.change-role', $user) }}"><button class="btn btn-success btn-sm mr-2"> Change Role</button></a>
+                    <form action="{{ route('admin.users.destroy', $user) }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm"> Delete</button>

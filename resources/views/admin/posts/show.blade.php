@@ -33,9 +33,9 @@
                                     </div>
                                     <div class="btn-group">
                                         @if(!$post->approved)
-                                            <a href="{{ route('admin.post.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                            <a href="{{ route('admin.posts.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                         @endif
-                                        <form action="{{ route('admin.post.destroy', $post) }}" method="post">
+                                        <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-danger">Delete</button>
@@ -68,9 +68,9 @@
                                                 <button class="btn"><i class="fas fa-thumbs-up"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
                                                 <button class="btn"><i class="fas fa-thumbs-down"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                                                 @if(!$comment->approved)
-                                                    <a href="{{ route('admin.post.comment.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
+                                                    <a href="{{ route('admin.posts.comment.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
                                                 @endif
-                                                <form action="{{ route('admin.post.comment.destroy', $comment) }}" method="post">
+                                                <form action="{{ route('admin.posts.comment.destroy', $comment) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-sm btn-danger">Delete</button>

@@ -19,7 +19,7 @@ class DefinitionController extends Controller
     public function index()
     {
         $definitions = Definition::where('approved', true)
-            ->with('user', 'tags')
+            ->with('user', 'tags', 'comments', 'likes')
             ->latest()
             ->paginate(15);
 

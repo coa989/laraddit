@@ -33,8 +33,8 @@
                             <td>{{ $definition->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.definition.show', $definition) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
-                                    <form action="{{ route('admin.definition.destroy', $definition) }}" method="post">
+                                    <a href="{{ route('admin.definitions.show', $definition) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
+                                    <form action="{{ route('admin.definitions.destroy', $definition) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>
