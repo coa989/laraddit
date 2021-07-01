@@ -70,16 +70,14 @@
                                         <div class="box-footer box-comments mt-3" style="display: block;">
                                             <div class="box-comment">
                                                 <div class="comment-text">
-                                                    <span class="username">
-                                                        <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
-                                                    </span>
+                                        <span class="username">
+                                            <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
+                                        </span>
                                                     <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
-                                                  </span>
                                                 </div>
                                                 <span>{{ $comment->body }}</span>
                                             </div>
                                             <div class="btn-group">
-                                                <a href=""><button class="btn text-muted">Reply</button></a>
                                                 <form action="{{ route('post.like.comment', $comment) }}" method="post">
                                                     @csrf
                                                     <button class="btn" type="submit"><i class="fas fa-thumbs-up"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
@@ -88,6 +86,71 @@
                                                     @csrf
                                                     <button class="btn" type="submit"><i class="fas fa-thumbs-down"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
                                                 </form>
+                                            </div>
+                                            <div class="container">
+                                                <div class="replybutton btn4 like mb-3">
+                                                    <button class="btn btn-sm text-muted">Reply</button>
+                                                </div>
+                                                <div class="col-lg-12 reply" style="display: none">
+                                                    <form action="{{ route('post.comment.reply', $post) }}" method="post">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <input type="hidden" value="{{ $comment->id }}" name="parentId">
+                                                            <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
+                                                            @error('body')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+                                                        <button class="btn btn-success" type="submit">Reply</button>
+                                                    </form>
+                                                </div>
+                                                @if($comment->replies->first())
+                                                    @foreach($comment->replies as $reply)
+                                                        <div class="box-footer box-comments mt-3" style="display: block;">
+                                                            <div class="box-comment">
+                                                                <div class="comment-text">
+                                                        <span class="username">
+                                                            <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                        </span>
+                                                                    <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
+                                                                </div>
+                                                                <span>{{ $reply->body }}</span>
+                                                            </div>
+                                                            <div class="btn-group">
+                                                                <form action="{{ route('post.like.comment', $reply) }}" method="post">
+                                                                    @csrf
+                                                                    <button class="btn" type="submit"><i class="fas fa-thumbs-up"> {{ $reply->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                                                </form>
+                                                                <form action="{{ route('post.dislike.comment', $reply) }}" method="post">
+                                                                    @csrf
+                                                                    <button class="btn" type="submit"><i class="fas fa-thumbs-down"> {{ $reply->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                                                </form>
+                                                            </div>
+                                                            {{--                                                <div class="container">--}}
+                                                            {{--                                                    <div class="replybutton btn4 like mb-3">--}}
+                                                            {{--                                                        <button class="btn btn-sm text-muted">Reply</button>--}}
+                                                            {{--                                                    </div>--}}
+                                                            {{--                                                    <div class="col-lg-12 reply" style="display: none">--}}
+                                                            {{--                                                        <form action="{{ route('post.comment.reply', $post) }}" method="post">--}}
+                                                            {{--                                                            @csrf--}}
+                                                            {{--                                                            <div class="form-group">--}}
+                                                            {{--                                                                <input type="hidden" value="{{ $reply->id }}" name="parentId">--}}
+                                                            {{--                                                                <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>--}}
+                                                            {{--                                                                @error('body')--}}
+                                                            {{--                                                                <div class="invalid-feedback">--}}
+                                                            {{--                                                                    {{ $message }}--}}
+                                                            {{--                                                                </div>--}}
+                                                            {{--                                                                @enderror--}}
+                                                            {{--                                                            </div>--}}
+                                                            {{--                                                            <button class="btn btn-success" type="submit">Reply</button>--}}
+                                                            {{--                                                        </form>--}}
+                                                            {{--                                                    </div>--}}
+                                                            {{--                                                </div>--}}
+                                                        </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                     @endforeach
@@ -99,4 +162,12 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.replybutton').click(function() {
+                $(this).next('.reply').toggle();
+            });
+        });
+    </script>
 @endsection

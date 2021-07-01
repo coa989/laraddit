@@ -6,6 +6,7 @@ use App\Components\FlashMessages;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
+use App\Models\Definition;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
@@ -155,6 +156,21 @@ class PostController extends Controller
         ]);
 
         self::success('Your comment has been successfully added! It will be visible when admin approves it.');
+
+        return back();
+    }
+
+    public function commentReply(StoreCommentRequest $request, Post $post)
+    {
+        Comment::create([
+            'user_id' => auth()->id(),
+            'commentable_id' => $post->id,
+            'body' => $request->body,
+            'commentable_type' => get_class($post),
+            'parent_id' => $request->parentId
+        ]);
+
+        self::success('Your reply has been successfully added! It will be visible when admin approves it.');
 
         return back();
     }

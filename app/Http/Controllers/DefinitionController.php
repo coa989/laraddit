@@ -134,6 +134,21 @@ class DefinitionController extends Controller
         return back();
     }
 
+    public function commentReply(StoreCommentRequest $request, Definition $definition)
+    {
+        Comment::create([
+            'user_id' => auth()->id(),
+            'commentable_id' => $definition->id,
+            'body' => $request->body,
+            'commentable_type' => get_class($definition),
+            'parent_id' => $request->parentId
+        ]);
+
+        self::success('Your reply has been successfully added! It will be visible when admin approves it.');
+
+        return back();
+    }
+
     public function likeComment(Comment $comment)
     {
         if (Like::where('user_id', auth()->id())

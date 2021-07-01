@@ -66,6 +66,7 @@ Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
         Route::post('/like/{post}', [PostController::class, 'like'])->name('like');
         Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike');
         Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment');
+        Route::post('/comment/reply/{post}', [PostController::class, 'commentReply'])->name('comment.reply');
         Route::post('/comment/like/{comment}', [PostController::class, 'likeComment'])->name('like.comment');
         Route::post('/comment//dislike/{comment}', [PostController::class, 'dislikeComment'])->name('dislike.comment');
         Route::get('/tag/{tag}', [PostController::class, 'tag'])->name('tag');
@@ -84,6 +85,7 @@ Route::group(['prefix' => 'definition', 'as' => 'definition.'], function () {
         Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like');
         Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike');
         Route::post('/comment/{definition}', [DefinitionController::class, 'comment'])->name('comment');
+        Route::post('/comment/reply/{definition}', [DefinitionController::class, 'commentReply'])->name('comment.reply');
         Route::post('/comment/like/{comment}', [DefinitionController::class, 'likeComment'])->name('like.comment');
         Route::post('/comment/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.comment');
         Route::get('/tag/{tag}', [DefinitionController::class, 'tag'])->name('tag');
