@@ -31,11 +31,16 @@
                                             {{ Str::plural('point', $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count()) }}
                                         </button>
                                     </div>
-                                    <form action="{{ route('admin.post.destroy', $post) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                    </form>
+                                    <div class="btn-group">
+                                        @if(!$post->approved)
+                                            <a href="{{ route('admin.post.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                        @endif
+                                        <form action="{{ route('admin.post.destroy', $post) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </div>
                                 </div>
                                 <p class="mt-2">
                                     Tags:
