@@ -28,6 +28,7 @@
                             @endif
                             <form action="{{ route('admin.definition.destroy', $definition) }}" method="post">
                                 @csrf
+                                @method('DELETE')
                                 <button class="btn btn-sm btn-danger btn-block" type="submit">Delete</button>
                             </form>
                         </div>
