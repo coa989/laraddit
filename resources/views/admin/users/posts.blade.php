@@ -34,10 +34,10 @@
                             <td>
                                 <div class="btn-group">
                                     @if(!$post->approved)
-                                        <a href="{{ route('admin.post.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                        <a href="{{ route('admin.posts.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                     @endif
-                                    <a href="{{ route('admin.post.show', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
-                                    <form action="{{ route('admin.post.destroy', $post) }}" method="post">
+                                    <a href="{{ route('admin.posts.show', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
+                                    <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>

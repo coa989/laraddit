@@ -19,7 +19,7 @@ class DefinitionController extends Controller
     public function index()
     {
         $definitions = Definition::where('approved', true)
-            ->with('user', 'tags')
+            ->with('user', 'tags', 'comments', 'likes')
             ->latest()
             ->paginate(15);
 
@@ -130,6 +130,21 @@ class DefinitionController extends Controller
         ]);
 
         self::success('Your comment has been successfully added! It will be visible when admin approves it.');
+
+        return back();
+    }
+
+    public function commentReply(StoreCommentRequest $request, Definition $definition)
+    {
+        Comment::create([
+            'user_id' => auth()->id(),
+            'commentable_id' => $definition->id,
+            'body' => $request->body,
+            'commentable_type' => get_class($definition),
+            'parent_id' => $request->parentId
+        ]);
+
+        self::success('Your reply has been successfully added! It will be visible when admin approves it.');
 
         return back();
     }

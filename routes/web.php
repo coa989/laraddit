@@ -27,22 +27,22 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/posts', [AdminPostController::class, 'index'])->name('posts');
     Route::get('/posts/approved', [AdminPostController::class, 'approved'])->name('posts.approved');
     Route::get('/posts/waiting', [AdminPostController::class, 'waiting'])->name('posts.waiting');
-    Route::get('/post/approve/{post}', [AdminPostController::class, 'approve'])->name('post.approve');
-    Route::get('/post/show/{post}', [AdminPostController::class, 'show'])->name('post.show');
-    Route::delete('/post/destroy/{post}', [AdminPostController::class, 'destroy'])->name('post.destroy');
-    Route::get('/post/comment/{comment}/approve', [AdminPostController::class, 'approveComment'])->name('post.comment.approve');
-    Route::get('/post/comments/waiting', [AdminPostController::class, 'waitingComments'])->name('post.comments.waiting');
-    Route::delete('/post/comments/{comment}/destroy', [AdminPostController::class, 'destroyComment'])->name('post.comment.destroy');
+    Route::get('/posts/approve/{post}', [AdminPostController::class, 'approve'])->name('posts.approve');
+    Route::get('/posts/show/{post}', [AdminPostController::class, 'show'])->name('posts.show');
+    Route::delete('/posts/destroy/{post}', [AdminPostController::class, 'destroy'])->name('posts.destroy');
+    Route::get('/posts/comment/{comment}/approve', [AdminPostController::class, 'approveComment'])->name('posts.comment.approve');
+    Route::get('/posts/comments/waiting', [AdminPostController::class, 'waitingComments'])->name('posts.comments.waiting');
+    Route::delete('/posts/comments/{comment}/destroy', [AdminPostController::class, 'destroyComment'])->name('posts.comment.destroy');
 
     Route::get('/definitions', [AdminDefinitionController::class, 'index'])->name('definitions');
     Route::get('/definitions/approved', [AdminDefinitionController::class, 'approved'])->name('definitions.approved');
     Route::get('/definitions/waiting', [AdminDefinitionController::class, 'waiting'])->name('definitions.waiting');
-    Route::get('/definition/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('definition.approve');
-    Route::get('/definition/show/{definition}', [AdminDefinitionController::class, 'show'])->name('definition.show');
-    Route::delete('/definition/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('definition.destroy');
-    Route::get('/definition/comment/{comment}/approve', [AdminDefinitionController::class, 'approveComment'])->name('definition.comment.approve');
-    Route::get('/definition/comments/waiting', [AdminDefinitionController::class, 'waitingComments'])->name('definitions.comments.waiting');
-    Route::delete('/definition/comments/{comment}/destroy', [AdminDefinitionController::class, 'destroyComment'])->name('definition.comment.destroy');
+    Route::get('/definitions/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('definitions.approve');
+    Route::get('/definitions/show/{definition}', [AdminDefinitionController::class, 'show'])->name('definitions.show');
+    Route::delete('/definitions/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('definitions.destroy');
+    Route::get('/definitions/comment/{comment}/approve', [AdminDefinitionController::class, 'approveComment'])->name('definitions.comment.approve');
+    Route::get('/definitions/comments/waiting', [AdminDefinitionController::class, 'waitingComments'])->name('definitions.comments.waiting');
+    Route::delete('/definitions/comments/{comment}/destroy', [AdminDefinitionController::class, 'destroyComment'])->name('definitions.comment.destroy');
 
     Route::get('/users', [AdminUserController::class, 'index'])->name('users');
     Route::get('/users/{user}/posts', [AdminUserController::class, 'posts'])->name('users.posts');
@@ -51,8 +51,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/users/show/{user}', [AdminUserController::class, 'show'])->name('users.show');
     Route::get('/users/authors', [AdminUserController::class, 'authors'])->name('users.authors');
     Route::get('/users/guests', [AdminUserController::class, 'guests'])->name('users.guests');
-    Route::delete('/user/destroy/{user}', [AdminUserController::class, 'destroy'])->name('user.destroy');
-    Route::get('/user/change-role{user}', [AdminUserController::class, 'changeRole'])->name('change-role.user');
+    Route::delete('/users/destroy/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users/change-role{user}', [AdminUserController::class, 'changeRole'])->name('users.change-role');
 });
 
 Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
@@ -66,6 +66,7 @@ Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
         Route::post('/like/{post}', [PostController::class, 'like'])->name('like');
         Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike');
         Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment');
+        Route::post('/comment/reply/{post}', [PostController::class, 'commentReply'])->name('comment.reply');
         Route::post('/comment/like/{comment}', [PostController::class, 'likeComment'])->name('like.comment');
         Route::post('/comment//dislike/{comment}', [PostController::class, 'dislikeComment'])->name('dislike.comment');
         Route::get('/tag/{tag}', [PostController::class, 'tag'])->name('tag');
@@ -84,6 +85,7 @@ Route::group(['prefix' => 'definition', 'as' => 'definition.'], function () {
         Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like');
         Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike');
         Route::post('/comment/{definition}', [DefinitionController::class, 'comment'])->name('comment');
+        Route::post('/comment/reply/{definition}', [DefinitionController::class, 'commentReply'])->name('comment.reply');
         Route::post('/comment/like/{comment}', [DefinitionController::class, 'likeComment'])->name('like.comment');
         Route::post('/comment/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.comment');
         Route::get('/tag/{tag}', [DefinitionController::class, 'tag'])->name('tag');
