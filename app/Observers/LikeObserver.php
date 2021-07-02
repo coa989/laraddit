@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\Comment;
 use App\Models\Definition;
 use App\Models\DefinitionSummary;
 use App\Models\Like;
@@ -28,7 +29,7 @@ class LikeObserver
                 $summary->ratings++;
             }
             $summary->save();
-        } else {
+        } elseif($like->likeable_type === 'App\Models\Definition') {
             $summary = Definition::where('id', $like->likeable_id)->first();
             if ($like->is_dislike) {
                 $summary->dislikes_count++;
@@ -36,6 +37,14 @@ class LikeObserver
             } else {
                 $summary->likes_count++;
                 $summary->ratings++;
+            }
+            $summary->save();
+        } else {
+            $summary = Comment::where('id', $like->likeable_id)->first();
+            if ($like->is_dislike) {
+                $summary->dislikes_count++;
+            } else {
+                $summary->likes_count++;
             }
             $summary->save();
         }
