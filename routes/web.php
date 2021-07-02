@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/users/change-role{user}', [AdminUserController::class, 'changeRole'])->name('users.change-role');
 });
 
-Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
+Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
     Route::get('/home', [PostController::class, 'index'])->name('index');
     Route::get('/show/{post}', [PostController::class, 'show'])->name('show');
 
@@ -65,17 +65,17 @@ Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
         Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
         Route::post('/like/{post}', [PostController::class, 'like'])->name('like');
         Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike');
-        Route::post('/comment/{post}', [PostController::class, 'comment'])->name('comment');
-        Route::post('/comment/reply/{post}', [PostController::class, 'commentReply'])->name('comment.reply');
-        Route::post('/comment/like/{comment}', [PostController::class, 'likeComment'])->name('like.comment');
-        Route::post('/comment//dislike/{comment}', [PostController::class, 'dislikeComment'])->name('dislike.comment');
-        Route::get('/tag/{tag}', [PostController::class, 'tag'])->name('tag');
+        Route::post('/comments/{post}', [PostController::class, 'comment'])->name('comments');
+        Route::post('/comments/reply/{post}', [PostController::class, 'commentReply'])->name('comments.reply');
+        Route::post('/comments/like/{comment}', [PostController::class, 'likeComment'])->name('comments.like');
+        Route::post('/comments/dislike/{comment}', [PostController::class, 'dislikeComment'])->name('comments.dislike');
+        Route::get('/tags/{tag}', [PostController::class, 'tag'])->name('tags');
         Route::get('/hot', [PostController::class, 'hot'])->name('hot');
     });
 });
 
-Route::group(['prefix' => 'definition', 'as' => 'definition.'], function () {
-    Route::get('/definitions', [DefinitionController::class, 'index'])->name('index');
+Route::group(['prefix' => 'definitions', 'as' => 'definitions.'], function () {
+    Route::get('/', [DefinitionController::class, 'index'])->name('index');
     Route::get('/show/{definition}', [DefinitionController::class, 'show'])->name('show');
 
     Route::group(['middleware' => 'auth'], function () {
@@ -84,11 +84,11 @@ Route::group(['prefix' => 'definition', 'as' => 'definition.'], function () {
         Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy');
         Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like');
         Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike');
-        Route::post('/comment/{definition}', [DefinitionController::class, 'comment'])->name('comment');
-        Route::post('/comment/reply/{definition}', [DefinitionController::class, 'commentReply'])->name('comment.reply');
-        Route::post('/comment/like/{comment}', [DefinitionController::class, 'likeComment'])->name('like.comment');
-        Route::post('/comment/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('dislike.comment');
-        Route::get('/tag/{tag}', [DefinitionController::class, 'tag'])->name('tag');
+        Route::post('/comments/{definition}', [DefinitionController::class, 'comment'])->name('comments');
+        Route::post('/comments/reply/{definition}', [DefinitionController::class, 'commentReply'])->name('comments.reply');
+        Route::post('/comments/like/{comment}', [DefinitionController::class, 'likeComment'])->name('comments.like');
+        Route::post('/comments/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('comments.dislike');
+        Route::get('/tags/{tag}', [DefinitionController::class, 'tag'])->name('tags');
         Route::get('/hot', [DefinitionController::class, 'hot'])->name('hot');
     });
 });

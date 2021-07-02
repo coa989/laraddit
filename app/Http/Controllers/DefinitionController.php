@@ -49,7 +49,7 @@ class DefinitionController extends Controller
 
         self::success('Definition created successfully! It will be visible when admin approves it.');
 
-        return redirect()->route('definition.index');
+        return redirect()->route('definitions.index');
     }
 
     public function show(Definition $definition)
@@ -65,7 +65,7 @@ class DefinitionController extends Controller
 
         $definition->delete();
 
-        return redirect()->route('definition.index');
+        return redirect()->route('definitions.index');
     }
 
     public function hot()
