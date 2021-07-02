@@ -70,7 +70,7 @@ class DefinitionController extends Controller
 
     public function hot()
     {
-        $definitions = Definition::whereDate('created_at', Carbon::today())
+        $definitions = Definition::where('approved', true)->whereDate('created_at', Carbon::today())
             ->orderBy('ratings', 'DESC')
             ->paginate(10);
 

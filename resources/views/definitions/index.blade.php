@@ -11,7 +11,7 @@
                     <div class="col-sm-12">
                         <div class="btn-group mb-3">
                             <a href="{{ route('definitions.hot') }}"><button class="btn btn-lg btn-outline-secondary mr-1">Hot</button></a>
-                            <a href=""><button class="btn btn-lg btn-outline-secondary">Fresh</button></a>
+                            <a href="{{ route('definitions.index') }}"><button class="btn btn-lg btn-outline-secondary">Fresh</button></a>
                         </div>
                     </div>
                 </div>

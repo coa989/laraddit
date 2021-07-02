@@ -6,7 +6,6 @@ use App\Components\FlashMessages;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
-use App\Models\Definition;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
@@ -95,7 +94,7 @@ class PostController extends Controller
 
     public function hot()
     {
-        $posts = Post::whereDate('created_at', Carbon::today())
+        $posts = Post::where('approved', true)->whereDate('created_at', Carbon::today())
             ->orderBy('ratings', 'DESC')
             ->paginate(10);
 
