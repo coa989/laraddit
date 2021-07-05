@@ -4,9 +4,7 @@ namespace App\Observers;
 
 use App\Models\Comment;
 use App\Models\Definition;
-use App\Models\DefinitionSummary;
 use App\Models\Post;
-use App\Models\PostSummary;
 
 class CommentObserver
 {
@@ -29,7 +27,7 @@ class CommentObserver
      */
     public function updated(Comment $comment)
     {
-        if ($comment->approved) {
+        if ($comment->isDirty('approved')) {
             if ($comment->commentable_type === 'App\Models\Post') {
                 $summary = Post::where('id', $comment->commentable_id)->first();
                 $summary->comments_count++;
