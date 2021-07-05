@@ -55,13 +55,6 @@ class DefinitionController extends Controller
         return view('admin.definitions.waiting', ['definitions' => $definitions]);
     }
 
-    public function approveComment(Comment $comment)
-    {
-        $comment->update(['approved' => true]);
-
-        return back();
-    }
-
     public function waitingComments()
     {
         $comments = Comment::where('commentable_type', 'App\Models\Definition')
@@ -72,10 +65,4 @@ class DefinitionController extends Controller
         return view('admin.definitions.comments', ['comments' => $comments]);
     }
 
-    public function destroyComment(Comment $comment)
-    {
-        $comment->delete();
-
-        return back();
-    }
 }

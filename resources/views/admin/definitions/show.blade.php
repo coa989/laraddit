@@ -60,9 +60,9 @@
                                 </div>
                                 <div class="btn-group">
                                     @if(!$comment->approved)
-                                        <a href="{{ route('admin.definitions.comment.approve', $comment) }}"><button class="btn btn-success btn-sm btn-block">Approve</button></a>
+                                        <a href="{{ route('admin.comments.approve', $comment) }}"><button class="btn btn-success btn-sm btn-block">Approve</button></a>
                                     @endif
-                                    <form action="{{ route('admin.posts.comment.destroy', $comment) }}" method="post">
+                                    <form action="{{ route('admin.comments.destroy', $comment) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger btn-block">Delete</button>

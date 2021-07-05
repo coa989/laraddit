@@ -29,8 +29,8 @@
                             <td><a href="{{ route('admin.definitions.show', $comment->commentable_id) }}"><button class="btn btn-primary btn-sm">View</button></a></td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.definitions.comment.approve', $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
-                                    <form action="{{ route('admin.definitions.comment.destroy', $comment) }}" method="post">
+                                    <a href="{{ route('admin.comments.approve', $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                    <form action="{{ route('admin.comments.destroy', $comment) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>

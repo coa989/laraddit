@@ -68,9 +68,9 @@
                                                 <button class="btn"><i class="far fa-thumbs-up"></i> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                                 <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                                 @if(!$comment->approved)
-                                                    <a href="{{ route('admin.posts.comment.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
+                                                    <a href="{{ route('admin.comments.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
                                                 @endif
-                                                <form action="{{ route('admin.posts.comment.destroy', $comment) }}" method="post">
+                                                <form action="{{ route('admin.comments.destroy', $comment) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-sm btn-danger">Delete</button>

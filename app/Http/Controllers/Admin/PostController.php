@@ -54,13 +54,6 @@ class PostController extends Controller
         return view('admin.posts.waiting', ['posts' => $posts]);
     }
 
-    public function approveComment(Comment $comment)
-    {
-        $comment->update(['approved' => true]);
-
-        return back();
-    }
-
     public function waitingComments()
     {
         $comments = Comment::where('commentable_type', 'App\Models\Post')
@@ -69,12 +62,5 @@ class PostController extends Controller
             ->paginate(20);
 
         return view('admin.posts.comments', ['comments' => $comments]);
-    }
-
-    public function destroyComment(Comment $comment)
-    {
-        $comment->delete();
-
-        return back();
     }
 }
