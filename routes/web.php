@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DefinitionController as AdminDefinitionController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -65,8 +66,7 @@ Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
         Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
         Route::post('/like/{post}', [PostController::class, 'like'])->name('like');
         Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike');
-        Route::post('/comments/{post}', [PostController::class, 'comment'])->name('comments');
-        Route::post('/comments/reply/{post}', [PostController::class, 'commentReply'])->name('comments.reply');
+//        Route::post('/comments/reply/{post}', [PostController::class, 'commentReply'])->name('comments.reply');
         Route::post('/comments/like/{comment}', [PostController::class, 'likeComment'])->name('comments.like');
         Route::post('/comments/dislike/{comment}', [PostController::class, 'dislikeComment'])->name('comments.dislike');
         Route::get('/tags/{tag}', [PostController::class, 'tag'])->name('tags');
@@ -84,13 +84,16 @@ Route::group(['prefix' => 'definitions', 'as' => 'definitions.'], function () {
         Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy');
         Route::post('/like/{definition}', [DefinitionController::class, 'like'])->name('like');
         Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike');
-        Route::post('/comments/{definition}', [DefinitionController::class, 'comment'])->name('comments');
-        Route::post('/comments/reply/{definition}', [DefinitionController::class, 'commentReply'])->name('comments.reply');
         Route::post('/comments/like/{comment}', [DefinitionController::class, 'likeComment'])->name('comments.like');
         Route::post('/comments/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('comments.dislike');
         Route::get('/tags/{tag}', [DefinitionController::class, 'tag'])->name('tags');
         Route::get('/hot', [DefinitionController::class, 'hot'])->name('hot');
     });
+});
+
+Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
+    Route::post('/store/{model}', [CommentController::class, 'store'])->name('store');
+    Route::post('/reply/{model}', [CommentController::class, 'reply'])->name('reply');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function () {
