@@ -8,7 +8,6 @@
             <h6 class="heading">{{ $user->email }}</h6>
             <div class="time d-flex flex-row align-items-center justify-content-between mt-3">
                 <div class="d-flex align-items-center">
-                    <i class="fa fa-clock-o clock"></i>
                     <span class="hour ">Member since: {{ $user->created_at->toFormattedDateString() }}</span>
                 </div>
             </div>

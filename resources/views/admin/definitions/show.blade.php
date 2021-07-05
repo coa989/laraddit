@@ -19,8 +19,8 @@
                             <a href="">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }} {{ Str::plural('point', $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count()) }}</a>
                         </p>
                         <div class="btn-group">
-                            <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
-                            <button class="btn" type="submit"><i class="fa fa-thumbs-down icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</button>
                         </div>
                         <div class="btn btn-group-sm">
                             @if(!$definition->approved)
@@ -55,8 +55,8 @@
                                     <span>{{ $comment->body }}</span>
                                 </div>
                                 <div class="btn-group-sm">
-                                    <button class="btn"><i class="fas fa-thumbs-up"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
-                                    <button class="btn"><i class="fas fa-thumbs-down"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                    <button class="btn"><i class="far fa-thumbs-up"></i> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                                    <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                 </div>
                                 <div class="btn-group">
                                     @if(!$comment->approved)

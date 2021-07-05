@@ -24,11 +24,11 @@
                         <div class="btn-group">
                             <form action="{{ route('definitions.like', $definition) }}" method="post">
                                 @csrf
-                                <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</button>
                             </form>
                             <form action="{{ route('definitions.dislike', $definition) }}" method="post">
                                 @csrf
-                                <button class="btn" type="submit"><i class="fa fa-thumbs-down icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</button>
                             </form>
                             @can('delete', $definition)
                                 <form action="{{ route('definitions.destroy', $definition) }}" method="post">
@@ -74,11 +74,11 @@
                                 <div class="btn-group">
                                     <form action="{{ route('definitions.comments.like', $comment) }}" method="post">
                                         @csrf
-                                        <button class="btn" type="submit"><i class="fas fa-thumbs-up"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                     </form>
                                     <form action="{{ route('definitions.comments.dislike', $comment) }}" method="post">
                                         @csrf
-                                        <button class="btn" type="submit"><i class="fas fa-thumbs-down"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                        <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                     </form>
                                 </div>
                                 <div class="container">
@@ -116,11 +116,11 @@
                                                     <div class="btn-group">
                                                         <form action="{{ route('definitions.comments.like', $reply) }}" method="post">
                                                             @csrf
-                                                            <button class="btn" type="submit"><i class="fas fa-thumbs-up"> {{ $reply->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                                         </form>
                                                         <form action="{{ route('definitions.comments.dislike', $reply) }}" method="post">
                                                             @csrf
-                                                            <button class="btn" type="submit"><i class="fas fa-thumbs-down"> {{ $reply->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $reply->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                                         </form>
                                                     </div>
                                                     {{--                                                <div class="container">--}}

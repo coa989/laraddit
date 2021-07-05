@@ -23,8 +23,8 @@
                             <div class="post-description">
                                 <div class="stats">
                                     <div class="btn-group">
-                                        <button class="btn"><i class="fa fa-thumbs-up icon"> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
-                                        <button class="btn"><i class="fa fa-thumbs-down icon"> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                        <button class="btn"><i class="far fa-thumbs-up"></i></i> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                                        <button class="btn"><i class="far fa-thumbs-down"></i> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                         <button class="btn"><i class="fas fa-comment"></i> {{ $post->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</i></a></button>
                                         <button class="btn">
                                             {{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }}
@@ -65,8 +65,8 @@
                                                 <span>{{ $comment->body }}</span>
                                             </div>
                                             <div class="btn-group">
-                                                <button class="btn"><i class="fas fa-thumbs-up"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
-                                                <button class="btn"><i class="fas fa-thumbs-down"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                                <button class="btn"><i class="far fa-thumbs-up"></i> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                                                <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                                 @if(!$comment->approved)
                                                     <a href="{{ route('admin.posts.comment.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
                                                 @endif

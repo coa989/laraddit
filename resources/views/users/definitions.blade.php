@@ -32,11 +32,11 @@
                                 <div class="btn-group">
                                     <form action="{{ route('definitions.like', $definition) }}" method="post">
                                         @csrf
-                                        <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                     </form>
                                     <form action="{{ route('definitions.dislike', $definition) }}" method="post">
                                         @csrf
-                                        <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                        <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                     </form>
                                 </div>
                                 <p class="mt-4">

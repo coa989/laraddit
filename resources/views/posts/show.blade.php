@@ -25,11 +25,11 @@
                                     <div class="btn-group">
                                         <form action="{{ route('posts.like', $post) }}" method="post">
                                             @csrf
-                                            <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                         </form>
                                         <form action="{{ route('posts.dislike', $post) }}" method="post">
                                             @csrf
-                                            <button class="btn" type="submit"><i class="fa fa-thumbs-up icon"> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                         </form>
                                         <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</i></a></button>
                                         <button class="btn">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }}
@@ -80,11 +80,11 @@
                                             <div class="btn-group">
                                                 <form action="{{ route('posts.comments.like', $comment) }}" method="post">
                                                     @csrf
-                                                    <button class="btn" type="submit"><i class="fas fa-thumbs-up"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                                    <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                                 </form>
                                                 <form action="{{ route('posts.comments.dislike', $comment) }}" method="post">
                                                     @csrf
-                                                    <button class="btn" type="submit"><i class="fas fa-thumbs-down"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                                    <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                                 </form>
                                             </div>
                                             <div class="container">
@@ -122,11 +122,11 @@
                                                                 <div class="btn-group">
                                                                     <form action="{{ route('posts.comments.like', $reply) }}" method="post">
                                                                         @csrf
-                                                                        <button class="btn" type="submit"><i class="fas fa-thumbs-up"> {{ $reply->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
+                                                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                                                     </form>
                                                                     <form action="{{ route('posts.comments.dislike', $reply) }}" method="post">
                                                                         @csrf
-                                                                        <button class="btn" type="submit"><i class="fas fa-thumbs-down"> {{ $reply->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
+                                                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                                                     </form>
                                                                 </div>
                                                                 {{--                                                <div class="container">--}}
