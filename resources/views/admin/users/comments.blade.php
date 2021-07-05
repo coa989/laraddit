@@ -22,7 +22,7 @@
                         @foreach($comments as $comment)
                             <tr>
                                 @php
-                                    $type = strtolower(class_basename($comment->commentable_type));
+                                    $type = strtolower(class_basename($comment->commentable_type)) . 's';
                                 @endphp
                                 <td>{{ $comment->body }}</td>
                                 <td>{{ $comment->created_at->diffForHumans() }}</td>
@@ -31,9 +31,9 @@
                                 <td>
                                     <div class="btn-group">
                                         @if(!$comment->approved)
-                                            <a href="{{ route("admin.$type.comment.approve", $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                            <a href="{{ route("admin.comments.approve", $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                         @endif
-                                        <form action="{{ route("admin.$type.comment.destroy", $comment) }}" method="post">
+                                        <form action="{{ route("admin.comments.destroy", $comment) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-danger">Delete</button>
