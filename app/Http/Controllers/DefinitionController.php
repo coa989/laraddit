@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Components\FlashMessages;
-use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\StoreDefinitionRequest;
 use App\Models\Comment;
 use App\Models\Definition;
@@ -116,35 +115,6 @@ class DefinitionController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
-
-        return back();
-    }
-
-    public function comment(StoreCommentRequest $request, Definition $definition)
-    {
-        Comment::create([
-            'user_id' => auth()->id(),
-            'commentable_id' => $definition->id,
-            'body' => $request->body,
-            'commentable_type' => get_class($definition),
-        ]);
-
-        self::success('Your comment has been successfully added! It will be visible when admin approves it.');
-
-        return back();
-    }
-
-    public function commentReply(StoreCommentRequest $request, Definition $definition)
-    {
-        Comment::create([
-            'user_id' => auth()->id(),
-            'commentable_id' => $definition->id,
-            'body' => $request->body,
-            'commentable_type' => get_class($definition),
-            'parent_id' => $request->parentId
-        ]);
-
-        self::success('Your reply has been successfully added! It will be visible when admin approves it.');
 
         return back();
     }

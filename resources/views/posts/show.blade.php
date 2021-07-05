@@ -53,10 +53,11 @@
                             </div>
                             <hr>
                             <div class="post-footer">
-                                <form action="{{ route('posts.comments', $post) }}" method="post">
+                                <form action="{{ route('comments.store', $post) }}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
+                                        <input type="hidden" name="class" value="App\Models\Post">
                                         @error('body')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -66,7 +67,7 @@
                                     <button class="btn btn-success" type="submit">Post</button>
                                 </form>
                                 <ul class="comments-list">
-                                    @foreach($post->comments->where('approved', true) as $comment)
+                                    @foreach($post->comments->where('approved', true)->where('parent_id', null) as $comment)
                                         <div class="box-footer box-comments mt-3" style="display: block;">
                                             <div class="box-comment">
                                                 <div class="comment-text">
@@ -92,10 +93,11 @@
                                                     <button class="btn btn-sm text-muted">Reply</button>
                                                 </div>
                                                 <div class="col-lg-12 reply" style="display: none">
-                                                    <form action="{{ route('posts.comments.reply', $post) }}" method="post">
+                                                    <form action="{{ route('comments.reply', $post) }}" method="post">
                                                         @csrf
                                                         <div class="form-group">
                                                             <input type="hidden" value="{{ $comment->id }}" name="parentId">
+                                                            <input type="hidden" value="App\Models\Post" name="class">
                                                             <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
                                                             @error('body')
                                                             <div class="invalid-feedback">
@@ -112,9 +114,9 @@
                                                             <div class="box-footer box-comments mt-3" style="display: block;">
                                                                 <div class="box-comment">
                                                                     <div class="comment-text">
-                                                            <span class="username">
-                                                                <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
-                                                            </span>
+                                                                        <span class="username">
+                                                                            <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                                        </span>
                                                                         <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
                                                                     </div>
                                                                     <span>{{ $reply->body }}</span>
@@ -129,26 +131,6 @@
                                                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                                                     </form>
                                                                 </div>
-                                                                {{--                                                <div class="container">--}}
-                                                                {{--                                                    <div class="replybutton btn4 like mb-3">--}}
-                                                                {{--                                                        <button class="btn btn-sm text-muted">Reply</button>--}}
-                                                                {{--                                                    </div>--}}
-                                                                {{--                                                    <div class="col-lg-12 reply" style="display: none">--}}
-                                                                {{--                                                        <form action="{{ route('post.comment.reply', $post) }}" method="post">--}}
-                                                                {{--                                                            @csrf--}}
-                                                                {{--                                                            <div class="form-group">--}}
-                                                                {{--                                                                <input type="hidden" value="{{ $reply->id }}" name="parentId">--}}
-                                                                {{--                                                                <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>--}}
-                                                                {{--                                                                @error('body')--}}
-                                                                {{--                                                                <div class="invalid-feedback">--}}
-                                                                {{--                                                                    {{ $message }}--}}
-                                                                {{--                                                                </div>--}}
-                                                                {{--                                                                @enderror--}}
-                                                                {{--                                                            </div>--}}
-                                                                {{--                                                            <button class="btn btn-success" type="submit">Reply</button>--}}
-                                                                {{--                                                        </form>--}}
-                                                                {{--                                                    </div>--}}
-                                                                {{--                                                </div>--}}
                                                             </div>
                                                         @endif
                                                     @endforeach
