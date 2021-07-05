@@ -1,81 +1,31 @@
-
-<header class="c-header c-header-light c-header-fixed c-header-with-subheader">
-    <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
-        <svg class="c-icon c-icon-lg">
-            <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
-        </svg>
-    </button><a class="c-header-brand d-lg-none" href="#">
-        <svg width="118" height="46" alt="CoreUI Logo">
-            <use xlink:href="assets/brand/coreui.svg#full"></use>
-        </svg></a>
-    <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
-        <svg class="c-icon c-icon-lg">
-            <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
-        </svg>
-    </button>
-{{--    <ul class="c-header-nav d-md-down-none">--}}
-{{--        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Dashboard</a></li>--}}
-{{--        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Users</a></li>--}}
-{{--        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li>--}}
-{{--    </ul>--}}
-    <ul class="c-header-nav ml-auto mr-4">
-        <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" href="#">
-                <svg class="c-icon">
-                    <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" href="#">
-                <svg class="c-icon">
-                    <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-list-rich"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link" href="#">
-                <svg class="c-icon">
-                    <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <div class="c-avatar">
-                    <img class="c-avatar-img" src="assets/img/avatars/6.jpg">{{ auth()->user()->name }}
-                </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right pt-0">
-                <div class="dropdown-header bg-light py-2">
-                    <strong>Settings</strong>
-                </div>
-                <a class="dropdown-item" href="{{ route('admin.users.show', auth()->user()) }}">
-                    <svg class="c-icon mr-2">
-                        <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-                    </svg> Profile
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                        <svg class="c-icon mr-2">
-                            <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-                        </svg>
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="{{ route('index') }}">ZAGRC! Admin Area</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+{{--        <div class="input-group">--}}
+{{--            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />--}}
+{{--            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>--}}
+{{--        </div>--}}
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ auth()->user()->name }}<i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{{ route('admin.users.show', auth()->user()) }}">My Profile</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </div>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form></a></li>
+            </ul>
         </li>
     </ul>
-                {{--    <div class="c-subheader px-3">--}}
-
-{{--        <ol class="breadcrumb border-0 m-0">--}}
-{{--            <li class="breadcrumb-item">Home</li>--}}
-{{--            <li class="breadcrumb-item"><a href="#">Admin</a></li>--}}
-{{--            <li class="breadcrumb-item active">Dashboard</li>--}}
-
-{{--        </ol>--}}
-{{--    </div>--}}
-</header>
+</nav>
