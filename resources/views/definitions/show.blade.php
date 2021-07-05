@@ -16,9 +16,11 @@
                     </div>
                     <div class="card-footer">
                         <p>
-                            <a href="">{{ $definition->likes_count - $definition->dislikes_count }} points &#183;</a>
+                            <a href="">{{ $definition->likes_count - $definition->dislikes_count }}
+                                {{ Str::plural('point', $definition->likes_count - $definition->dislikes_count) }} &#183;</a>
                             <a href="{{ route('definitions.show', $definition) }}">
-                                <i class="fas fa-comment"> {{ $definition->comments_count }} {{ Str::plural('comment', $definition->comments_count) }}</i>
+                                <i class="fas fa-comment"> {{ $definition->comments_count }}
+                                    {{ Str::plural('comment', $definition->comments_count) }}</i>
                             </a>
                         </p>
                         <div class="btn-group">

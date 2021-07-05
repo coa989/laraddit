@@ -38,13 +38,14 @@
                                         <div class="btn-group">
                                             <form action="{{ route('posts.like', $post) }}" method="post">
                                                 @csrf
-                                                <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                                                <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>
                                             </form>
                                             <form action="{{ route('posts.dislike', $post) }}" method="post">
                                                 @csrf
-                                                <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</button>
+                                                <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->dislikes_count }}</button>
                                             </form>
-                                            <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</i></a></button>
+                                            <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
+                                                    {{ Str::plural('comment', $post->comments_count) }}</i></a></button>
                                         </div>
                                     </div>
                                     <p class="mt-2">

@@ -25,15 +25,16 @@
                                     <div class="btn-group">
                                         <form action="{{ route('posts.like', $post) }}" method="post">
                                             @csrf
-                                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>
                                         </form>
                                         <form action="{{ route('posts.dislike', $post) }}" method="post">
                                             @csrf
-                                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</button>
+                                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->dislikes_count }}</button>
                                         </form>
-                                        <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</i></a></button>
-                                        <button class="btn">{{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }}
-                                            {{ Str::plural('point', $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count()) }}
+                                        <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
+                                                {{ Str::plural('comment', $post->comments_count) }}</i></a></button>
+                                        <button class="btn">{{ $post->likes_count - $post->dislikes_count }}
+                                            {{ Str::plural('point', $post->likes_count - $post->dislikes_count) }}
                                         </button>
                                         @can('delete', $post)
                                             <form action="{{ route('posts.destroy', $post) }}" method="post">
@@ -81,11 +82,11 @@
                                             <div class="btn-group">
                                                 <form action="{{ route('posts.comments.like', $comment) }}" method="post">
                                                     @csrf
-                                                    <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                                                    <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
                                                 </form>
                                                 <form action="{{ route('posts.comments.dislike', $comment) }}" method="post">
                                                     @csrf
-                                                    <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</button>
+                                                    <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $comment->dislikes_count }}</button>
                                                 </form>
                                             </div>
                                             <div class="container">
@@ -124,11 +125,11 @@
                                                                 <div class="btn-group">
                                                                     <form action="{{ route('posts.comments.like', $reply) }}" method="post">
                                                                         @csrf
-                                                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                                                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
                                                                     </form>
                                                                     <form action="{{ route('posts.comments.dislike', $reply) }}" method="post">
                                                                         @csrf
-                                                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes()->where('is_dislike', 1)->get()->count() }}</button>
+                                                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->dislikes_count }}</button>
                                                                     </form>
                                                                 </div>
                                                             </div>
