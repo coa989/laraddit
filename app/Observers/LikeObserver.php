@@ -4,10 +4,8 @@ namespace App\Observers;
 
 use App\Models\Comment;
 use App\Models\Definition;
-use App\Models\DefinitionSummary;
 use App\Models\Like;
 use App\Models\Post;
-use App\Models\PostSummary;
 
 class LikeObserver
 {
