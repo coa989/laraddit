@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DefinitionController;
+use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -64,8 +65,6 @@ Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
         Route::view('/create', 'posts.create')->middleware('can:create,App\Models\Post')->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');
         Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
-        Route::post('/dislike/{post}', [PostController::class, 'dislike'])->name('dislike');
-        Route::post('/comments/dislike/{comment}', [PostController::class, 'dislikeComment'])->name('comments.dislike');
         Route::get('/tags/{tag}', [PostController::class, 'tag'])->name('tags');
         Route::get('/hot', [PostController::class, 'hot'])->name('hot');
     });
@@ -79,8 +78,6 @@ Route::group(['prefix' => 'definitions', 'as' => 'definitions.'], function () {
         Route::view('/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('create');
         Route::post('/store', [DefinitionController::class, 'store'])->name('store');
         Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy');
-        Route::post('/dislike/{definition}', [DefinitionController::class, 'dislike'])->name('dislike');
-        Route::post('/comments/dislike/{comment}', [DefinitionController::class, 'dislikeComment'])->name('comments.dislike');
         Route::get('/tags/{tag}', [DefinitionController::class, 'tag'])->name('tags');
         Route::get('/hot', [DefinitionController::class, 'hot'])->name('hot');
     });
@@ -99,6 +96,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], func
 
 Route::group(['middleware' => 'auth', 'prefix' => 'likes', 'as' => 'likes.'], function () {
     Route::post('/{model}/store', [LikeController::class, 'store'])->name('store');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'dislikes', 'as' => 'dislikes.'], function () {
+    Route::post('/{model}/store', [DislikeController::class, 'store'])->name('store');
 });
 
 Auth::routes();

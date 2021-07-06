@@ -34,8 +34,9 @@
                                         @csrf
                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                     </form>
-                                    <form action="{{ route('definitions.dislike', $definition) }}" method="post">
+                                    <form action="{{ route('dislikes.store', $definition) }}" method="post">
                                         @csrf
+                                        <input type="hidden" name="class" value="App\Models\Definition">
                                         <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                     </form>
                                 </div>
