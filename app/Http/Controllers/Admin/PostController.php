@@ -53,14 +53,4 @@ class PostController extends Controller
 
         return view('admin.posts.waiting', ['posts' => $posts]);
     }
-
-    public function waitingComments()
-    {
-        $comments = Comment::where('commentable_type', 'App\Models\Post')
-            ->where('approved', false)
-            ->latest()
-            ->paginate(20);
-
-        return view('admin.posts.comments', ['comments' => $comments]);
-    }
 }

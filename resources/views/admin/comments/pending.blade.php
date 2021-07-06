@@ -15,18 +15,21 @@
                         <th scope="col">Body</th>
                         <th scope="col">Created</th>
                         <th scope="col">Updated</th>
-                        <th scope="col">Post</th>
+                        <th scope="col">Source</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($comments as $comment)
+                        @php
+                            $type = strtolower(class_basename($comment->commentable_type)) . 's';
+                        @endphp
                         <tr>
                             <td><a href="{{ route('admin.users.show', $comment->user) }}">{{ $comment->user->name }}</a></td>
                             <td>{{ $comment->body }}</td>
                             <td>{{ $comment->created_at->diffForHumans() }}</td>
                             <td>{{ $comment->updated_at->diffForHumans() }}</td>
-                            <td><a href="{{ route('admin.posts.show', $comment->commentable_id) }}"><button class="btn btn-primary btn-sm">View</button></a></td>
+                            <td><a href="{{ route("admin.".$type.".show", $comment->commentable_id) }}"><button class="btn btn-primary btn-sm">View</button></a></td>
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ route('admin.comments.approve', $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>

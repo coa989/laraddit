@@ -32,7 +32,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/posts/approve/{post}', [AdminPostController::class, 'approve'])->name('posts.approve');
     Route::get('/posts/show/{post}', [AdminPostController::class, 'show'])->name('posts.show');
     Route::delete('/posts/destroy/{post}', [AdminPostController::class, 'destroy'])->name('posts.destroy');
-    Route::get('/posts/comments/waiting', [AdminPostController::class, 'waitingComments'])->name('posts.comments.waiting');
 
     Route::get('/definitions', [AdminDefinitionController::class, 'index'])->name('definitions');
     Route::get('/definitions/approved', [AdminDefinitionController::class, 'approved'])->name('definitions.approved');
@@ -40,7 +39,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/definitions/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('definitions.approve');
     Route::get('/definitions/show/{definition}', [AdminDefinitionController::class, 'show'])->name('definitions.show');
     Route::delete('/definitions/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('definitions.destroy');
-    Route::get('/definitions/comments/waiting', [AdminDefinitionController::class, 'waitingComments'])->name('definitions.comments.waiting');
 
     Route::get('/users', [AdminUserController::class, 'index'])->name('users');
     Route::get('/users/{user}/posts', [AdminUserController::class, 'posts'])->name('users.posts');
@@ -53,6 +51,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/users/change-role{user}', [AdminUserController::class, 'changeRole'])->name('users.change-role');
 
     Route::get('/comments/approve/{comment}', [AdminCommentController::class, 'approve'])->name('comments.approve');
+    Route::get('/comments/pending', [AdminCommentController::class, 'pending'])->name('comments.pending');
     Route::delete('/comments/destroy/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
 });
 

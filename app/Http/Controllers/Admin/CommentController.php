@@ -21,4 +21,13 @@ class CommentController extends Controller
 
         return back();
     }
+
+    public function pending()
+    {
+        $comments = Comment::where('approved', false)
+            ->latest()
+            ->paginate(20);
+
+        return view('admin.comments.pending', ['comments' => $comments]);
+    }
 }

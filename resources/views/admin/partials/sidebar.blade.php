@@ -17,7 +17,7 @@
                     <a class="nav-link" href="{{ route('admin.users.authors') }}">Authors</a>
                 </nav>
             </div>
-            <a class="nav-link collapsed" href="{{ route('admin.users.guests') }}" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
                 <div class="sb-nav-link-icon"><i class="fas fa-layer-group"></i></div>
                 Posts
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -29,7 +29,7 @@
                     <a class="nav-link" href="{{ route('admin.posts.waiting') }}">Waiting Approval</a>
                 </nav>
             </div>
-            <a class="nav-link collapsed" href="{{ route('admin.users.guests') }}" data-bs-toggle="collapse" data-bs-target="#collapseDefinitions" aria-expanded="false" aria-controls="collapseDefinitions">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDefinitions" aria-expanded="false" aria-controls="collapseDefinitions">
                 <div class="sb-nav-link-icon"><i class="fas fa-align-left"></i></div>
                 Definitions
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -41,31 +41,14 @@
                     <a class="nav-link" href="{{ route('admin.definitions.waiting') }}">Waiting Approval</a>
                 </nav>
             </div>
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                <div class="sb-nav-link-icon"><i class="fas fa-comment"></i></div>
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseComments" aria-expanded="false" aria-controls="collapseComments">
+                <div class="sb-nav-link-icon"><i class="fas fa-layer-group"></i></div>
                 Comments
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
-            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                        Posts
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{ route('admin.posts.comments.waiting') }}">Waiting Approval</a>
-                        </nav>
-                    </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                        Definitions
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="{{ route('admin.definitions.comments.waiting') }}">Waiting Approval</a>
-                        </nav>
-                    </div>
+            <div class="collapse" id="collapseComments" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="{{ route('admin.comments.pending') }}">Pending</a>
                 </nav>
             </div>
         </div>

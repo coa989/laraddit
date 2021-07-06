@@ -54,15 +54,4 @@ class DefinitionController extends Controller
 
         return view('admin.definitions.waiting', ['definitions' => $definitions]);
     }
-
-    public function waitingComments()
-    {
-        $comments = Comment::where('commentable_type', 'App\Models\Definition')
-            ->where('approved', false)
-            ->latest()
-            ->paginate(20);
-
-        return view('admin.definitions.comments', ['comments' => $comments]);
-    }
-
 }
