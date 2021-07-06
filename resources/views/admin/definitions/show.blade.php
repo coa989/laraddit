@@ -49,7 +49,7 @@
                     <i class="fas fa-comment"></i> {{ $definition->comments_count }}
                     {{ Str::plural('comment', $definition->comments_count) }}
                     <ul class="comments-list">
-                        @foreach($definition->comments as $comment)
+                        @foreach($definition->comments->where('parent_id', null) as $comment)
                             <div class="box-footer box-comments mt-3" style="display: block;">
                                 <div class="box-comment">
                                     <div class="comment-text">
@@ -60,19 +60,50 @@
                                     </div>
                                     <span>{{ $comment->body }}</span>
                                 </div>
-                                <div class="btn-group-sm">
+                                <div class="btn-group">
                                     <button class="btn"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
                                     <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->dislikes_count }}</button>
-                                </div>
-                                <div class="btn-group">
                                     @if(!$comment->approved)
                                         <a href="{{ route('admin.comments.approve', $comment) }}"><button class="btn btn-success btn-sm btn-block">Approve</button></a>
+                                    @endif
+                                    @if(!$comment->rejected)
+                                        <a href="{{ route('admin.comments.reject', $comment) }}"><button class="btn btn-warning btn-sm btn-block">Reject</button></a>
                                     @endif
                                     <form action="{{ route('admin.comments.destroy', $comment) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger btn-block">Delete</button>
                                     </form>
+                                </div>
+                                <div class="container">
+                                    @if($comment->replies->first())
+                                        @foreach($comment->replies as $reply)
+                                            <div class="box-comment">
+                                                <div class="comment-text">
+                                                    <span class="username">
+                                                        <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                    </span>
+                                                    <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
+                                                </div>
+                                                <span>{{ $reply->body }}</span>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
+                                                <button class="btn"><i class="far fa-thumbs-down"></i> {{ $reply->dislikes_count }}</button>
+                                                @if(!$reply->approved)
+                                                    <a href="{{ route('admin.comments.approve', $reply) }}"><button class="btn btn-success btn-sm btn-block">Approve</button></a>
+                                                @endif
+                                                @if(!$reply->rejected)
+                                                    <a href="{{ route('admin.comments.reject', $reply) }}"><button class="btn btn-warning btn-sm btn-block">Reject</button></a>
+                                                @endif
+                                                <form action="{{ route('admin.comments.destroy', $reply) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

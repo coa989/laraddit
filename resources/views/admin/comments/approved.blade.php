@@ -32,12 +32,7 @@
                             <td><a href="{{ route("admin.".$type.".show", $comment->commentable_id) }}"><button class="btn btn-primary btn-sm">View</button></a></td>
                             <td>
                                 <div class="btn-group">
-                                    @if(!$comment->approved)
-                                        <a href="{{ route('admin.comments.approve', $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
-                                    @endif
-                                    @if(!$comment->rejected)
-                                        <a href="{{ route('admin.comments.reject', $comment) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
-                                    @endif
+                                    <a href="{{ route('admin.comments.reject', $comment) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
                                     <form action="{{ route('admin.comments.destroy', $comment) }}" method="post">
                                         @csrf
                                         @method('DELETE')

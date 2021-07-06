@@ -46,8 +46,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::delete('/users/destroy/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/change-role{user}', [AdminUserController::class, 'changeRole'])->name('users.change-role');
 
+    Route::get('/comments}', [AdminCommentController::class, 'index'])->name('comments.index');
     Route::get('/comments/approve/{comment}', [AdminCommentController::class, 'approve'])->name('comments.approve');
+    Route::get('/comments/reject/{comment}', [AdminCommentController::class, 'reject'])->name('comments.reject');
+    Route::get('/comments/approved', [AdminCommentController::class, 'approved'])->name('comments.approved');
     Route::get('/comments/pending', [AdminCommentController::class, 'pending'])->name('comments.pending');
+    Route::get('/comments/rejected', [AdminCommentController::class, 'rejected'])->name('comments.rejected');
     Route::delete('/comments/destroy/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
 });
 
