@@ -36,6 +36,9 @@
                                     @if(!$definition->approved)
                                         <a href="{{ route('admin.definitions.approve', $definition) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                     @endif
+                                    @if(!$definition->rejected)
+                                        <a href="{{ route('admin.definitions.reject', $definition) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
+                                    @endif
                                     <a href="{{ route('admin.definitions.show', $definition) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
                                     <form action="{{ route('admin.definitions.destroy', $definition) }}" method="post">
                                         @csrf

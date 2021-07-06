@@ -33,7 +33,8 @@
                             <td>{{ $post->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.posts.show', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
+                                    <a href="{{ route('admin.posts.reject', $post) }}"><button class="btn btn-sm btn-warning">Reject</button></a>
+                                    <a href="{{ route('admin.posts.show', $post) }}"><button class="btn btn-sm btn-primary">View</button></a>
                                     <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
                                         @csrf
                                         @method('DELETE')

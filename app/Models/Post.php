@@ -12,7 +12,7 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['approved', 'user_id', 'title', 'slug', 'image_path', 'thumbnail', 'medium_image_path'];
+    protected $fillable = ['approved', 'user_id', 'title', 'slug', 'image_path', 'thumbnail', 'medium_image_path', 'rejected'];
 
     public function scopeToday($builder)
     {

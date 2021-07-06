@@ -36,6 +36,9 @@
                                         @if(!$post->approved)
                                             <a href="{{ route('admin.posts.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                         @endif
+                                        @if(!$post->rejected)
+                                            <a href="{{ route('admin.posts.reject', $post) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
+                                        @endif
                                         <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
                                             @csrf
                                             @method('DELETE')
@@ -53,7 +56,7 @@
                             <hr>
                             <div class="post-footer">
                                 <ul class="comments-list">
-                                    @foreach($post->comments as $comment)
+                                    @foreach($post->comments->where('parent_id', null) as $comment)
                                         <div class="box-footer box-comments mt-3" style="display: block;">
                                             <div class="box-comment">
                                                 <div class="comment-text">
@@ -61,7 +64,6 @@
                                                         <a href="{{ route('admin.users.show', $comment->user) }}">{{ $comment->user->name }}</a>
                                                     </span>
                                                     <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
-                                                    </span>
                                                 </div>
                                                 <span>{{ $comment->body }}</span>
                                             </div>
@@ -70,6 +72,9 @@
                                                 <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->dislikes_count }}</button>
                                                 @if(!$comment->approved)
                                                     <a href="{{ route('admin.comments.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
+                                                @endif
+                                                @if(!$comment->rejected)
+                                                    <a href="{{ route('admin.comments.reject', $comment) }}"><button class="btn btn-warning btn-sm btn-block">Reject</button></a>
                                                 @endif
                                                 <form action="{{ route('admin.comments.destroy', $comment) }}" method="post">
                                                     @csrf
@@ -80,31 +85,30 @@
                                             <div class="container">
                                                 @if($comment->replies->first())
                                                     @foreach($comment->replies as $reply)
-                                                        @if($reply->approved)
-                                                            <div class="box-footer box-comments mt-3" style="display: block;">
-                                                                <div class="box-comment">
-                                                                    <div class="comment-text">
-                                                                        <span class="username">
-                                                                            <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
-                                                                        </span>
-                                                                        <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
-                                                                    </div>
-                                                                    <span>{{ $reply->body }}</span>
-                                                                </div>
-                                                                <div class="btn-group">
-                                                                    <button class="btn"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
-                                                                    <button class="btn"><i class="far fa-thumbs-down"></i> {{ $reply->dislikes_count }}</button>
-                                                                    @if(!$reply->approved)
-                                                                        <a href="{{ route('admin.comments.approve', $reply) }}"><button class="btn btn-success btn-sm">Approve</button></a>
-                                                                    @endif
-                                                                    <form action="{{ route('admin.comments.destroy', $reply) }}" method="post">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                                                    </form>
-                                                                </div>
+                                                        <div class="box-comment">
+                                                            <div class="comment-text">
+                                                                <span class="username">
+                                                                    <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                                </span>
+                                                                <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
                                                             </div>
-                                                        @endif
+                                                            <span>{{ $reply->body }}</span>
+                                                        </div>
+                                                        <div class="btn-group">
+                                                            <button class="btn"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
+                                                            <button class="btn"><i class="far fa-thumbs-down"></i> {{ $reply->dislikes_count }}</button>
+                                                            @if(!$reply->approved)
+                                                                <a href="{{ route('admin.comments.approve', $reply) }}"><button class="btn btn-success btn-sm">Approve</button></a>
+                                                            @endif
+                                                            @if(!$reply->rejected)
+                                                                <a href="{{ route('admin.comments.reject', $reply) }}"><button class="btn btn-warning btn-sm btn-block">Reject</button></a>
+                                                            @endif
+                                                            <form action="{{ route('admin.comments.destroy', $reply) }}" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
                                                     @endforeach
                                                 @endif
                                             </div>

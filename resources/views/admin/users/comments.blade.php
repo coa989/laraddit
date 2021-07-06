@@ -14,7 +14,7 @@
                             <th scope="col">Body</th>
                             <th scope="col">Created</th>
                             <th scope="col">Updated</th>
-                            <th scope="col">Post/Definition</th>
+                            <th scope="col">Source</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -32,6 +32,9 @@
                                     <div class="btn-group">
                                         @if(!$comment->approved)
                                             <a href="{{ route("admin.comments.approve", $comment) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                        @endif
+                                        @if(!$comment->rejected)
+                                            <a href="{{ route('admin.comments.reject', $comment) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
                                         @endif
                                         <form action="{{ route("admin.comments.destroy", $comment) }}" method="post">
                                             @csrf
