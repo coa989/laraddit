@@ -34,8 +34,9 @@
                                                         <input type="hidden" name="class" value="App\Models\Post">
                                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                                     </form>
-                                                    <form action="{{ route('posts.dislike', $post) }}" method="post">
+                                                    <form action="{{ route('dislikes.store', $post) }}" method="post">
                                                         @csrf
+                                                        <input type="hidden" name="class" value="App\Models\Post">
                                                         <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</button>
                                                     </form>
                                                     <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</i></a></button>

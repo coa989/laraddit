@@ -76,50 +76,6 @@ class DefinitionController extends Controller
         return view('definitions.hot', ['definitions' => $definitions]);
     }
 
-    public function dislike(Definition $definition)
-    {
-        if (Like::where('user_id', auth()->id())
-            ->where('likeable_id', $definition->id)
-            ->where('likeable_type', get_class($definition))
-            ->first()) {
-
-            return back();
-        }
-
-        Like::create([
-            'user_id' => auth()->id(),
-            'likeable_id' => $definition->id,
-            'likeable_type' => get_class($definition),
-            'is_dislike' => 1
-        ]);
-
-        self::success('Your reaction has been recorded!');
-
-        return back();
-    }
-
-    public function dislikeComment(Comment $comment)
-    {
-        if (Like::where('user_id', auth()->id())
-            ->where('likeable_id', $comment->id)
-            ->where('likeable_type', get_class($comment))
-            ->first()) {
-
-            return back();
-        }
-
-        Like::create([
-            'user_id' => auth()->id(),
-            'likeable_id' => $comment->id,
-            'likeable_type' => get_class($comment),
-            'is_dislike' => 1
-        ]);
-
-        self::success('Your reaction has been recorded!');
-
-        return back();
-    }
-
     public function tag(Tag $tag)
     {
         $tagsId = $tag->id;
