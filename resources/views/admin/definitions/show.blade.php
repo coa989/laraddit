@@ -22,16 +22,20 @@
                         <div class="btn-group">
                             <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
                             <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->dislikes_count }}</button>
-                        </div>
-                        <div class="btn btn-group-sm">
                             @if(!$definition->approved)
                                 <a href="{{ route('admin.definitions.approve', $definition) }}"><button class="btn btn-sm btn-success btn-block">Approve</button></a>
+                            @endif
+                            @if(!$definition->rejected)
+                                <a href="{{ route('admin.definitions.reject', $definition) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
                             @endif
                             <form action="{{ route('admin.definitions.destroy', $definition) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-danger btn-block" type="submit">Delete</button>
                             </form>
+                        </div>
+                        <div class="btn btn-group-sm">
+
                         </div>
                         <p class="mt-4">
                             Tags:

@@ -11,7 +11,7 @@ class Definition extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'title', 'body', 'slug', 'approved'];
+    protected $fillable = ['user_id', 'title', 'body', 'slug', 'approved', 'rejected'];
 
     public function scopeToday($builder)
     {

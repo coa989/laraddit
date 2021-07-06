@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container " >
-        <div class="row ">
+        <div class="row">
             @if(!$definitions->first())
                 <div class="container">
-                    <h3 class="text-center">No definition!</h3>
+                    <h3 class="text-center">No approved definition!</h3>
                 </div>
             @else
                 <table class="table">
@@ -33,12 +33,7 @@
                             <td>{{ $definition->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="btn-group">
-                                    @if(!$definition->approved)
-                                        <a href="{{ route('admin.definitions.approve', $definition) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
-                                    @endif
-                                    @if(!$definition->rejected)
-                                        <a href="{{ route('admin.definitions.reject', $definition) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
-                                    @endif
+                                    <a href="{{ route('admin.definitions.approve', $definition) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                     <a href="{{ route('admin.definitions.show', $definition) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
                                     <form action="{{ route('admin.definitions.destroy', $definition) }}" method="post">
                                         @csrf
@@ -59,4 +54,3 @@
     </div>
 
 @endsection
-

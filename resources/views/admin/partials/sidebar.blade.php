@@ -26,7 +26,8 @@
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" href="{{ route('admin.posts') }}">All</a>
                     <a class="nav-link" href="{{ route('admin.posts.approved') }}">Approved</a>
-                    <a class="nav-link" href="{{ route('admin.posts.waiting') }}">Waiting Approval</a>
+                    <a class="nav-link" href="{{ route('admin.posts.pending') }}">Pending</a>
+                    <a class="nav-link" href="{{ route('admin.posts.rejected') }}">Rejected</a>
                 </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDefinitions" aria-expanded="false" aria-controls="collapseDefinitions">
@@ -38,7 +39,8 @@
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" href="{{ route('admin.definitions') }}">All</a>
                     <a class="nav-link" href="{{ route('admin.definitions.approved') }}">Approved</a>
-                    <a class="nav-link" href="{{ route('admin.definitions.waiting') }}">Waiting Approval</a>
+                    <a class="nav-link" href="{{ route('admin.definitions.pending') }}">Pending</a>
+                    <a class="nav-link" href="{{ route('admin.definitions.rejected') }}">Rejected</a>
                 </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseComments" aria-expanded="false" aria-controls="collapseComments">
