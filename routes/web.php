@@ -20,15 +20,19 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
 
     Route::get('/posts', [AdminPostController::class, 'index'])->name('posts');
     Route::get('/posts/approved', [AdminPostController::class, 'approved'])->name('posts.approved');
-    Route::get('/posts/waiting', [AdminPostController::class, 'waiting'])->name('posts.waiting');
+    Route::get('/posts/rejected', [AdminPostController::class, 'rejected'])->name('posts.rejected');
+    Route::get('/posts/pending', [AdminPostController::class, 'pending'])->name('posts.pending');
     Route::get('/posts/approve/{post}', [AdminPostController::class, 'approve'])->name('posts.approve');
+    Route::get('/posts/reject/{post}', [AdminPostController::class, 'reject'])->name('posts.reject');
     Route::get('/posts/show/{post}', [AdminPostController::class, 'show'])->name('posts.show');
     Route::delete('/posts/destroy/{post}', [AdminPostController::class, 'destroy'])->name('posts.destroy');
 
     Route::get('/definitions', [AdminDefinitionController::class, 'index'])->name('definitions');
     Route::get('/definitions/approved', [AdminDefinitionController::class, 'approved'])->name('definitions.approved');
-    Route::get('/definitions/waiting', [AdminDefinitionController::class, 'waiting'])->name('definitions.waiting');
+    Route::get('/definitions/rejected', [AdminDefinitionController::class, 'rejected'])->name('definitions.rejected');
+    Route::get('/definitions/pending', [AdminDefinitionController::class, 'pending'])->name('definitions.pending');
     Route::get('/definitions/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('definitions.approve');
+    Route::get('/definitions/reject/{definition}', [AdminDefinitionController::class, 'reject'])->name('definitions.reject');
     Route::get('/definitions/show/{definition}', [AdminDefinitionController::class, 'show'])->name('definitions.show');
     Route::delete('/definitions/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('definitions.destroy');
 

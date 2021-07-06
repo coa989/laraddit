@@ -5,7 +5,7 @@
         <div class="row ">
             @if(!$posts->first())
                 <div class="container">
-                    <h3 class="text-center">No approved post!</h3>
+                    <h3 class="text-center">No post!</h3>
                 </div>
             @else
                 <table class="table">
@@ -33,8 +33,8 @@
                             <td>{{ $post->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.posts.reject', $post) }}"><button class="btn btn-sm btn-warning">Reject</button></a>
-                                    <a href="{{ route('admin.posts.show', $post) }}"><button class="btn btn-sm btn-primary">View</button></a>
+                                    <a href="{{ route('admin.posts.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                    <a href="{{ route('admin.posts.show', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
                                     <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
                                         @csrf
                                         @method('DELETE')
