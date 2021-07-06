@@ -23,8 +23,9 @@
                             <div class="post-description">
                                 <div class="stats">
                                     <div class="btn-group">
-                                        <form action="{{ route('posts.like', $post) }}" method="post">
+                                        <form action="{{ route('likes.store', $post) }}" method="post">
                                             @csrf
+                                            <input type="hidden" name="class" value="App\Models\Post">
                                             <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>
                                         </form>
                                         <form action="{{ route('posts.dislike', $post) }}" method="post">
@@ -80,8 +81,9 @@
                                                 <span>{{ $comment->body }}</span>
                                             </div>
                                             <div class="btn-group">
-                                                <form action="{{ route('posts.comments.like', $comment) }}" method="post">
+                                                <form action="{{ route('likes.store', $comment) }}" method="post">
                                                     @csrf
+                                                    <input type="hidden" name="class" value="App\Models\Comment">
                                                     <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
                                                 </form>
                                                 <form action="{{ route('posts.comments.dislike', $comment) }}" method="post">
@@ -123,8 +125,9 @@
                                                                     <span>{{ $reply->body }}</span>
                                                                 </div>
                                                                 <div class="btn-group">
-                                                                    <form action="{{ route('posts.comments.like', $reply) }}" method="post">
+                                                                    <form action="{{ route('likes.store', $reply) }}" method="post">
                                                                         @csrf
+                                                                        <input type="hidden" name="class" value="App\Models\Comments">
                                                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
                                                                     </form>
                                                                     <form action="{{ route('posts.comments.dislike', $reply) }}" method="post">

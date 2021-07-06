@@ -30,7 +30,7 @@
                                     </a>
                                 </p>
                                 <div class="btn-group">
-                                    <form action="{{ route('definitions.like', $definition) }}" method="post">
+                                    <form action="{{ route('likes.store', $definition) }}" method="post">
                                         @csrf
                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</button>
                                     </form>
