@@ -24,8 +24,9 @@
                             </a>
                         </p>
                         <div class="btn-group">
-                            <form action="{{ route('definitions.like', $definition) }}" method="post">
+                            <form action="{{ route('likes.store', $definition) }}" method="post">
                                 @csrf
+                                <input type="hidden" name="class" value="App\Models\Definition">
                                 <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
                             </form>
                             <form action="{{ route('definitions.dislike', $definition) }}" method="post">
@@ -75,8 +76,9 @@
                                     <span>{{ $comment->body }}</span>
                                 </div>
                                 <div class="btn-group">
-                                    <form action="{{ route('definitions.comments.like', $comment) }}" method="post">
+                                    <form action="{{ route('likes.store', $comment) }}" method="post">
                                         @csrf
+                                        <input type="hidden" name="class" value="App\Models\Comment">
                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
                                     </form>
                                     <form action="{{ route('definitions.comments.dislike', $comment) }}" method="post">
@@ -94,8 +96,8 @@
                                             <div class="form-group">
                                                 <input type="hidden" value="{{ $comment->id }}" name="parentId">
                                                 <input type="hidden" value="App\Models\Definition" name="class">
-                                                <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
-                                                @error('body')
+                                                <textarea name="replyBody" class="form-control @error('replyBody') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
+                                                @error('replyBody')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -118,8 +120,9 @@
                                                         <span>{{ $reply->body }}</span>
                                                     </div>
                                                     <div class="btn-group">
-                                                        <form action="{{ route('definitions.comments.like', $reply) }}" method="post">
+                                                        <form action="{{ route('likes.store', $reply) }}" method="post">
                                                             @csrf
+                                                            <input type="hidden" name="class" value="App\Models\Comment">
                                                             <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
                                                         </form>
                                                         <form action="{{ route('definitions.comments.dislike', $reply) }}" method="post">

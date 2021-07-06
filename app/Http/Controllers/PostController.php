@@ -100,28 +100,6 @@ class PostController extends Controller
         return view('posts.hot', ['posts' => $posts]);
     }
 
-// TODO: Move to controller ???
-    public function like(Post $post)
-    {
-        if (Like::where('user_id', auth()->id())
-            ->where('likeable_id', $post->id)
-            ->where('likeable_type', get_class($post))
-            ->first()) {
-
-            return back();
-        }
-
-        Like::create([
-            'user_id' => auth()->id(),
-            'likeable_id' => $post->id,
-            'likeable_type' => get_class($post)
-        ]);
-
-        self::success('Your reaction has been recorded!');
-
-        return back();
-    }
-
     public function dislike(Post $post)
     {
         if (Like::where('user_id', auth()->id())
@@ -137,27 +115,6 @@ class PostController extends Controller
             'likeable_id' => $post->id,
             'likeable_type' => get_class($post),
             'is_dislike' => 1
-        ]);
-
-        self::success('Your reaction has been recorded!');
-
-        return back();
-    }
-
-    public function likeComment(Comment $comment)
-    {
-        if (Like::where('user_id', auth()->id())
-            ->where('likeable_id', $comment->id)
-            ->where('likeable_type', get_class($comment))
-            ->first()) {
-
-            return back();
-        }
-
-        Like::create([
-            'user_id' => auth()->id(),
-            'likeable_id' => $comment->id,
-            'likeable_type' => get_class($comment),
         ]);
 
         self::success('Your reaction has been recorded!');
