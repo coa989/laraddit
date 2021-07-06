@@ -40,7 +40,7 @@
                                             <form action="{{ route('posts.destroy', $post) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-sm btn-danger mt-1">Delete</button>
                                             </form>
                                         @endcan
                                     </div>
@@ -72,9 +72,9 @@
                                         <div class="box-footer box-comments mt-3" style="display: block;">
                                             <div class="box-comment">
                                                 <div class="comment-text">
-                                        <span class="username">
-                                            <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
-                                        </span>
+                                                    <span class="username">
+                                                        <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
+                                                    </span>
                                                     <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
                                                 </div>
                                                 <span>{{ $comment->body }}</span>
@@ -99,8 +99,8 @@
                                                         <div class="form-group">
                                                             <input type="hidden" value="{{ $comment->id }}" name="parentId">
                                                             <input type="hidden" value="App\Models\Post" name="class">
-                                                            <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
-                                                            @error('body')
+                                                            <textarea name="replyBody" class="form-control @error('replyBody') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
+                                                            @error('replyBody')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
                                                             </div>

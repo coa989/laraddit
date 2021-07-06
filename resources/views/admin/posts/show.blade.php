@@ -23,12 +23,13 @@
                             <div class="post-description">
                                 <div class="stats">
                                     <div class="btn-group">
-                                        <button class="btn"><i class="far fa-thumbs-up"></i></i> {{ $post->likes()->where('is_dislike', 0)->get()->count() }}</button>
-                                        <button class="btn"><i class="far fa-thumbs-down"></i> {{ $post->likes()->where('is_dislike', 1)->get()->count() }}</button>
-                                        <button class="btn"><i class="fas fa-comment"></i> {{ $post->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $post->comments()->count()) }}</i></a></button>
+                                        <button class="btn"><i class="far fa-thumbs-up"></i></i> {{ $post->likes_count }}</button>
+                                        <button class="btn"><i class="far fa-thumbs-down"></i> {{ $post->dislikes_count }}</button>
+                                        <button class="btn"><i class="fas fa-comment"></i> {{ $post->comments_count }}
+                                            {{ Str::plural('comment', $post->comments_count) }}</i></a></button>
                                         <button class="btn">
-                                            {{ $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count() }}
-                                            {{ Str::plural('point', $post->likes()->where('is_dislike', 0)->get()->count() - $post->likes()->where('is_dislike', 1)->get()->count()) }}
+                                            {{ $post->likes_count - $post->likes_count }}
+                                            {{ Str::plural('point', $post->likes_count - $post->dislikes_count) }}
                                         </button>
                                     </div>
                                     <div class="btn-group">
@@ -65,8 +66,8 @@
                                                 <span>{{ $comment->body }}</span>
                                             </div>
                                             <div class="btn-group">
-                                                <button class="btn"><i class="far fa-thumbs-up"></i> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</button>
-                                                <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</button>
+                                                <button class="btn"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
+                                                <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->dislikes_count }}</button>
                                                 @if(!$comment->approved)
                                                     <a href="{{ route('admin.comments.approve', $comment) }}"><button class="btn btn-success btn-sm">Approve</button></a>
                                                 @endif

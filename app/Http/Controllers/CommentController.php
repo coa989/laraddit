@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCommentReplyRequest;
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Comment;
 
@@ -21,7 +22,7 @@ class CommentController extends Controller
         return back();
     }
 
-    public function reply(StoreCommentRequest $request, $id)
+    public function reply(StoreCommentReplyRequest $request, $id)
     {
         Comment::create([
             'user_id' => auth()->id(),

@@ -16,11 +16,12 @@
                     </div>
                     <div class="card-footer">
                         <p>
-                            <a href="">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }} {{ Str::plural('point', $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count()) }}</a>
+                            <a href="">{{ $definition->likes_count - $definition->dislikes_count }}
+                                {{ Str::plural('point', $definition->likes_count - $definition->dislikes_count) }}</a>
                         </p>
                         <div class="btn-group">
-                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</button>
-                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</button>
+                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
+                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->dislikes_count }}</button>
                         </div>
                         <div class="btn btn-group-sm">
                             @if(!$definition->approved)
@@ -41,7 +42,8 @@
                     </div>
                 </div>
                 <div class="post-footer">
-                    <i class="fas fa-comment">{{ $definition->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $definition->comments()->count()) }}</i>
+                    <i class="fas fa-comment"></i> {{ $definition->comments_count }}
+                    {{ Str::plural('comment', $definition->comments_count) }}
                     <ul class="comments-list">
                         @foreach($definition->comments as $comment)
                             <div class="box-footer box-comments mt-3" style="display: block;">
@@ -55,8 +57,8 @@
                                     <span>{{ $comment->body }}</span>
                                 </div>
                                 <div class="btn-group-sm">
-                                    <button class="btn"><i class="far fa-thumbs-up"></i> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</button>
-                                    <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</button>
+                                    <button class="btn"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
+                                    <button class="btn"><i class="far fa-thumbs-down"></i> {{ $comment->dislikes_count }}</button>
                                 </div>
                                 <div class="btn-group">
                                     @if(!$comment->approved)
