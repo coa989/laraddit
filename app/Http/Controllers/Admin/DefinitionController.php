@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Comment;
 use App\Models\Definition;
-use Illuminate\Http\Request;
 
 class DefinitionController extends Controller
 {

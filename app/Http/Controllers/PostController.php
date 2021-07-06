@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Components\FlashMessages;
 use App\Http\Requests\StorePostRequest;
-use App\Models\Comment;
-use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
 use Carbon\Carbon;

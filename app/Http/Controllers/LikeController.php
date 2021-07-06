@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Components\FlashMessages;
 use App\Models\Like;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
+    use FlashMessages;
+
     public function store(Request $request, $id)
     {
         if (Like::where('user_id', auth()->id())
@@ -14,7 +17,7 @@ class LikeController extends Controller
             ->where('likeable_type', $request->class)
             ->first()) {
 
-            // TODO: add return message
+            self::danger('You have already voted!');
             return back();
         }
 
@@ -25,7 +28,6 @@ class LikeController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
-
         return back();
     }
 }

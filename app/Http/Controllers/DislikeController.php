@@ -14,6 +14,7 @@ class DislikeController extends Controller
             ->where('likeable_type', $request->class)
             ->first()) {
 
+            self::danger('You have already voted!');
             return back();
         }
 
@@ -25,7 +26,6 @@ class DislikeController extends Controller
         ]);
 
         self::success('Your reaction has been recorded!');
-
         return back();
     }
 }

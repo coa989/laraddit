@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Components\FlashMessages;
 use App\Http\Requests\StoreDefinitionRequest;
-use App\Models\Comment;
 use App\Models\Definition;
-use App\Models\Like;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
