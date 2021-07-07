@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\CommentApprove;
+use App\Events\CommentReject;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -24,6 +26,8 @@ class CommentController extends Controller
             'rejected' => false
         ]);
 
+        CommentApprove::dispatch($comment);
+
         return back();
     }
 
@@ -33,6 +37,8 @@ class CommentController extends Controller
             'rejected' => true,
             'approved' => false
         ]);
+
+        CommentReject::dispatch($comment);
 
         return back();
     }

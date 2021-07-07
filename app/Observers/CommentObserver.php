@@ -27,19 +27,7 @@ class CommentObserver
      */
     public function updated(Comment $comment)
     {
-        if ($comment->isDirty('approved')) {
-            if ($comment->commentable_type === 'App\Models\Post') {
-                $summary = Post::where('id', $comment->commentable_id)->first();
-                $summary->comments_count++;
-                $summary->ratings++;
-                $summary->save();
-            } else {
-                $summary = Definition::where('id', $comment->commentable_id)->first();
-                $summary->comments_count++;
-                $summary->ratings++;
-                $summary->save();
-            }
-        }
+       //
     }
 
     /**

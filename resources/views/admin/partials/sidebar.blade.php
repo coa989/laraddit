@@ -44,7 +44,7 @@
                 </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseComments" aria-expanded="false" aria-controls="collapseComments">
-                <div class="sb-nav-link-icon"><i class="fas fa-layer-group"></i></div>
+                <div class="sb-nav-link-icon"><i class="fas fa-comments"></i></div>
                 Comments
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
