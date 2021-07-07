@@ -26,10 +26,10 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        if (auth()->user()->cannot('store', Post::class)) {
-            self::danger('You have reached daily post upload limit! Please try again later.');
-            return back();
-        }
+//        if (auth()->user()->cannot('store', Post::class)) {
+//            self::danger('You have reached daily post upload limit! Please try again later.');
+//            return back();
+//        }
 
         $image = $request->image;
         $fileName = Str::random(25).'.'.$image->getClientOriginalExtension();
@@ -64,8 +64,8 @@ class PostController extends Controller
             'medium_image_path' => $mediumImagePath,
         ]);
 
-        if ($request->tags) {
-            $this->tags($post, $request);
+        if ($request->tag_list) {
+            Tag::handle($post, $request);
         }
 
         self::success('Post created successfully! It will be visible when admin approves it.');
@@ -98,7 +98,7 @@ class PostController extends Controller
         return view('posts.hot', ['posts' => $posts]);
     }
 
-    public function tag(Tag $tag)
+    public function filterByTag(Tag $tag)
     {
         $tagsId = $tag->id;
 

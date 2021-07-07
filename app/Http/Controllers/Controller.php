@@ -13,21 +13,5 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
     use FlashMessages;
-
-    public function tags($object, $request)
-    {
-
-        $tags = explode(',', str_replace(' ', '', $request->tags));
-        foreach ($tags as $tag) {
-            $find_tag = Tag::where('name', strtolower($tag))->first();
-            if ($find_tag){
-                $object->tags()->attach($find_tag->id);
-            } else {
-                $new_tag = Tag::create(['name' => strtolower($tag)]);
-                $object->tags()->attach($new_tag->id);
-            }
-        }
-    }
 }
