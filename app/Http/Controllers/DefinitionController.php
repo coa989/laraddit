@@ -40,8 +40,8 @@ class DefinitionController extends Controller
             'slug' => $slug
         ]);
 
-        if ($request->tags) {
-            $this->tags($definition, $request);
+        if ($request->tag_list) {
+            Tag::handle($definition, $request);
         }
 
         self::success('Definition created successfully! It will be visible when admin approves it.');
@@ -74,7 +74,7 @@ class DefinitionController extends Controller
         return view('definitions.hot', ['definitions' => $definitions]);
     }
 
-    public function tag(Tag $tag)
+    public function filterByTag(Tag $tag)
     {
         $tagsId = $tag->id;
 

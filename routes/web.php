@@ -10,6 +10,7 @@ use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,7 +25,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/posts/pending', [AdminPostController::class, 'pending'])->name('posts.pending');
     Route::get('/posts/approve/{post}', [AdminPostController::class, 'approve'])->name('posts.approve');
     Route::get('/posts/reject/{post}', [AdminPostController::class, 'reject'])->name('posts.reject');
-    Route::get('/posts/show/{post}', [AdminPostController::class, 'show'])->name('posts.show');
+    Route::get('/posts/show/{post:slug}', [AdminPostController::class, 'show'])->name('posts.show');
     Route::delete('/posts/destroy/{post}', [AdminPostController::class, 'destroy'])->name('posts.destroy');
 
     Route::get('/definitions', [AdminDefinitionController::class, 'index'])->name('definitions');
@@ -33,7 +34,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::get('/definitions/pending', [AdminDefinitionController::class, 'pending'])->name('definitions.pending');
     Route::get('/definitions/approve/{definition}', [AdminDefinitionController::class, 'approve'])->name('definitions.approve');
     Route::get('/definitions/reject/{definition}', [AdminDefinitionController::class, 'reject'])->name('definitions.reject');
-    Route::get('/definitions/show/{definition}', [AdminDefinitionController::class, 'show'])->name('definitions.show');
+    Route::get('/definitions/show/{definition:slug}', [AdminDefinitionController::class, 'show'])->name('definitions.show');
     Route::delete('/definitions/destroy/{definition}', [AdminDefinitionController::class, 'destroy'])->name('definitions.destroy');
 
     Route::get('/users', [AdminUserController::class, 'index'])->name('users');
@@ -57,26 +58,26 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
 
 Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
     Route::get('/home', [PostController::class, 'index'])->name('index');
-    Route::get('/show/{post}', [PostController::class, 'show'])->name('show');
+    Route::get('/show/{post:slug}', [PostController::class, 'show'])->name('show');
 
     Route::group(['middleware' => 'auth'], function () {
         Route::view('/create', 'posts.create')->middleware('can:create,App\Models\Post')->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');
         Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
-        Route::get('/tags/{tag}', [PostController::class, 'tag'])->name('tags');
+        Route::get('/tags/{tag:name}', [PostController::class, 'filterByTag'])->name('tags');
         Route::get('/hot', [PostController::class, 'hot'])->name('hot');
     });
 });
 
 Route::group(['prefix' => 'definitions', 'as' => 'definitions.'], function () {
     Route::get('/', [DefinitionController::class, 'index'])->name('index');
-    Route::get('/show/{definition}', [DefinitionController::class, 'show'])->name('show');
+    Route::get('/show/{definition:slug}', [DefinitionController::class, 'show'])->name('show');
 
     Route::group(['middleware' => 'auth'], function () {
         Route::view('/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('create');
         Route::post('/store', [DefinitionController::class, 'store'])->name('store');
         Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy');
-        Route::get('/tags/{tag}', [DefinitionController::class, 'tag'])->name('tags');
+        Route::get('/tags/{tag:name}', [DefinitionController::class, 'filterByTag'])->name('tags');
         Route::get('/hot', [DefinitionController::class, 'hot'])->name('hot');
     });
 });
@@ -99,5 +100,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'likes', 'as' => 'likes.'], fu
 Route::group(['middleware' => 'auth', 'prefix' => 'dislikes', 'as' => 'dislikes.'], function () {
     Route::post('/{model}/store', [DislikeController::class, 'store'])->name('store');
 });
+
+Route::get('/tags/find', [TagController::class, 'find']);
 
 Auth::routes();
