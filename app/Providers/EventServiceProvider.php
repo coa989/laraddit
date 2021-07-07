@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\CommentApprove;
+use App\Events\CommentReject;
+use App\Listeners\DecreaseCommentCount;
+use App\Listeners\IncreaseCommentCount;
 use App\Models\Comment;
 use App\Models\Definition;
 use App\Models\Like;
@@ -26,6 +30,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        CommentApprove::class => [
+            IncreaseCommentCount::class
+        ],
+        CommentReject::class => [
+            DecreaseCommentCount::class
+        ]
     ];
 
     /**
