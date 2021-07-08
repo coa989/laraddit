@@ -6,6 +6,7 @@ use App\Models\Definition;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
@@ -39,7 +40,9 @@ class TagController extends Controller
             $query->where('post_tag.tag_id', $tagsId);
         })->latest()->paginate(10);
 
-        return view('home', ['posts' => $posts]);
+        $popularTags = Tag::popular();
+
+        return view('home', ['posts' => $posts, 'tags' => $popularTags]);
     }
 
     public function filterDefinitions(Tag $tag)
@@ -50,7 +53,9 @@ class TagController extends Controller
             $query->where('definition_tag.tag_id', $tagsId);
         })->latest()->paginate(15);
 
-        return view('definitions.index', ['definitions' => $definitions]);
+        $popularTags = Tag::popular();
+
+        return view('definitions.index', ['definitions' => $definitions, 'tags' => $popularTags]);
     }
 
 }

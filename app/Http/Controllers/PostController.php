@@ -21,7 +21,9 @@ class PostController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('home', ['posts' => $posts]);
+        $popularTags = Tag::popular();
+
+        return view('home', ['posts' => $posts, 'tags' => $popularTags]);
     }
 
     public function store(StorePostRequest $request)
@@ -95,6 +97,8 @@ class PostController extends Controller
             ->orderBy('ratings', 'DESC')
             ->paginate(10);
 
-        return view('posts.hot', ['posts' => $posts]);
+        $popularTags = Tag::popular();
+
+        return view('posts.hot', ['posts' => $posts, 'tags' => $popularTags]);
     }
 }

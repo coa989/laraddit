@@ -20,7 +20,9 @@ class DefinitionController extends Controller
             ->latest()
             ->paginate(15);
 
-        return view('definitions.index', ['definitions' => $definitions]);
+        $popularTags = Tag::popular();
+
+        return view('definitions.index', ['definitions' => $definitions, 'tags' => $popularTags]);
     }
 
     public function store(StoreDefinitionRequest $request)
@@ -71,6 +73,8 @@ class DefinitionController extends Controller
             ->orderBy('ratings', 'DESC')
             ->paginate(10);
 
-        return view('definitions.hot', ['definitions' => $definitions]);
+        $popularTags = Tag::popular();
+
+        return view('definitions.hot', ['definitions' => $definitions, 'tags' => $popularTags]);
     }
 }
