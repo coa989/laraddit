@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
-use Sofa\Eloquence\Eloquence;
 
 class Tag extends Model
 {
-    use HasFactory, Eloquence;
-
-    protected $searchableColumns = ['name'];
+    use HasFactory;
 
     protected $fillable = ['name'];
 

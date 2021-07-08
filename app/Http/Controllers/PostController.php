@@ -26,10 +26,10 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-//        if (auth()->user()->cannot('store', Post::class)) {
-//            self::danger('You have reached daily post upload limit! Please try again later.');
-//            return back();
-//        }
+        if (auth()->user()->cannot('store', Post::class)) {
+            self::danger('You have reached daily post upload limit! Please try again later.');
+            return back();
+        }
 
         $image = $request->image;
         $fileName = Str::random(25).'.'.$image->getClientOriginalExtension();
@@ -96,16 +96,5 @@ class PostController extends Controller
             ->paginate(10);
 
         return view('posts.hot', ['posts' => $posts]);
-    }
-
-    public function filterByTag(Tag $tag)
-    {
-        $tagsId = $tag->id;
-
-        $posts = Post::whereHas('tags', function ($query) use($tagsId) {
-            $query->where('post_tag.tag_id', $tagsId);
-        })->latest()->paginate(10);
-
-        return view('home', ['posts' => $posts]);
     }
 }

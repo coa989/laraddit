@@ -73,15 +73,4 @@ class DefinitionController extends Controller
 
         return view('definitions.hot', ['definitions' => $definitions]);
     }
-
-    public function filterByTag(Tag $tag)
-    {
-        $tagsId = $tag->id;
-
-        $definitions = Definition::whereHas('tags', function ($query) use($tagsId) {
-            $query->where('definition_tag.tag_id', $tagsId);
-        })->latest()->paginate(15);
-
-        return view('definitions.index', ['definitions' => $definitions]);
-    }
 }

@@ -5,7 +5,7 @@
         <div class="row ">
             @if(!$comments->first())
                 <div class="container">
-                    <h3 class="text-center">No pending comments!</h3>
+                    <h3 class="text-center">No comments!</h3>
                 </div>
             @else
                 <table class="table">
