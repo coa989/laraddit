@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Tag extends Model
 {
@@ -19,6 +20,17 @@ class Tag extends Model
     public function definitions()
     {
         return $this->belongsToMany(Definition::class);
+    }
+
+    public static function popular()
+    {
+        return DB::table('post_tag')
+            ->join('tags','tags.id','=','tag_id')
+            ->select(DB::raw('count(tag_id) as repetition, tag_id'), 'tags.name as name')
+            ->groupBy('tag_id', 'name')
+            ->orderBy('repetition', 'desc')
+            ->get()
+            ->take(10);
     }
 
     public static function handle($object, $request)

@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="d-flex">
+    <div class="border-end bg-white ml-4 position-fixed" id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom bg-light">Popular</div>
+        <div class="list-group list-group-flush">
+            @foreach($tags as $tag)
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{ route('tags.posts', $tag->name) }}">{{ $tag->name }}</a>
+            @endforeach
+        </div>
+    </div>
     <div class="container">
         @include ('partials.messages')
         <div class="row d-flex justify-content-center">
@@ -66,4 +75,5 @@
         @endforeach
         {{ $posts->links() }}
     </div>
+</div>
 @endsection
