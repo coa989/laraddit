@@ -22,9 +22,9 @@ class Tag extends Model
         return $this->belongsToMany(Definition::class);
     }
 
-    public static function popular()
+    public static function popular($model)
     {
-        return DB::table('post_tag')
+        return DB::table($model."_tag")
             ->join('tags','tags.id','=','tag_id')
             ->select(DB::raw('count(tag_id) as repetition, tag_id'), 'tags.name as name')
             ->groupBy('tag_id', 'name')
@@ -35,7 +35,7 @@ class Tag extends Model
 
     public static function handle($object, $request)
     {
-        $tags = $request->tag_list;
+        $tags = array_unique($request->tag_list);
         foreach ($tags as $tag) {
             $find_tag = Tag::where('name', strtolower($tag))->first();
             if ($find_tag){

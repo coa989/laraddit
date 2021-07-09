@@ -45,7 +45,7 @@
                                             <p class="mt-2">
                                                 Tags:
                                                 @foreach($post->tags as $tag)
-                                                    <a href="{{ route('posts.tags', $tag) }}">{{ $tag->name }}</a>
+                                                    <a href="{{ route('tags.posts', $tag) }}">{{ $tag->name }}</a>
                                                 @endforeach
                                             </p>
                                         </div>

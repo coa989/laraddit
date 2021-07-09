@@ -20,18 +20,17 @@ class DefinitionController extends Controller
             ->latest()
             ->paginate(15);
 
-        $popularTags = Tag::popular();
+        $popularTags = Tag::popular('definition');
 
         return view('definitions.index', ['definitions' => $definitions, 'tags' => $popularTags]);
     }
 
     public function store(StoreDefinitionRequest $request)
     {
-        if (auth()->user()->cannot('store', Definition::class)) {
-            self::danger('You have reached daily definition upload limit! Please try again later.');
-
-            return back();
-        }
+//        if (auth()->user()->cannot('store', Definition::class)) {
+//            self::danger('You have reached daily definition upload limit! Please try again later.');
+//            return back();
+//        }
 
         $slug = Str::slug($request->title);
 
@@ -62,6 +61,7 @@ class DefinitionController extends Controller
             abort(403);
         }
 
+        $definition->tags()->detach();
         $definition->delete();
 
         return redirect()->route('definitions.index');
@@ -73,7 +73,7 @@ class DefinitionController extends Controller
             ->orderBy('ratings', 'DESC')
             ->paginate(10);
 
-        $popularTags = Tag::popular();
+        $popularTags = Tag::popular('definition');
 
         return view('definitions.hot', ['definitions' => $definitions, 'tags' => $popularTags]);
     }

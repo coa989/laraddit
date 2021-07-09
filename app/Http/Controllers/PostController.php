@@ -21,17 +21,17 @@ class PostController extends Controller
             ->latest()
             ->paginate(10);
 
-        $popularTags = Tag::popular();
+        $popularTags = Tag::popular('post');
 
         return view('home', ['posts' => $posts, 'tags' => $popularTags]);
     }
 
     public function store(StorePostRequest $request)
     {
-        if (auth()->user()->cannot('store', Post::class)) {
-            self::danger('You have reached daily post upload limit! Please try again later.');
-            return back();
-        }
+//        if (auth()->user()->cannot('store', Post::class)) {
+//            self::danger('You have reached daily post upload limit! Please try again later.');
+//            return back();
+//        }
 
         $image = $request->image;
         $fileName = Str::random(25).'.'.$image->getClientOriginalExtension();
@@ -86,6 +86,7 @@ class PostController extends Controller
             abort(403);
         }
 
+        $post->tags()->detach();
         $post->delete();
 
         return redirect()->route('index');
@@ -97,7 +98,7 @@ class PostController extends Controller
             ->orderBy('ratings', 'DESC')
             ->paginate(10);
 
-        $popularTags = Tag::popular();
+        $popularTags = Tag::popular('post');
 
         return view('posts.hot', ['posts' => $posts, 'tags' => $popularTags]);
     }
