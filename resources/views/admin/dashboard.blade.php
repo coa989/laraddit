@@ -85,6 +85,47 @@
         </div>
     </div>
     <div class="container px-4 py-2" >
+        <h2 class="font-weight-bold">COMMENTS</h2>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-4">
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h1>{{ count(\App\Models\Comment::all()) }}</h1>
+                    <h5>ALL COMMENTS</h5>
+                    <a href="{{ route('admin.comments') }}" class="btn btn-secondary">
+                        View
+                    </a>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h1>{{ count(\App\Models\Comment::where('approved', true)->get()) }}</h1>
+                    <h5>APPROVED COMMENTS</h5>
+                    <a href="{{ route('admin.comments.approved') }}" class="btn btn-secondary">
+                        View
+                    </a>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h1>{{ count(\App\Models\Comment::where('approved', false)->where('rejected', false)->get()) }}</h1>
+                    <h5>PENDING COMMENTS</h5>
+                    <a href="{{ route('admin.comments.pending') }}" class="btn btn-secondary">
+                        View
+                    </a>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div>
+                    <h1>{{ count(\App\Models\Comment::where('rejected', true)->get()) }}</h1>
+                    <h5>REJECTED COMMENTS</h5>
+                    <a href="{{ route('admin.comments.rejected') }}" class="btn btn-secondary">
+                        View
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container px-4 py-2" >
         <h2 class="font-weight-bold">USERS</h2>
         <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
             <div class="col d-flex align-items-start">
