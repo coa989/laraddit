@@ -12,13 +12,16 @@
     </form>
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <a class="nav-link" role="button" href="{{ route('admin.notifications') }}">
+            <i class="fas fa-envelope fa-lg"></i>
+            <sup><span class="badge badge-success">{{ auth()->user()->unreadNotifications->count() }}</span></sup>
+        </a>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ auth()->user()->name }}<i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="{{ route('admin.users.show', auth()->user()) }}">My Profile</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                    <a href="{{ route('admin.notifications') }}" class="dropdown-item">Notifications</a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
