@@ -6,6 +6,7 @@ use App\Events\CommentApprove;
 use App\Events\CommentReject;
 use App\Listeners\DecreaseCommentCount;
 use App\Listeners\IncreaseCommentCount;
+use App\Listeners\SendNewUserNotification;
 use App\Models\Comment;
 use App\Models\Definition;
 use App\Models\Like;
@@ -29,6 +30,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            SendNewUserNotification::class
         ],
         CommentApprove::class => [
             IncreaseCommentCount::class

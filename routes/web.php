@@ -18,6 +18,7 @@ Route::get('/', [PostController::class, 'index'])->name('index');
 
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+    Route::get('/notifications', [\App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notifications');
 
     Route::get('/posts', [AdminPostController::class, 'index'])->name('posts');
     Route::get('/posts/approved', [AdminPostController::class, 'approved'])->name('posts.approved');
@@ -47,7 +48,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::delete('/users/destroy/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/change-role{user}', [AdminUserController::class, 'changeRole'])->name('users.change-role');
 
-    Route::get('/comments', [AdminCommentController::class, 'index'])->name('comments.index');
+    Route::get('/comments', [AdminCommentController::class, 'index'])->name('comments');
     Route::get('/comments/approve/{comment}', [AdminCommentController::class, 'approve'])->name('comments.approve');
     Route::get('/comments/reject/{comment}', [AdminCommentController::class, 'reject'])->name('comments.reject');
     Route::get('/comments/approved', [AdminCommentController::class, 'approved'])->name('comments.approved');
