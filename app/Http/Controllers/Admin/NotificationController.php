@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 
 class NotificationController extends Controller
 {
@@ -16,8 +17,15 @@ class NotificationController extends Controller
 
     public function markAsRead($id)
     {
-        $notifications = auth()->user()->unreadNotifications->where('id', $id);
+        auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
 
-        dd($notifications);
+        return back();
+    }
+
+    public function markAllAsRead()
+    {
+        auth()->user()->unreadNotifications->markAsRead();
+
+        return back();
     }
 }
