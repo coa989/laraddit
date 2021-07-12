@@ -19,6 +19,8 @@ Route::get('/', [PostController::class, 'index'])->name('index');
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
     Route::get('/notifications', [\App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notifications');
+    Route::patch('/notifications/mark-as-read/{notification}', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('notifications.mark');
+    Route::patch('/notifications/mark-all-as-read/', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])->name('notifications.mark_all');
 
     Route::get('/posts', [AdminPostController::class, 'index'])->name('posts');
     Route::get('/posts/approved', [AdminPostController::class, 'approved'])->name('posts.approved');

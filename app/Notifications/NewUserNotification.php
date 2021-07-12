@@ -57,7 +57,6 @@ class NewUserNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'text' => 'New user has been registered',
             'name' => $this->user->name,
             'email' => $this->user->email,
         ];
