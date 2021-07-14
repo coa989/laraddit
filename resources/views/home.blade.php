@@ -45,11 +45,13 @@
                                     <div class="post-description">
                                         <div class="stats">
                                             <div class="btn-group">
-                                                <form action="{{ route('likes.store', $post) }}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="class" value="App\Models\Post">
-                                                    <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>
-                                                </form>
+                                                @dd($post)
+                                                <like-component :posts="{{ $post->id }}" :user="{{ auth()->id() }}" :model="{{ $post }}"></like-component>
+{{--                                                <form action="{{ route('likes.store', $post) }}" method="post" v-on:submit.prevent="likePost">--}}
+{{--                                                    @csrf--}}
+{{--                                                    <input type="hidden" name="class" value="App\Models\Post">--}}
+{{--                                                    <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>--}}
+{{--                                                </form>--}}
                                                 <form action="{{ route('dislikes.store', $post) }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="class" value="App\Models\Post">
@@ -75,6 +77,5 @@
             @endforeach
             {{ $posts->links() }}
         </div>
-        </div>
-
+    </div>
 @endsection

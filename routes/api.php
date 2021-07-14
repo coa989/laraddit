@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+//Route::apiResource('/like', \App\Http\Controllers\Api\LikeController::class);
+
+Route::post('/likes/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
+
+Route::get('/posts/{id}', [\App\Http\Controllers\Api\PostController::class, 'show']);
+
+
