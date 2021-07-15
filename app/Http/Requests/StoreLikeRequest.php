@@ -26,7 +26,7 @@ class StoreLikeRequest extends FormRequest
         return [
             'id' => ['required'],
             'user_id' => ['required'],
-            'model' => ['required']
+            'type' => ['required']
         ];
     }
 }

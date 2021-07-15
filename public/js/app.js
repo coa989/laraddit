@@ -1851,11 +1851,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['posts', 'user', 'model'],
+  props: ['posts', 'user', 'type'],
   data: function data() {
     return {
-      likes: null
+      likes: null,
+      success: false
     };
   },
   mounted: function mounted() {
@@ -1867,12 +1872,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
+      var _this2 = this;
+
+      console.log(this.model);
       axios.post('/api/likes/store', {
         'id': this.posts,
         'user_id': this.user,
-        'model': this.model
+        'type': this.type
       }).then(function (response) {
-        console.log(response.data.message);
+        _this2.likes = response.data.likes_count;
+        _this2.success = true;
       })["catch"](function (error) {
         console.log('Error', error.response.data);
       });
@@ -37448,7 +37457,23 @@ var render = function() {
       _c("button", { staticClass: "btn", attrs: { type: "submit" } }, [
         _c("i", { staticClass: "far fa-thumbs-up" }),
         _vm._v(" " + _vm._s(_vm.likes) + " ")
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.success,
+              expression: "success"
+            }
+          ],
+          staticClass: "alert alert-success"
+        },
+        [_vm._v("Your reaction has been recorded!")]
+      )
     ]
   )
 }

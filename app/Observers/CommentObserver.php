@@ -38,7 +38,7 @@ class CommentObserver
      */
     public function deleted(Comment $comment)
     {
-        if ($comment->commentable_type === 'App\Models\Post') {
+        if ($comment->commentable_type === 'Post') {
             $summary = Post::where('id', $comment->commentable_id)->first();
             $summary->comments_count--;
             $summary->ratings--;

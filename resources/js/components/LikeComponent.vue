@@ -1,15 +1,20 @@
 <template>
+
     <form @submit.prevent="submit">
         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ likes }} </button>
+        <div class="alert alert-success" v-show="success">Your reaction has been recorded!</div>
+
     </form>
+
 </template>
 
 <script>
     export default {
-        props:['posts','user', 'model'],
+        props:['posts','user', 'type'],
         data() {
             return {
                 likes: null,
+                success: false
             }
         },
         mounted() {
@@ -19,12 +24,14 @@
         },
         methods: {
             submit() {
+                console.log(this.model)
                 axios.post('/api/likes/store', {
                     'id': this.posts,
                     'user_id': this.user,
-                    'model': this.model
+                    'type': this.type
                 }).then(response => {
-                    console.log(response.data.message)
+                    this.likes = response.data.likes_count
+                    this.success = true
                 }).catch(error => {
                     console.log('Error',error.response.data)
                 })
