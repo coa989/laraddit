@@ -1860,7 +1860,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       likes: null,
-      success: false
+      success: false,
+      errors: {}
     };
   },
   mounted: function mounted() {
@@ -1883,6 +1884,10 @@ __webpack_require__.r(__webpack_exports__);
         _this2.likes = response.data.likes_count;
         _this2.success = true;
       })["catch"](function (error) {
+        if (error.response.status == 422) {
+          _this2.errors = error.response.data;
+        }
+
         console.log('Error', error.response.data);
       });
     }
@@ -37473,6 +37478,22 @@ var render = function() {
           staticClass: "alert alert-success"
         },
         [_vm._v("Your reaction has been recorded!")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.errors && _vm.errors.error,
+              expression: "errors && errors.error"
+            }
+          ],
+          staticClass: "alert alert-danger"
+        },
+        [_vm._v(_vm._s(_vm.errors.error))]
       )
     ]
   )

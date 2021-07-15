@@ -28,7 +28,7 @@ class DecreaseCommentCount
      */
     public function handle(CommentReject $event)
     {
-        if ($event->comment->commentable_type === 'Post') {
+        if ($event->comment->commentable_type === 'App\Models\Post') {
             $summary = Post::where('id', $event->comment->commentable_id)->first();
             $summary->comments_count--;
             $summary->ratings--;
