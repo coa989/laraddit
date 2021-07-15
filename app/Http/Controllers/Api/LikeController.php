@@ -30,19 +30,19 @@ class LikeController extends Controller
     {
         if (Like::where('user_id',$request->posts)
             ->where('likeable_id', $request->id)
-            ->where('likeable_type', get_class($request->model))
+            ->where('likeable_type', $request->type)
             ->first()) {
 
-            return response()->json(['message' =>'You have already voted!']);
+            return response()->json(Post::findOrFail($request->id));
         }
 
         Like::create([
             'user_id' => $request->user_id,
             'likeable_id' => $request->id,
-            'likeable_type' => get_class($request->model),
+            'likeable_type' => $request->type,
         ]);
 
-        return response()->json(['Your reaction has been recorded!']);
+        return response()->json(Post::findOrFail($request->id));
     }
 
     /**
