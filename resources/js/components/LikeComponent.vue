@@ -3,7 +3,7 @@
     <form @submit.prevent="submit">
         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ likes }} </button>
         <div class="alert alert-success" v-show="success">Your reaction has been recorded!</div>
-
+        <div class="alert alert-danger" v-show="errors && errors.error">{{ errors.error }}</div>
     </form>
 
 </template>
@@ -14,7 +14,8 @@
         data() {
             return {
                 likes: null,
-                success: false
+                success: false,
+                errors: {},
             }
         },
         mounted() {
@@ -33,6 +34,9 @@
                     this.likes = response.data.likes_count
                     this.success = true
                 }).catch(error => {
+                    if (error.response.status == 422) {
+                        this.errors = error.response.data
+                    }
                     console.log('Error',error.response.data)
                 })
             }

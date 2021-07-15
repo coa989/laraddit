@@ -45,7 +45,7 @@
                                     <div class="post-description">
                                         <div class="stats">
                                             <div class="btn-group">
-                                                <like-component :posts="{{ $post->id }}" :user="{{ auth()->id() }}" type="{{ class_basename(get_class($post)) }}"></like-component>
+                                                <like-component :posts="{{ $post->id }}" type="App\Models\Post" :user="{{ auth()->id() ? auth()->id() : 'null' }}"></like-component>
 {{--                                                <form action="{{ route('likes.store', $post) }}" method="post" v-on:submit.prevent="likePost">--}}
 {{--                                                    @csrf--}}
 {{--                                                    <input type="hidden" name="class" value="App\Models\Post">--}}

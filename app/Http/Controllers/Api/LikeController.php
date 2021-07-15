@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLikeRequest;
 use App\Models\Like;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -24,16 +25,16 @@ class LikeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreLikeRequest $request)
     {
-        if (Like::where('user_id',$request->posts)
+        if (Like::where('user_id', $request->user_id)
             ->where('likeable_id', $request->id)
             ->where('likeable_type', $request->type)
             ->first()) {
 
-            return response()->json(Post::findOrFail($request->id));
+            return response()->json(['error' => 'You have already voted!'], 422);
         }
 
         Like::create([
@@ -42,7 +43,7 @@ class LikeController extends Controller
             'likeable_type' => $request->type,
         ]);
 
-        return response()->json(Post::findOrFail($request->id));
+        return Post::findOrFail($request->id);
     }
 
     /**
@@ -53,10 +54,7 @@ class LikeController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id)->get();
-        return response()->json([
-            'post' => $post
-        ]);
+        return Post::find($id)->get();
     }
 
     /**
