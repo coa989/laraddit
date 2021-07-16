@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        props:['posts','user', 'type'],
+        props:['model','user', 'type', 'likesCount'],
         data() {
             return {
                 likes: null,
@@ -19,14 +19,12 @@
             }
         },
         mounted() {
-            axios.get('/api/posts/'+this.posts).then(response => {
-                this.likes = response.data.likes_count
-            })
+                this.likes = this.likesCount
         },
         methods: {
             submit() {
                 axios.post('/api/likes/store', {
-                    'id': this.posts,
+                    'id': this.model,
                     'user_id': this.user,
                     'type': this.type
                 }).then(response => {
