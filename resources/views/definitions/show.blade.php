@@ -29,11 +29,11 @@
                                             type="App\Models\Definition"
                                             :user="{{ auth()->id() ? auth()->id() : 'null' }}">
                             </like-component>
-                            <form action="{{ route('dislikes.store', $definition) }}" method="post">
-                                @csrf
-                                <input type="hidden" name="class" value="App\Models\Definition">
-                                <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->dislikes_count }}</button>
-                            </form>
+                            <dislike-component :model="{{ $definition->id }}"
+                                               :dislikes-count="{{ $definition->dislikes_count }}"
+                                               type="App\Models\Definition"
+                                               :user="{{ auth()->id() ? auth()->id() : 'null' }}">
+                            </dislike-component>
                             @can('delete', $definition)
                                 <form action="{{ route('definitions.destroy', $definition) }}" method="post">
                                     @csrf

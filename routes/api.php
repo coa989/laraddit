@@ -19,7 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/likes/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
-Route::get('/likes/{id}', [\App\Http\Controllers\Api\LikeController::class, 'show']);
+
+Route::post('/dislikes/store', [\App\Http\Controllers\Api\DislikeController::class, 'store']);
 
 
 

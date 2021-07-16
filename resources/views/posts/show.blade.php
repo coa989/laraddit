@@ -28,11 +28,11 @@
                                                         type="App\Models\Post"
                                                         :user="{{ auth()->id() ? auth()->id() : 'null' }}">
                                         </like-component>
-                                        <form action="{{ route('dislikes.store', $post) }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="class" value="App\Models\Post">
-                                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->dislikes_count }}</button>
-                                        </form>
+                                        <dislike-component :model="{{ $post->id }}"
+                                                           :dislikes-count="{{ $post->dislikes_count }}"
+                                                           type="App\Models\Post"
+                                                           :user="{{ auth()->id() ? auth()->id() : 'null' }}">
+                                        </dislike-component>
                                         <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
                                                 {{ Str::plural('comment', $post->comments_count) }}</i></a></button>
                                         <button class="btn">{{ $post->likes_count - $post->dislikes_count }}
