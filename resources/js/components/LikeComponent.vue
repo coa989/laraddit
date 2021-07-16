@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="submit">
         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ likes }} </button>
-        <div class="alert alert-success" v-show="success">{{ messages.success }}</div>
+        <div class="alert alert-success" v-show="success && messages.success">{{ messages.success }}</div>
         <div class="alert alert-danger" v-if="errors && errors.type">{{ errors.type[0] }}</div>
         <div class="alert alert-danger" v-if="errors && errors.user_id">{{ errors.user_id[0] }}</div>
     </form>
@@ -35,6 +35,7 @@
                     this.success = true
                     this.errors = {}
                 }).catch(error => {
+                    this.messages = {}
                     if (error.response.status = 422) {
                         this.errors = error.response.data.errors
                     }

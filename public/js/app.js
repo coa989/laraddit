@@ -1885,6 +1885,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.success = true;
         _this2.errors = {};
       })["catch"](function (error) {
+        _this2.messages = {};
+
         if (error.response.status = 422) {
           _this2.errors = error.response.data.errors;
         }
@@ -37472,8 +37474,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.success,
-              expression: "success"
+              value: _vm.success && _vm.messages.success,
+              expression: "success && messages.success"
             }
           ],
           staticClass: "alert alert-success"
