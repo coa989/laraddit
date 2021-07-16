@@ -5,19 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLikeRequest;
 use App\Models\Like;
-use App\Models\Post;
 use Illuminate\Http\Request;
 
-class LikeController extends Controller
+class DislikeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Post[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -32,24 +31,24 @@ class LikeController extends Controller
             'user_id' => $request->user_id,
             'likeable_id' => $request->id,
             'likeable_type' => $request->type,
+            'is_dislike' => 1
         ]);
 
         $class = $request->type;
 
         return response()->json([
-                'success' => 'Your reaction has been recorded!',
-                'likes' => $class::find($request->id)->likes_count
+            'success' => 'Your reaction has been recorded!',
+            'dislikes' => $class::find($request->id)->dislikes_count
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param $type
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function show($id, $type)
+    public function show($id)
     {
         //
     }
