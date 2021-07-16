@@ -7,6 +7,7 @@ use App\Http\Requests\StoreLikeRequest;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -29,21 +30,16 @@ class LikeController extends Controller
      */
     public function store(StoreLikeRequest $request)
     {
-        if (Like::where('user_id', $request->user_id)
-            ->where('likeable_id', $request->id)
-            ->where('likeable_type', $request->type)
-            ->first()) {
-
-            return response()->json(['error' => 'You have already voted!'], 422);
-        }
-
         Like::create([
             'user_id' => $request->user_id,
             'likeable_id' => $request->id,
             'likeable_type' => $request->type,
         ]);
 
-        return Post::findOrFail($request->id);
+        return response()->json([
+                'success' => 'Your reaction has been recorded!',
+                'likes' => Post::findOrFail($request->id)->likes_count
+        ]);
     }
 
     /**

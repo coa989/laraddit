@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueLike;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLikeRequest extends FormRequest
@@ -24,9 +25,15 @@ class StoreLikeRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required'],
             'user_id' => ['required'],
-            'type' => ['required']
+            'type' => new UniqueLike(request()->user_id, request()->id, request()->type)
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'user_id.required' => 'You need to be registered to vote'
         ];
     }
 }

@@ -1854,14 +1854,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['posts', 'user', 'type'],
   data: function data() {
     return {
       likes: null,
       success: false,
-      errors: {}
+      errors: {},
+      messages: {}
     };
   },
   mounted: function mounted() {
@@ -1875,17 +1875,18 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
-      console.log(this.model);
       axios.post('/api/likes/store', {
         'id': this.posts,
         'user_id': this.user,
         'type': this.type
       }).then(function (response) {
-        _this2.likes = response.data.likes_count;
+        _this2.likes = response.data.likes;
+        _this2.messages.success = response.data.success;
         _this2.success = true;
+        _this2.errors = {};
       })["catch"](function (error) {
-        if (error.response.status == 422) {
-          _this2.errors = error.response.data;
+        if (error.response.status = 422) {
+          _this2.errors = error.response.data.errors;
         }
 
         console.log('Error', error.response.data);
@@ -37477,24 +37478,20 @@ var render = function() {
           ],
           staticClass: "alert alert-success"
         },
-        [_vm._v("Your reaction has been recorded!")]
+        [_vm._v(_vm._s(_vm.messages.success))]
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.errors && _vm.errors.error,
-              expression: "errors && errors.error"
-            }
-          ],
-          staticClass: "alert alert-danger"
-        },
-        [_vm._v(_vm._s(_vm.errors.error))]
-      )
+      _vm.errors && _vm.errors.type
+        ? _c("div", { staticClass: "alert alert-danger" }, [
+            _vm._v(_vm._s(_vm.errors.type[0]))
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.errors && _vm.errors.user_id
+        ? _c("div", { staticClass: "alert alert-danger" }, [
+            _vm._v(_vm._s(_vm.errors.user_id[0]))
+          ])
+        : _vm._e()
     ]
   )
 }
