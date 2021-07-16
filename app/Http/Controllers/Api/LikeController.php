@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLikeRequest;
 use App\Models\Like;
 use App\Models\Post;
-use App\Models\User;
-use http\Env\Response;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -36,21 +34,26 @@ class LikeController extends Controller
             'likeable_type' => $request->type,
         ]);
 
+        $class = $request->type;
+
         return response()->json([
                 'success' => 'Your reaction has been recorded!',
-                'likes' => Post::findOrFail($request->id)->likes_count
+                'likes' => $class::find($request->id)->likes_count
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $type
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($id, $type)
     {
-        return Post::find($id)->get();
+        return response()->json([
+            'likes' => $type::find($id)->likes_count
+        ]);
     }
 
     /**

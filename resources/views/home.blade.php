@@ -45,12 +45,11 @@
                                     <div class="post-description">
                                         <div class="stats">
                                             <div class="btn-group">
-                                                <like-component :posts="{{ $post->id }}" type="App\Models\Post" :user="{{ auth()->id() ? auth()->id() : 'null' }}"></like-component>
-{{--                                                <form action="{{ route('likes.store', $post) }}" method="post" v-on:submit.prevent="likePost">--}}
-{{--                                                    @csrf--}}
-{{--                                                    <input type="hidden" name="class" value="App\Models\Post">--}}
-{{--                                                    <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>--}}
-{{--                                                </form>--}}
+                                                <like-component :model="{{ $post->id }}"
+                                                                :likes-count="{{ $post->likes_count }}"
+                                                                type="App\Models\Post"
+                                                                :user="{{ auth()->id() ? auth()->id() : 'null' }}">
+                                                </like-component>
                                                 <form action="{{ route('dislikes.store', $post) }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="class" value="App\Models\Post">

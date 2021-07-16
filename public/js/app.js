@@ -1855,7 +1855,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['posts', 'user', 'type'],
+  props: ['model', 'user', 'type', 'likesCount'],
   data: function data() {
     return {
       likes: null,
@@ -1865,30 +1865,26 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/api/posts/' + this.posts).then(function (response) {
-      _this.likes = response.data.likes_count;
-    });
+    this.likes = this.likesCount;
   },
   methods: {
     submit: function submit() {
-      var _this2 = this;
+      var _this = this;
 
       axios.post('/api/likes/store', {
-        'id': this.posts,
+        'id': this.model,
         'user_id': this.user,
         'type': this.type
       }).then(function (response) {
-        _this2.likes = response.data.likes;
-        _this2.messages.success = response.data.success;
-        _this2.success = true;
-        _this2.errors = {};
+        _this.likes = response.data.likes;
+        _this.messages.success = response.data.success;
+        _this.success = true;
+        _this.errors = {};
       })["catch"](function (error) {
-        _this2.messages = {};
+        _this.messages = {};
 
         if (error.response.status = 422) {
-          _this2.errors = error.response.data.errors;
+          _this.errors = error.response.data.errors;
         }
 
         console.log('Error', error.response.data);
