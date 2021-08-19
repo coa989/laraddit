@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\CommentApprove;
+use App\Events\CommentDelete;
 use App\Events\CommentReject;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
@@ -55,6 +56,8 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         $comment->delete();
+
+        CommentDelete::dispatch($comment);
 
         return back();
     }
