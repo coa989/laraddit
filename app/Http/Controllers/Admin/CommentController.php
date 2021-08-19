@@ -33,14 +33,23 @@ class CommentController extends Controller
 
     public function reject(Comment $comment)
     {
-        $comment->update([
-            'rejected' => true,
-            'approved' => false
-        ]);
+        if ($comment->approved === 1) {
+            $comment->update([
+                'rejected' => true,
+                'approved' => false
+            ]);
 
-        CommentReject::dispatch($comment);
+            CommentReject::dispatch($comment);
 
-        return back();
+            return back();
+        } else {
+            $comment->update([
+                'rejected' => true,
+                'approved' => false
+            ]);
+
+            return back();
+        }
     }
 
     public function destroy(Comment $comment)

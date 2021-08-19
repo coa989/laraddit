@@ -19,7 +19,7 @@ class CommentReject
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $comment
      */
     public function __construct($comment)
     {
