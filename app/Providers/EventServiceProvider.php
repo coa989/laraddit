@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\CommentApprove;
+use App\Events\CommentDelete;
 use App\Events\CommentReject;
 use App\Listeners\DecreaseCommentCount;
+use App\Listeners\DeleteChildComments;
 use App\Listeners\IncreaseCommentCount;
 use App\Listeners\SendNewUserNotification;
 use App\Models\Comment;
@@ -37,6 +39,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CommentReject::class => [
             DecreaseCommentCount::class
+        ],
+        CommentDelete::class => [
+            DeleteChildComments::class
         ]
     ];
 
