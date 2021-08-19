@@ -29,8 +29,9 @@
                             <td>{{ $author->role->name }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.change-role.user', $author) }}"><button class="btn btn-sm btn-success mr-1">Change Role</button></a>
-                                    <form action="{{ route('admin.destroy.user', $author) }}" method="post">
+                                    <a href="{{ route('admin.users.show', $author) }}"><button class="btn btn-sm btn-secondary mr-1">View</button></a>
+                                    <a href="{{ route('admin.users.change-role', $author) }}"><button class="btn btn-sm btn-success mr-1">Change Role</button></a>
+                                    <form action="{{ route('admin.users.destroy', $author) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>

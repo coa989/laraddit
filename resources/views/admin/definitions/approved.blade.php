@@ -26,15 +26,16 @@
                         <tr>
                             <td>{{ $definition->title }}</td>
                             <td>{{ $definition->slug }}</td>
-                            <td>{{ $definition->user->name }}</td>
+                            <td><a href="{{ route('admin.users.show', $definition->user) }}">{{ $definition->user->name }}</a></td>
                             <td>{{ $definition->body }}</td>
                             <td>@foreach($definition->tags as $tag) {{ $tag->name }} @endforeach</td>
-                            <td>{{ $definition->created_at }}</td>
-                            <td>{{ $definition->updated_at }}</td>
+                            <td>{{ $definition->created_at->diffForHumans() }}</td>
+                            <td>{{ $definition->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.show.definition', $definition) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
-                                    <form action="{{ route('admin.destroy.definition', $definition) }}" method="post">
+                                    <a href="{{ route('admin.definitions.reject', $definition) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
+                                    <a href="{{ route('admin.definitions.show', $definition) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
+                                    <form action="{{ route('admin.definitions.destroy', $definition) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>

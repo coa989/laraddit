@@ -26,18 +26,21 @@
                         <tr>
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->slug }}</td>
-                            <td>{{ $post->user->name }}</td>
-                            <td><img src="{{ asset($post->small_image_path) }}" alt=""></td>
+                            <td><a href="{{ route('admin.users.show', $post->user) }}">{{ $post->user->name }}</a></td>
+                            <td><img src="{{ asset($post->thumbnail) }}" alt=""></td>
                             <td>@foreach($post->tags as $tag) {{ $tag->name }} @endforeach</td>
-                            <td>{{ $post->created_at }}</td>
-                            <td>{{ $post->updated_at }}</td>
+                            <td>{{ $post->created_at->diffForHumans() }}</td>
+                            <td>{{ $post->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="btn-group">
                                     @if(!$post->approved)
-                                        <a href="{{ route('admin.approve.post', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
+                                        <a href="{{ route('admin.posts.approve', $post) }}"><button class="btn btn-sm btn-success mr-1">Approve</button></a>
                                     @endif
-                                    <a href="{{ route('admin.show.post', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
-                                    <form action="{{ route('admin.destroy.post', $post) }}" method="post">
+                                    @if(!$post->rejected)
+                                        <a href="{{ route('admin.posts.reject', $post) }}"><button class="btn btn-sm btn-warning mr-1">Reject</button></a>
+                                    @endif
+                                    <a href="{{ route('admin.posts.show', $post) }}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
+                                    <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">Delete</button>

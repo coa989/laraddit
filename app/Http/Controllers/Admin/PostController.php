@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')->paginate(8);
+        $posts = Post::with('user')
+            ->latest()
+            ->paginate(8);
 
         return view('admin.posts.index', ['posts' => $posts]);
     }
@@ -24,27 +25,54 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
     public function approve(Post $post)
     {
-        $post->update(['approved' => true]);
+        $post->update([
+            'approved' => true,
+            'rejected' => false
+        ]);
+
+        return back();
+    }
+
+    public function reject(Post $post)
+    {
+        $post->update([
+            'rejected' => true,
+            'approved' => false
+        ]);
 
         return back();
     }
 
     public function approved()
     {
-        $posts = Post::where('approved', true)->paginate(8);
+        $posts = Post::where('approved', true)
+            ->latest()
+            ->paginate(8);
 
         return view('admin.posts.approved', ['posts' => $posts]);
     }
 
-    public function waiting()
+    public function rejected()
     {
-        $posts = Post::where('approved', false)->paginate(8);
+        $posts = Post::where('rejected', true)
+            ->latest()
+            ->paginate(8);
 
-        return view('admin.posts.waiting', ['posts' => $posts]);
+        return view('admin.posts.rejected', ['posts' => $posts]);
+    }
+
+    public function pending()
+    {
+        $posts = Post::where('approved', false)
+            ->where('rejected', false)
+            ->latest()
+            ->paginate(8);
+
+        return view('admin.posts.pending', ['posts' => $posts]);
     }
 }

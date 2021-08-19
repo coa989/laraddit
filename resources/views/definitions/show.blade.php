@@ -3,88 +3,154 @@
 @section('content')
     <div class="container">
         @include ('partials.messages')
-        <div class="row">
-            <div class="card" style="width: 25rem;">
-                <div class="card-header">
-                    <a href="{{ route('definition.show', $definition) }}"><h4>{{ $definition->title }}</h4></a>
-                    <a href="{{ route('user.profile', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
-                    <a>{{ $definition->created_at->diffForHumans() }}</a>
-                </div>
-                <div class="card-body">
-                    <p>{{ $definition->body }}</p>
-                </div>
-                <div class="card-footer">
-                    @auth()
-                        @if(auth()->user()->role_id === 2)
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card my-4">
+                    <div class="card-header">
+                        <a href="{{ route('definitions.show', $definition) }}"><h4>{{ $definition->title }}</h4></a>
+                        <a href="{{ route('user.profile', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
+                        <a>{{ $definition->created_at->diffForHumans() }}</a>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ $definition->body }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <p>
+                            <a href="">{{ $definition->likes_count - $definition->dislikes_count }}
+                                {{ Str::plural('point', $definition->likes_count - $definition->dislikes_count) }} &#183;</a>
+                            <a href="{{ route('definitions.show', $definition) }}">
+                                <i class="fas fa-comment"> {{ $definition->comments_count }}
+                                    {{ Str::plural('comment', $definition->comments_count) }}</i>
+                            </a>
+                        </p>
+                        <div class="btn-group">
+                            <form action="{{ route('likes.store', $definition) }}" method="post">
+                                @csrf
+                                <input type="hidden" name="class" value="App\Models\Definition">
+                                <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
+                            </form>
+                            <form action="{{ route('dislikes.store', $definition) }}" method="post">
+                                @csrf
+                                <input type="hidden" name="class" value="App\Models\Definition">
+                                <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->dislikes_count }}</button>
+                            </form>
                             @can('delete', $definition)
-                                <form action="{{ route('destroy.definition', $definition) }}" method="post">
+                                <form action="{{ route('definitions.destroy', $definition) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             @endcan
-                        @endif
-                    @endauth
-                    <p>
-                        <a href="{{ route('definition.show', $definition) }}">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }}
-                            {{ Str::plural('point', $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count()) }}</a>
-                    </p>
-                    <div class="btn-group">
-                        <form action="{{ route('definition.like', $definition) }}" method="post">
-                            @csrf
-                            <button class="btn" type="submit"><i class="fas fa-arrow-up mr-4"> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
-                        </form>
-                        <form action="{{ route('definition.dislike', $definition) }}" method="post">
-                            @csrf
-                            <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
-                        </form>
+                        </div>
+                        <p class="mt-4">
+                            Tags:
+                            @foreach($definition->tags as $tag)
+                                <a href="{{ route('tags.definitions', $tag) }}">{{ $tag->name }}</a>
+                            @endforeach
+                        </p>
                     </div>
-                    <p class="mt-4">
-                        Tags:
-                        @foreach($definition->tags as $tag)
-                            <a href="{{ route('definition.tag', $tag) }}">{{ $tag->name }}</a>
-                        @endforeach
-                    </p>
                 </div>
-            </div>
-            <div class="container">
-                <form action="{{ route('definition.comment', $definition) }}" method="post">
-                    @csrf
-                    <div class="form-group">
-                        <p class="mt-2">{{ $definition->comments()->count() }} {{ Str::plural('comment', $definition->comments()->count()) }}</p>
-                        <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
-                        @error('body')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <button class="btn btn-success mt-2" type="submit">Post</button>
-                </form>
-                <hr>
-                <div class="container">
-                    @foreach($definition->comments as $comment)
+                <div class="post-footer">
+                    <form action="{{ route('comments.store', $definition) }}" method="post">
+                        @csrf
                         <div class="form-group">
-                            <p>
-                                <a href="">{{ $comment->user->name }}</a>
-                                <a href="">{{ $comment->created_at->diffForHumans() }}</a>
-                            </p>
-                            <p>{{ $comment->body }}</p>
-                            <div class="btn-group">
-                                <form action="{{ route('definition.like.comment', $comment) }}" method="post">
-                                    @csrf
-                                    <button class="btn" type="submit"><i class="fas fa-arrow-up mr-4"> {{ $comment->likes()->where('is_dislike', 0)->get()->count() }}</i></button>
-                                </form>
-                                <form action="{{ route('definition.dislike.comment', $comment) }}" method="post">
-                                    @csrf
-                                    <button class="btn" type="submit"><i class="fas fa-arrow-down mr-4"> {{ $comment->likes()->where('is_dislike', 1)->get()->count() }}</i></button>
-                                </form>
+                            <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
+                            <input type="hidden" name="class" value="App\Models\Definition">
+                            @error('body')
+                            <div class="invalid-feedback">
+                                {{ $message }}
                             </div>
+                            @enderror
                         </div>
-                        <hr>
-                    @endforeach
+                        <button class="btn btn-success" type="submit">Post</button>
+                    </form>
+                    <ul class="comments-list">
+                        @foreach($definition->comments->where('approved', true) as $comment)
+                            <div class="box-footer box-comments mt-3" style="display: block;">
+                                <div class="box-comment">
+                                    <div class="comment-text">
+                                        <span class="username">
+                                            <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
+                                        </span>
+                                        <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
+                                    </div>
+                                    <span>{{ $comment->body }}</span>
+                                </div>
+                                <div class="btn-group">
+                                    <form action="{{ route('likes.store', $comment) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="class" value="App\Models\Comment">
+                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
+                                    </form>
+                                    <form action="{{ route('dislikes.store', $comment) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="class" value="App\Models\Comments">
+                                        <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $comment->dislikes_count }}</button>
+                                    </form>
+                                </div>
+                                <div class="container">
+                                    <div class="replybutton btn4 like mb-3">
+                                        <button class="btn btn-sm text-muted">Reply</button>
+                                    </div>
+                                    <div class="col-lg-12 reply" style="display: none">
+                                        <form action="{{ route('comments.reply', $definition) }}" method="post">
+                                            @csrf
+                                            <div class="form-group">
+                                                <input type="hidden" value="{{ $comment->id }}" name="parentId">
+                                                <input type="hidden" value="App\Models\Definition" name="class">
+                                                <textarea name="replyBody" class="form-control @error('replyBody') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
+                                                @error('replyBody')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                            <button class="btn btn-success" type="submit">Reply</button>
+                                        </form>
+                                    </div>
+                                    @if($comment->replies->first())
+                                        @foreach($comment->replies as $reply)
+                                            @if($reply->approved)
+                                                <div class="box-footer box-comments mt-3" style="display: block;">
+                                                    <div class="box-comment">
+                                                        <div class="comment-text">
+                                                            <span class="username">
+                                                                <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                            </span>
+                                                            <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
+                                                        </div>
+                                                        <span>{{ $reply->body }}</span>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <form action="{{ route('likes.store', $reply) }}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="class" value="App\Models\Comment">
+                                                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
+                                                        </form>
+                                                        <form action="{{ route('dislikes.store', $reply) }}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="class" value="App\Models\Comment">
+                                                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $reply->dislikes_count }}</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.replybutton').click(function() {
+                $(this).next('.reply').toggle();
+            });
+        });
+    </script>
 @endsection

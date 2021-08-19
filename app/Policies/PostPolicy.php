@@ -52,7 +52,7 @@ class PostPolicy
      */
     public function store(User $user)
     {
-        return $user->posts()->today()->count() < 3;
+        return $user->posts()->withTrashed()->today()->count() < 3;
     }
 
     /**

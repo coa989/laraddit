@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use function Symfony\Component\Translation\t;
 
 class Post extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-    protected $fillable = ['approved', 'user_id', 'title', 'slug', 'image_path', 'small_image_path', 'medium_image_path'];
+    protected $fillable = ['approved', 'user_id', 'title', 'slug', 'image_path', 'thumbnail', 'medium_image_path', 'rejected'];
 
     public function scopeToday($builder)
     {

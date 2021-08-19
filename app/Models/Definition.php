@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Definition extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-    protected $fillable = ['user_id', 'title', 'body', 'slug', 'approved'];
+    protected $fillable = ['user_id', 'title', 'body', 'slug', 'approved', 'rejected'];
 
     public function scopeToday($builder)
     {
@@ -28,7 +30,7 @@ class Definition extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
 
     public function tags()

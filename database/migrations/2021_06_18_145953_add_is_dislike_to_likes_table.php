@@ -26,7 +26,7 @@ class AddIsDislikeToLikesTable extends Migration
     public function down()
     {
         Schema::table('likes', function (Blueprint $table) {
-            //
+            $table->dropColumn('is_dislike');
         });
     }
 }

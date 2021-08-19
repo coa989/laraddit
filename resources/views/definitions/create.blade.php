@@ -4,7 +4,7 @@
     <div class="container">
         @include ('partials.messages')
         <div class="form-group">
-            <form action="{{ route('definition.store') }}" method="post">
+            <form action="{{ route('definitions.store') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -25,11 +25,12 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="tags">Tags</label>
-                    <input type="text" class="form-control" name="tags" value="{{ old('tags') }}">
+                    <label for="tag_list">Tags:</label>
+                    <select id="tag_list" name="tag_list[]" class="form-control" multiple></select>
                 </div>
                 <button type="submit" class="btn btn-success">Create</button>
             </form>
         </div>
     </div>
+    <script src="{{ asset('js/tag.js') }}"></script>
 @endsection

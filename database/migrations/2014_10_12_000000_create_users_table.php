@@ -13,7 +13,6 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        // TODO: add default value for role_id ???
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');

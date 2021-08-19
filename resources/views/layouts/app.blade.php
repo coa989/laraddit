@@ -11,25 +11,26 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <!-- Bootstrap tags input -->
-    <script src="{{asset('/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
-    <!-- Type aheaed -->
-    <script src="{{ asset('/js/typeahead/dist/typeahead.bundle.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('/js/typeahead/dist/bloodhound.min.js') }}" type="text/javascript"></script>
+    <!-- JQuery and Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
-                    <a class="navbar-brand" href="{{ route('post.index') }}">
+                    <a class="navbar-brand" href="{{ route('posts.index') }}">
                         {{ config('app.name', 'Zagrc') }}
                     </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -38,7 +39,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <a class="navbar-brand" href="{{ route('definition.index') }}">Definitions</a>
+                    <a class="navbar-brand" href="{{ route('definitions.index') }}">Definitions</a>
 
                     <!-- Right Side Of Navbar -->
 
@@ -71,8 +72,8 @@
                                         Upload
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a href="{{ route('post.create') }}" class="dropdown-item">Post</a>
-                                        <a href="{{ route('definition.create') }}" class="dropdown-item">Definition</a>
+                                        <a href="{{ route('posts.create') }}" class="dropdown-item">Post</a>
+                                        <a href="{{ route('definitions.create') }}" class="dropdown-item">Definition</a>
                                     </div>
                                 </li>
                             @endif
@@ -100,10 +101,10 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+
 </body>
 </html>
