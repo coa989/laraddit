@@ -24,6 +24,8 @@ class DefinitionController extends Controller
 
     public function destroy(Definition $definition)
     {
+        $definition->tags()->detach();
+
         $definition->delete();
 
         return redirect()->route('admin.definitions');
