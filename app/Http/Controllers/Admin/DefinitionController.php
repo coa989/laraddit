@@ -10,7 +10,7 @@ class DefinitionController extends Controller
 {
     public function index()
     {
-        $definitions = Definition::with('user')
+        $definitions = Definition::with('user', 'tags')
             ->latest()
             ->paginate(8);
 
@@ -52,7 +52,8 @@ class DefinitionController extends Controller
 
     public function approved()
     {
-        $definitions = Definition::where('approved', true)
+        $definitions = Definition::with('user', 'tags')
+            ->where('approved', true)
             ->latest()
             ->paginate(8);
 
@@ -61,7 +62,8 @@ class DefinitionController extends Controller
 
     public function rejected()
     {
-        $definitions = Definition::where('rejected', true)
+        $definitions = Definition::with('user', 'tags')
+            ->where('rejected', true)
             ->latest()
             ->paginate(8);
 
@@ -70,7 +72,8 @@ class DefinitionController extends Controller
 
     public function pending()
     {
-        $definitions = Definition::where('approved', false)
+        $definitions = Definition::with('user', 'tags')
+            ->where('approved', false)
             ->where('rejected', false)
             ->latest()
             ->paginate(8);

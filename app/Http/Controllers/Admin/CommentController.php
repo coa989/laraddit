@@ -13,7 +13,7 @@ class CommentController extends Controller
 {
     public function index()
     {
-        $comments = Comment::with('user')
+        $comments = Comment::with('user', 'replies')
             ->latest()
             ->paginate(20);
 
@@ -64,7 +64,8 @@ class CommentController extends Controller
 
     public function approved()
     {
-        $comments = Comment::where('approved', true)
+        $comments = Comment::with('user')
+            ->where('approved', true)
             ->latest()
             ->paginate(20);
 
@@ -73,7 +74,8 @@ class CommentController extends Controller
 
     public function pending()
     {
-        $comments = Comment::where('approved', false)
+        $comments = Comment::with('user')
+            ->where('approved', false)
             ->where('rejected', false)
             ->latest()
             ->paginate(20);
@@ -83,7 +85,8 @@ class CommentController extends Controller
 
     public function rejected()
     {
-        $comments = Comment::where('rejected', true)
+        $comments = Comment::with('user')
+            ->where('rejected', true)
             ->latest()
             ->paginate(20);
 

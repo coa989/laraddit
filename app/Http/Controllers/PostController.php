@@ -94,7 +94,9 @@ class PostController extends Controller
 
     public function hot()
     {
-        $posts = Post::where('approved', true)->whereDate('created_at', Carbon::today())
+        $posts = Post::with('user', 'tags')
+            ->where('approved', true)
+            ->whereDate('created_at', Carbon::today())
             ->orderBy('ratings', 'DESC')
             ->paginate(10);
 
