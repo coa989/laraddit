@@ -37,7 +37,10 @@ class TagController extends Controller
 
         $posts = Post::whereHas('tags', function ($query) use($tagsId) {
             $query->where('post_tag.tag_id', $tagsId);
-        })->latest()->paginate(10);
+        })
+            ->with('user', 'tags')
+            ->latest()
+            ->paginate(10);
 
         $popularTags = Tag::popular('post');
 
@@ -50,7 +53,10 @@ class TagController extends Controller
 
         $definitions = Definition::whereHas('tags', function ($query) use($tagsId) {
             $query->where('definition_tag.tag_id', $tagsId);
-        })->latest()->paginate(15);
+        })
+            ->with('user', 'tags')
+            ->latest()
+            ->paginate(15);
 
         $popularTags = Tag::popular('definition');
 

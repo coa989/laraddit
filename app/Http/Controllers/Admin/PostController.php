@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')
+        $posts = Post::with('user', 'tags')
             ->latest()
             ->paginate(8);
 
@@ -50,7 +50,8 @@ class PostController extends Controller
 
     public function approved()
     {
-        $posts = Post::where('approved', true)
+        $posts = Post::with('user', 'tags')
+            ->where('approved', true)
             ->latest()
             ->paginate(8);
 
@@ -59,7 +60,8 @@ class PostController extends Controller
 
     public function rejected()
     {
-        $posts = Post::where('rejected', true)
+        $posts = Post::with('user', 'tags')
+            ->where('rejected', true)
             ->latest()
             ->paginate(8);
 
@@ -68,7 +70,8 @@ class PostController extends Controller
 
     public function pending()
     {
-        $posts = Post::where('approved', false)
+        $posts = Post::with('user', 'tags')
+            ->where('approved', false)
             ->where('rejected', false)
             ->latest()
             ->paginate(8);

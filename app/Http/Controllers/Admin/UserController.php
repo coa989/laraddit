@@ -28,13 +28,13 @@ class UserController extends Controller
 
         $posts = Post::where('approved', true)
             ->where('user_id', $user->id)
-            ->with('user', 'tags')
+            ->with('user', 'tags', 'likes')
             ->latest()
             ->paginate(15);
 
         $definitions = Definition::where('approved', true)
             ->where('user_id', $user->id)
-            ->with('user', 'tags')
+            ->with('user', 'tags', 'likes')
             ->latest()
             ->paginate(15);
 
@@ -86,14 +86,20 @@ class UserController extends Controller
 
     public function posts(User $user)
     {
-        $posts = Post::where('user_id', $user->id)->latest()->paginate(30);
+        $posts = Post::with('user', 'tags')
+            ->where('user_id', $user->id)
+            ->latest()
+            ->paginate(30);
 
         return view('admin.users.posts', ['posts' => $posts]);
     }
 
     public function definitions(User $user)
     {
-        $definitions = Definition::where('user_id', $user->id)->latest()->paginate(30);
+        $definitions = Definition::with('user', 'tags')
+            ->where('user_id', $user->id)
+            ->latest()
+            ->paginate(30);
 
         return view('admin.users.definitions', ['definitions' => $definitions]);
     }
