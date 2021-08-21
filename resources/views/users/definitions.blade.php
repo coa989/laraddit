@@ -32,6 +32,7 @@
                                 <div class="btn-group">
                                     <form action="{{ route('likes.store', $definition) }}" method="post">
                                         @csrf
+                                        <input type="hidden" name="class" value="App\Models\Definition">
                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
                                     </form>
                                     <form action="{{ route('dislikes.store', $definition) }}" method="post">
