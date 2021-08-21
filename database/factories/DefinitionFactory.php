@@ -26,7 +26,7 @@ class DefinitionFactory extends Factory
             'title' => $this->faker->sentence($nbWords = 3),
             'body' => $this->faker->sentence($nbWords = 15),
             'slug' => $this->faker->slug,
-            'approved' => $this->faker->boolean,
+            'approved' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ];

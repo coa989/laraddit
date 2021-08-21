@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -11,13 +10,13 @@
                         <small class="card-subtitle mb-2 text">{{ $user->email }}</small>
                         <small class="card-subtitle mb-2 text-muted">{{ $user->created_at->diffForHumans() }}</small>
                         <p>{{ $definitionPoints + $postPoints }} points</p>
-                        @if($user->posts()->get()->count())
-                            <p>{{round($postPoints / $user->posts()->get()->count(), 2) }} {{ Str::plural('point', $postPoints / $user->posts()->get()->count()) }} per post</p>
+                        @if($postsCount)
+                            <p>{{round($postPoints / $postsCount, 2) }} {{ Str::plural('point', $postPoints / $postsCount) }} per post</p>
                         @else
                             <p>0 points per post</p>
                         @endif
-                        @if($user->definitions()->get()->count())
-                            <p>{{ round($definitionPoints / $user->definitions()->get()->count(), 2) }} {{ Str::plural('point', $definitionPoints / $user->definitions()->get()->count()) }} per definition</p>
+                        @if($definitionsCount)
+                            <p>{{ round($definitionPoints / $definitionsCount, 2) }} {{ Str::plural('point', $definitionPoints / $definitionsCount) }} per definition</p>
                         @else
                             <p>0 points per definition</p>
                         @endif

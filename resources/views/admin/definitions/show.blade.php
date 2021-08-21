@@ -49,7 +49,7 @@
                     <i class="fas fa-comment"></i> {{ $definition->comments_count }}
                     {{ Str::plural('comment', $definition->comments_count) }}
                     <ul class="comments-list">
-                        @foreach($definition->comments->where('parent_id', null) as $comment)
+                        @foreach($comments->where('parent_id', null) as $comment)
                             <div class="box-footer box-comments mt-3" style="display: block;">
                                 <div class="box-comment">
                                     <div class="comment-text">

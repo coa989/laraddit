@@ -28,26 +28,19 @@ class UserController extends Controller
 
         $posts = Post::where('approved', true)
             ->where('user_id', $user->id)
-            ->with('user', 'tags', 'likes')
             ->latest()
             ->paginate(15);
 
         $definitions = Definition::where('approved', true)
             ->where('user_id', $user->id)
-            ->with('user', 'tags', 'likes')
             ->latest()
             ->paginate(15);
 
         if ($definitions->first()) {
             foreach ($definitions as $definition) {
                 $points[] = $definition
-                        ->likes()
-                        ->where('is_dislike', 0)
-                        ->get()->count() - $definition
-                        ->likes()
-                        ->where('is_dislike', 1)
-                        ->get()
-                        ->count();
+                        ->likes_count - $definition
+                        ->dislikes_count;
                 $definitionPoints = array_sum($points);
             }
         } else {
@@ -57,13 +50,8 @@ class UserController extends Controller
         if ($posts->first()) {
             foreach ($posts as $post) {
                 $points[] = $post
-                        ->likes()
-                        ->where('is_dislike', 0)
-                        ->get()->count() - $post
-                        ->likes()
-                        ->where('is_dislike', 1)
-                        ->get()
-                        ->count();
+                        ->likes_count - $post
+                        ->dislikes_count;
                 $postPoints = array_sum($points);
             }
         } else {
@@ -72,6 +60,8 @@ class UserController extends Controller
 
         return view('admin.users.show', [
             'user' => $userWith,
+            'posts' => $posts,
+            'definitions' => $definitions,
             'postPoints' => $postPoints,
             'definitionPoints' => $definitionPoints
         ]);

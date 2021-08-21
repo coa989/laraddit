@@ -38,13 +38,13 @@
         </div>
         <hr class="line-color">
         <p>{{ $definitionPoints + $postPoints }} points</p>
-        @if($user->posts()->get()->count())
-            <p>{{round($postPoints / $user->posts()->get()->count(), 2) }} {{ Str::plural('point', $postPoints / $user->posts()->get()->count()) }} per post</p>
+        @if($posts->count())
+            <p>{{round($postPoints / $posts->count(), 2) }} {{ Str::plural('point', $postPoints / $posts->count()) }} per post</p>
         @else
             <p>0 points per post</p>
         @endif
-        @if($user->definitions()->get()->count())
-            <p>{{ round($definitionPoints / $user->definitions()->get()->count(), 2) }} {{ Str::plural('point', $definitionPoints / $user->definitions()->get()->count()) }} per definition</p>
+        @if($definitions->count())
+            <p>{{ round($definitionPoints / $definitions->count(), 2) }} {{ Str::plural('point', $definitionPoints / $definitions->count()) }} per definition</p>
         @else
             <p>0 points per definition</p>
         @endif

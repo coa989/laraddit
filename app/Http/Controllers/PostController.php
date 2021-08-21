@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Components\FlashMessages;
 use App\Http\Requests\StorePostRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Carbon\Carbon;
@@ -77,7 +78,11 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('posts.show', ['post' => $post]);
+        $comments = Comment::where('commentable_id', $post->id)->with('replies', 'user', 'replies.user')->get();
+        return view('posts.show', [
+            'post' => $post,
+            'comments' => $comments
+        ]);
     }
 
     public function destroy(Post $post)
@@ -96,6 +101,7 @@ class PostController extends Controller
     {
         $posts = Post::with('user', 'tags')
             ->where('approved', true)
+            // TODO: change with today scope???
             ->whereDate('created_at', Carbon::today())
             ->orderBy('ratings', 'DESC')
             ->paginate(10);

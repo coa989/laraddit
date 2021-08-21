@@ -56,7 +56,7 @@
                             <hr>
                             <div class="post-footer">
                                 <ul class="comments-list">
-                                    @foreach($post->comments->where('parent_id', null) as $comment)
+                                    @foreach($comments->where('parent_id', null) as $comment)
                                         <div class="box-footer box-comments mt-3" style="display: block;">
                                             <div class="box-comment">
                                                 <div class="comment-text">

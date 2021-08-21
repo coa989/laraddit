@@ -24,20 +24,20 @@
                             </div>
                             <div class="card-footer">
                                 <p>
-                                    <a href="">{{ $definition->likes()->where('is_dislike', 0)->get()->count() - $definition->likes()->where('is_dislike', 1)->get()->count() }} points &#183;</a>
+                                    <a href="">{{ $definition->likes_count - $definition->dislikes_count }} points &#183;</a>
                                     <a href="{{ route('definitions.show', $definition) }}">
-                                        <i class="fas fa-comment"></i> {{ $definition->comments()->where('approved', true)->count() }} {{ Str::plural('comment', $definition->comments()->count()) }}</i>
+                                        <i class="fas fa-comment"></i> {{ $definition->comments_count }} {{ Str::plural('comment', $definition->comments_count) }}</i>
                                     </a>
                                 </p>
                                 <div class="btn-group">
                                     <form action="{{ route('likes.store', $definition) }}" method="post">
                                         @csrf
-                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes()->where('is_dislike', 0)->get()->count() }}</button>
+                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
                                     </form>
                                     <form action="{{ route('dislikes.store', $definition) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="class" value="App\Models\Definition">
-                                        <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->likes()->where('is_dislike', 1)->get()->count() }}</button>
+                                        <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->dislikes_count }}</button>
                                     </form>
                                 </div>
                                 <p class="mt-4">
