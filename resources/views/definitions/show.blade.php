@@ -65,7 +65,7 @@
                         <button class="btn btn-success" type="submit">Post</button>
                     </form>
                     <ul class="comments-list">
-                        @foreach($definition->comments->where('approved', true) as $comment)
+                        @foreach($comments->where('approved', true) as $comment)
                             <div class="box-footer box-comments mt-3" style="display: block;">
                                 <div class="box-comment">
                                     <div class="comment-text">

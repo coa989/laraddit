@@ -26,7 +26,7 @@ class PostFactory extends Factory
             'image_path' => 'https://thumbs.dreamstime.com/b/european-shorthair-tricolor-cat-close-up-european-shorthair-tricolor-cat-128908945.jpg',
             'title' => $this->faker->sentence($nbWords = 3),
             'slug' => $this->faker->slug,
-            'approved' => $this->faker->boolean,
+            'approved' => 1,
             'created_at' => now(),
             'updated_at' => now(),
             'thumbnail' => 'https://lh3.googleusercontent.com/proxy/VT-LKGbs9OpdIqyq978nIjQ2vQW54lyBfhlkytVLFfN4VweqSh6PSSsnu0h2YuxorZ-N-Bk_zq1pXPL8o8a_fkj280lagH74xXdBY50FAH_iIf4DWUWJ2xqup8caJGR3Fg',

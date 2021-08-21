@@ -26,7 +26,7 @@ class CommentFactory extends Factory
             'commentable_id' => $this->faker->numberBetween(1, 500),
             'body' => $this->faker->sentence,
             'commentable_type' => $this->faker->randomElement(['App\Models\Post', 'App\Models\Definition']),
-            'approved' => $this->faker->boolean,
+            'approved' => 1,
             'created_at' => now(),
             'updated_at' => now(),
             'parent_id' => $this->faker->optional(0.2, null)->numberBetween(1, 5000)

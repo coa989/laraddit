@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -18,7 +19,11 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('admin.posts.show', ['post' => $post]);
+        $comments = Comment::where('commentable_id', $post->id)->with('replies', 'user', 'replies.user')->get();
+        return view('admin.posts.show', [
+            'post' => $post,
+            'comments' => $comments
+        ]);
     }
 
     public function destroy(Post $post)

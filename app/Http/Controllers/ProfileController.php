@@ -16,26 +16,19 @@ class ProfileController extends Controller
 
         $posts = Post::where('approved', true)
             ->where('user_id', $user->id)
-            ->with('user', 'tags')
             ->latest()
             ->paginate(15);
 
         $definitions = Definition::where('approved', true)
             ->where('user_id', $user->id)
-            ->with('user', 'tags')
             ->latest()
             ->paginate(15);
 
         if ($definitions->first()) {
             foreach ($definitions as $definition) {
                 $points[] = $definition
-                        ->likes()
-                        ->where('is_dislike', 0)
-                        ->get()->count() - $definition
-                        ->likes()
-                        ->where('is_dislike', 1)
-                        ->get()
-                        ->count();
+                        ->likes_count - $definition
+                        ->dislikes_count;
                 $definitionPoints = array_sum($points);
             }
         } else {
@@ -45,13 +38,9 @@ class ProfileController extends Controller
         if ($posts->first()) {
             foreach ($posts as $post) {
                 $points[] = $post
-                        ->likes()
-                        ->where('is_dislike', 0)
-                        ->get()->count() - $post
-                        ->likes()
-                        ->where('is_dislike', 1)
-                        ->get()
-                        ->count();
+                        ->likes_count
+                        - $post
+                        ->dislike_count;
                 $postPoints = array_sum($points);
             }
         } else {
@@ -60,6 +49,8 @@ class ProfileController extends Controller
 
         return view('users.show', [
             'user' => $userWith,
+            'postsCount' => $posts->count(),
+            'definitionsCount' => $definitions->count(),
             'postPoints' => $postPoints,
             'definitionPoints' => $definitionPoints
         ]);
@@ -68,6 +59,7 @@ class ProfileController extends Controller
     public function posts(User $user)
     {
         $posts = Post::where('user_id', $user->id)
+            ->with('likes', 'user', 'tags')
             ->latest()
             ->paginate(10);
 
@@ -77,6 +69,7 @@ class ProfileController extends Controller
     public function definitions(User $user)
     {
         $definitions = Definition::where('user_id', $user->id)
+            ->with('likes', 'user', 'tags')
             ->latest()
             ->paginate(10);
 

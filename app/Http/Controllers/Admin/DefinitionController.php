@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Definition;
 use App\Models\Post;
 
@@ -19,7 +20,11 @@ class DefinitionController extends Controller
 
     public function show(Definition $definition)
     {
-        return view('admin.definitions.show', ['definition' => $definition]);
+        $comments = Comment::where('commentable_id', $definition->id)->with('replies', 'user', 'replies.user')->get();
+        return view('admin.definitions.show', [
+            'definition' => $definition,
+            'comments' => $comments
+        ]);
     }
 
     public function destroy(Definition $definition)
