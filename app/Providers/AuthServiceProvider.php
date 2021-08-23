@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Models\Definition;
 use App\Models\Post;
+use App\Models\User;
 use App\Policies\DefinitionPolicy;
 use App\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('delete-post', fn(User $user, Post $post) => $user->id === $post->user_id);
+        Gate::define('delete-definition', fn(User $user, Definition $definition) => $user->id === $definition->user_id);
+
     }
 }

@@ -7,7 +7,8 @@ use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
-use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -29,10 +30,10 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-//        if (auth()->user()->cannot('store', Post::class)) {
-//            self::danger('You have reached daily post upload limit! Please try again later.');
-//            return back();
-//        }
+        if (auth()->user()->cannot('store', Post::class)) {
+            self::danger('You have reached daily post upload limit! Please try again later.');
+            return back();
+        }
 
         $image = $request->image;
         $fileName = Str::random(25).'.'.$image->getClientOriginalExtension();
@@ -87,11 +88,10 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        if (auth()->user()->cannot('delete', $post)) {
-            abort(403);
-        }
+        $this->authorize('delete-post', $post);
 
         $post->tags()->detach();
+
         $post->delete();
 
         return redirect()->route('index');
@@ -101,8 +101,7 @@ class PostController extends Controller
     {
         $posts = Post::with('user', 'tags')
             ->where('approved', true)
-            // TODO: change with today scope???
-            ->whereDate('created_at', Carbon::today())
+            ->whereDate('created_at', today())
             ->orderBy('ratings', 'DESC')
             ->paginate(10);
 
