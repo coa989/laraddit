@@ -28,10 +28,10 @@ class DefinitionController extends Controller
 
     public function store(StoreDefinitionRequest $request)
     {
-//        if (auth()->user()->cannot('store', Definition::class)) {
-//            self::danger('You have reached daily definition upload limit! Please try again later.');
-//            return back();
-//        }
+        if (auth()->user()->cannot('store', Definition::class)) {
+            self::danger('You have reached daily definition upload limit! Please try again later.');
+            return back();
+        }
 
         $slug = Str::slug($request->title);
 
@@ -62,11 +62,10 @@ class DefinitionController extends Controller
 
     public function destroy(Definition $definition)
     {
-        if (auth()->user()->cannot('delete', $definition)) {
-            abort(403);
-        }
+        $this->authorize('delete-definition', $definition);
 
         $definition->tags()->detach();
+
         $definition->delete();
 
         return redirect()->route('definitions.index');
