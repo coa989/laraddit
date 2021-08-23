@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/likes/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
+
+Route::post('/dislikes/store', [\App\Http\Controllers\Api\DislikeController::class, 'store']);
+
+
+

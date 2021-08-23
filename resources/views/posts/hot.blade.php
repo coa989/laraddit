@@ -45,16 +45,16 @@
                                 <div class="post-description">
                                     <div class="stats">
                                         <div class="btn-group">
-                                            <form action="{{ route('likes.store', $post) }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="class" value="App\Models\Post">
-                                                <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>
-                                            </form>
-                                            <form action="{{ route('dislikes.store', $post) }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="class" value="App\Models\Post">
-                                                <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->dislikes_count }}</button>
-                                            </form>
+                                            <like-component :model="{{ $post->id }}"
+                                                            :likes-count="{{ $post->likes_count }}"
+                                                            type="App\Models\Post"
+                                                            :user="{{ auth()->id() ? auth()->id() : 'null' }}">
+                                            </like-component>
+                                            <dislike-component :model="{{ $post->id }}"
+                                                               :dislikes-count="{{ $post->dislikes_count }}"
+                                                               type="App\Models\Post"
+                                                               :user="{{ auth()->id() ? auth()->id() : 'null' }}">
+                                            </dislike-component>
                                             <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
                                                     {{ Str::plural('comment', $post->comments_count) }}</i></a></button>
                                         </div>

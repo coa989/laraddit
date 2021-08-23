@@ -56,7 +56,6 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-    padding-top: 70px;
   font-family: "Nunito", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
@@ -10002,4 +10001,7 @@ h3 {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+body {
+  padding-top: 70px;
 }

@@ -32,5 +32,5 @@
             </form>
         </div>
     </div>
-    <script src="{{ asset('js/tag.js') }}"></script>
+
 @endsection

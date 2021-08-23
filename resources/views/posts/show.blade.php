@@ -23,16 +23,16 @@
                             <div class="post-description">
                                 <div class="stats">
                                     <div class="btn-group">
-                                        <form action="{{ route('likes.store', $post) }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="class" value="App\Models\Post">
-                                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>
-                                        </form>
-                                        <form action="{{ route('dislikes.store', $post) }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="class" value="App\Models\Post">
-                                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->dislikes_count }}</button>
-                                        </form>
+                                        <like-component :model="{{ $post->id }}"
+                                                        :likes-count="{{ $post->likes_count }}"
+                                                        type="App\Models\Post"
+                                                        :user="{{ auth()->id() ? auth()->id() : 'null' }}">
+                                        </like-component>
+                                        <dislike-component :model="{{ $post->id }}"
+                                                           :dislikes-count="{{ $post->dislikes_count }}"
+                                                           type="App\Models\Post"
+                                                           :user="{{ auth()->id() ? auth()->id() : 'null' }}">
+                                        </dislike-component>
                                         <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
                                                 {{ Str::plural('comment', $post->comments_count) }}</i></a></button>
                                         <button class="btn">{{ $post->likes_count - $post->dislikes_count }}
@@ -60,7 +60,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
-                                        <input type="hidden" name="class" value="App\Models\Post">
+                                        <input type="hidden" name="class" value="{{ get_class($post) }}">
                                         @error('body')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -102,7 +102,7 @@
                                                         @csrf
                                                         <div class="form-group">
                                                             <input type="hidden" value="{{ $comment->id }}" name="parentId">
-                                                            <input type="hidden" value="App\Models\Post" name="class">
+                                                            <input type="hidden" value="{{ get_class($post) }}" name="class">
                                                             <textarea name="replyBody" class="form-control @error('replyBody') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
                                                             @error('replyBody')
                                                             <div class="invalid-feedback">
@@ -153,12 +153,11 @@
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.replybutton').click(function() {
-                $(this).next('.reply').toggle();
-            });
-        });
-    </script>
+{{--    <script>--}}
+{{--        $(document).ready(function() {--}}
+{{--            $('.replybutton').click(function() {--}}
+{{--                $(this).next('.reply').toggle();--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
 @endsection
