@@ -26,6 +26,15 @@ class PostController extends Controller
         return view('home', ['posts' => $posts, 'tags' => $popularTags]);
     }
 
+    public function show(Post $post)
+    {
+        $comments = Comment::where('commentable_id', $post->id)->with('replies', 'user', 'replies.user')->get();
+        return view('posts.show', [
+            'post' => $post,
+            'comments' => $comments
+        ]);
+    }
+
     public function store(StorePostRequest $request)
     {
         if (auth()->user()->cannot('store', Post::class)) {
@@ -77,15 +86,6 @@ class PostController extends Controller
         self::success('Post created successfully! It will be visible when admin approves it.');
 
         return redirect()->route('index');
-    }
-
-    public function show(Post $post)
-    {
-        $comments = Comment::where('commentable_id', $post->id)->with('replies', 'user', 'replies.user')->get();
-        return view('posts.show', [
-            'post' => $post,
-            'comments' => $comments
-        ]);
     }
 
     public function destroy(Post $post)

@@ -26,6 +26,15 @@ class DefinitionController extends Controller
         return view('definitions.index', ['definitions' => $definitions, 'tags' => $popularTags]);
     }
 
+    public function show(Definition $definition)
+    {
+        $comments = Comment::where('commentable_id', $definition->id)->with('replies', 'user', 'replies.user')->get();
+        return view('definitions.show', [
+            'definition' => $definition,
+            'comments' => $comments
+        ]);
+    }
+
     public function store(StoreDefinitionRequest $request)
     {
         if (auth()->user()->cannot('store', Definition::class)) {
@@ -49,15 +58,6 @@ class DefinitionController extends Controller
         self::success('Definition created successfully! It will be visible when admin approves it.');
 
         return redirect()->route('definitions.index');
-    }
-
-    public function show(Definition $definition)
-    {
-        $comments = Comment::where('commentable_id', $definition->id)->with('replies', 'user', 'replies.user')->get();
-        return view('definitions.show', [
-            'definition' => $definition,
-            'comments' => $comments
-            ]);
     }
 
     public function destroy(Definition $definition)
