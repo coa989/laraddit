@@ -7,8 +7,6 @@ use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -38,6 +36,10 @@ class PostController extends Controller
         $image = $request->image;
         $fileName = Str::random(25).'.'.$image->getClientOriginalExtension();
         $destinationPath = public_path('storage/images/');
+
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 755, true);
+        }
 
         Image::make($image->getRealPath())
             ->fit(700, 900)
