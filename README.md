@@ -1,7 +1,7 @@
 ## About Laraddit
 
 Laraddit is a simple web app where users can upload images or definitions with an integrated admin dashboard.  
-I made this project in the purpose of learning Laravel with the use of the framework's features like:
+I made this project for the purpose of learning Laravel with the use of the framework's features like:
 
 **Routing**
 - Routing to a Single Controller Method
@@ -55,7 +55,7 @@ Fill .env with your credentials:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=laraddit1
+DB_DATABASE=laraddit
 DB_USERNAME=root
 DB_PASSWORD=
 ```
@@ -71,6 +71,9 @@ Now you can open development server in your browser and login with admin credent
 email: admin@admin.com 
 
 password: admin
+
+## Contributing
+Do not hesitate to contribute to the project by adapting or adding features ! Bug reports or pull requests are welcome.
 
 ## Author
 Aleksandar Marjanovic
