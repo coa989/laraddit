@@ -56,11 +56,12 @@
                             </div>
                             <hr>
                             <div class="post-footer">
-                                <form action="{{ route('comments.store', $post) }}" method="post">
+                                <form action="{{ route('comments.store') }}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
                                         <input type="hidden" name="class" value="App\Models\Post">
+                                        <input type="hidden" name="id" value="{{ $post->id }}">
                                         @error('body')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -98,10 +99,11 @@
                                                     <button class="btn btn-sm text-muted">Reply</button>
                                                 </div>
                                                 <div class="col-lg-12 reply" style="display: none">
-                                                    <form action="{{ route('comments.reply', $post) }}" method="post">
+                                                    <form action="{{ route('replies.store') }}" method="post">
                                                         @csrf
                                                         <div class="form-group">
                                                             <input type="hidden" value="{{ $comment->id }}" name="parentId">
+                                                            <input type="hidden" value="{{ $post->id }}" name="id">
                                                             <input type="hidden" value="App\Models\Post" name="class">
                                                             <textarea name="replyBody" class="form-control @error('replyBody') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
                                                             @error('replyBody')
