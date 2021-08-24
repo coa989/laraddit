@@ -11,6 +11,7 @@ use App\Http\Controllers\HotPostController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -70,21 +71,17 @@ Route::resource('posts', PostController::class)->only(['index', 'show']);
 
 // Definitions
 Route::group(['middleware' => 'auth'], function() {
-    Route::view('definitions/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('create');
+    Route::view('definitions/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('definitions.create');
     Route::get('definitions/hot', [DefinitionController::class, 'hot'])->name('definitions.hot');
     Route::resource('definitions', DefinitionController::class)->only(['store', 'destroy']);
 });
 Route::resource('definitions', DefinitionController::class)->only(['index', 'show']);
 
-//Route::group(['middleware' => 'auth'], function() {
-//   Route::resource('comments', CommentController::class)->only('store');
-//});
-
-Route::group(['middleware' => 'auth', 'prefix' => 'comments', 'as' => 'comments.'], function () {
-    Route::post('/store/{model}', [CommentController::class, 'store'])->name('store');
-    Route::post('/reply/{model}', [CommentController::class, 'reply'])->name('reply');
+// Comments and Replies
+Route::group(['middleware' => 'auth'], function() {
+   Route::resource('comments', CommentController::class)->only('store');
+   Route::resource('replies', ReplyController::class)->only('store');
 });
-
 
 Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile');
