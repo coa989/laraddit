@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\DislikeController;
+use App\Http\Controllers\HotPostController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -59,34 +60,31 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::delete('/comments/destroy/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
 });
 
-Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
-    Route::get('/home', [PostController::class, 'index'])->name('index');
-    Route::get('/show/{post:slug}', [PostController::class, 'show'])->name('show');
-
-    Route::group(['middleware' => 'auth'], function () {
-        Route::view('/create', 'posts.create')->middleware('can:create,App\Models\Post')->name('create');
-        Route::post('/store', [PostController::class, 'store'])->name('store');
-        Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
-        Route::get('/hot', [PostController::class, 'hot'])->name('hot');
-    });
+// Posts
+Route::group(['middleware' => 'auth'], function () {
+    Route::view('posts/create', 'posts.create')->middleware('can:create,App\Models/Post')->name('posts.create');
+    Route::get('posts/hot', [PostController::class, 'hot'])->name('posts.hot');
+    Route::resource('posts', PostController::class)->only(['store', 'destroy']);
 });
+Route::resource('posts', PostController::class)->only(['index', 'show']);
 
-Route::group(['prefix' => 'definitions', 'as' => 'definitions.'], function () {
-    Route::get('/', [DefinitionController::class, 'index'])->name('index');
-    Route::get('/show/{definition:slug}', [DefinitionController::class, 'show'])->name('show');
-
-    Route::group(['middleware' => 'auth'], function () {
-        Route::view('/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('create');
-        Route::post('/store', [DefinitionController::class, 'store'])->name('store');
-        Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy');
-        Route::get('/hot', [DefinitionController::class, 'hot'])->name('hot');
-    });
+// Definitions
+Route::group(['middleware' => 'auth'], function() {
+    Route::view('definitions/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('create');
+    Route::get('definitions/hot', [DefinitionController::class, 'hot'])->name('definitions.hot');
+    Route::resource('definitions', DefinitionController::class)->only(['store', 'destroy']);
 });
+Route::resource('definitions', DefinitionController::class)->only(['index', 'show']);
+
+//Route::group(['middleware' => 'auth'], function() {
+//   Route::resource('comments', CommentController::class)->only('store');
+//});
 
 Route::group(['middleware' => 'auth', 'prefix' => 'comments', 'as' => 'comments.'], function () {
     Route::post('/store/{model}', [CommentController::class, 'store'])->name('store');
     Route::post('/reply/{model}', [CommentController::class, 'reply'])->name('reply');
 });
+
 
 Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile');

@@ -38,7 +38,7 @@
                                         <button class="btn">{{ $post->likes_count - $post->dislikes_count }}
                                             {{ Str::plural('point', $post->likes_count - $post->dislikes_count) }}
                                         </button>
-                                        @can('delete', $post)
+                                        @can('delete-post', $post)
                                             <form action="{{ route('posts.destroy', $post) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
