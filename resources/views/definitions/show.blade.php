@@ -8,7 +8,7 @@
                 <div class="card my-4">
                     <div class="card-header">
                         <a href="{{ route('definitions.show', $definition) }}"><h4>{{ $definition->title }}</h4></a>
-                        <a href="{{ route('user.profile', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
+                        <a href="{{ route('users.show', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
                         <a>{{ $definition->created_at->diffForHumans() }}</a>
                     </div>
                     <div class="card-body">
@@ -71,7 +71,7 @@
                                 <div class="box-comment">
                                     <div class="comment-text">
                                         <span class="username">
-                                            <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
+                                            <a href="{{ route('users.show', $comment->user) }}">{{ $comment->user->name }}</a>
                                         </span>
                                         <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
                                     </div>
@@ -117,7 +117,7 @@
                                                     <div class="box-comment">
                                                         <div class="comment-text">
                                                             <span class="username">
-                                                                <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                                <a href="{{ route('users.show', $reply->user) }}">{{ $reply->user->name }}</a>
                                                             </span>
                                                             <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
                                                         </div>

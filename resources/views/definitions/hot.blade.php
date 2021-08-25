@@ -35,7 +35,7 @@
                         <div class="card my-4">
                             <div class="card-header">
                                 <a href="{{ route('definitions.show', $definition) }}"><h4>{{ $definition->title }}</h4></a>
-                                <a href="{{ route('user.profile', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
+                                <a href="{{ route('users.show', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
                                 <a>{{ $definition->created_at->diffForHumans() }}</a>
                             </div>
                             <div class="card-body">

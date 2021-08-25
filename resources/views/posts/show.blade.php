@@ -11,7 +11,7 @@
                             <div class="post-heading">
                                 <div class="pull-left meta">
                                     <div class="title h6">
-                                        <a href="{{ route('user.profile', $post->user) }}"><b>{{ $post->user->name }}</b></a>
+                                        <a href="{{ route('users.show', $post->user) }}"><b>{{ $post->user->name }}</b></a>
                                         <a class="text-muted time">{{ $post->created_at->diffForHumans() }}</a>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
                                             <div class="box-comment">
                                                 <div class="comment-text">
                                                     <span class="username">
-                                                        <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
+                                                        <a href="{{ route('users.show', $comment->user) }}">{{ $comment->user->name }}</a>
                                                     </span>
                                                     <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
                                                 </div>
@@ -122,7 +122,7 @@
                                                                 <div class="box-comment">
                                                                     <div class="comment-text">
                                                                         <span class="username">
-                                                                            <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                                            <a href="{{ route('users.show', $reply->user) }}">{{ $reply->user->name }}</a>
                                                                         </span>
                                                                         <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
                                                                     </div>

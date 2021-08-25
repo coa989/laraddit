@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\DislikeController;
-use App\Http\Controllers\HotPostController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -79,14 +78,13 @@ Route::resource('definitions', DefinitionController::class)->only(['index', 'sho
 
 // Comments and Replies
 Route::group(['middleware' => 'auth'], function() {
-   Route::resource('comments', CommentController::class)->only('store');
-   Route::resource('replies', ReplyController::class)->only('store');
-});
+    Route::resource('comments', CommentController::class)->only('store');
+    Route::resource('replies', ReplyController::class)->only('store');
+    // Users
+    Route::get('/{user}/posts', [\App\Http\Controllers\UserController::class, 'posts'])->name('users.posts');
+    Route::get('/{user}/definitions', [\App\Http\Controllers\UserController::class, 'definitions'])->name('users.definitions');
+    Route::resource('users', \App\Http\Controllers\UserController::class)->only('show');
 
-Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function () {
-    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile');
-    Route::get('/{user}/posts', [ProfileController::class, 'posts'])->name('posts');
-    Route::get('/{user}/definitions', [ProfileController::class, 'definitions'])->name('definitions');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'likes', 'as' => 'likes.'], function () {

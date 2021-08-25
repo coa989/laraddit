@@ -33,7 +33,7 @@
                                     <div class="post-heading">
                                         <div class="pull-left meta">
                                             <div class="title h6">
-                                                <a href="{{ route('user.profile', $post->user) }}"><b>{{ $post->user->name }}</b></a>
+                                                <a href="{{ route('users.show', $post->user) }}"><b>{{ $post->user->name }}</b></a>
                                                 <a class="text-muted time">{{ $post->created_at->diffForHumans() }}</a>
                                             </div>
                                         </div>
