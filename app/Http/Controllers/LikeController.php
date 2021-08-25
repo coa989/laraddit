@@ -10,10 +10,17 @@ class LikeController extends Controller
 {
     use FlashMessages;
 
-    public function store(Request $request, $id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
     {
         if (Like::where('user_id', auth()->id())
-            ->where('likeable_id', $id)
+            ->where('likeable_id', $request->id)
             ->where('likeable_type', $request->class)
             ->first()) {
 
@@ -23,7 +30,7 @@ class LikeController extends Controller
 
         Like::create([
             'user_id' => auth()->id(),
-            'likeable_id' => $id,
+            'likeable_id' => $request->id,
             'likeable_type' => $request->class,
         ]);
 

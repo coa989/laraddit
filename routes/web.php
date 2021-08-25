@@ -9,7 +9,6 @@ use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -84,17 +83,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/{user}/posts', [\App\Http\Controllers\UserController::class, 'posts'])->name('users.posts');
     Route::get('/{user}/definitions', [\App\Http\Controllers\UserController::class, 'definitions'])->name('users.definitions');
     Route::resource('users', \App\Http\Controllers\UserController::class)->only('show');
-
+    // Likes and Dislike
+    Route::resource('likes', LikeController::class)->only('store');
+    Route::resource('dislikes', DislikeController::class)->only('store');
 });
 
-Route::group(['middleware' => 'auth', 'prefix' => 'likes', 'as' => 'likes.'], function () {
-    Route::post('/{model}/store', [LikeController::class, 'store'])->name('store');
-});
-
-Route::group(['middleware' => 'auth', 'prefix' => 'dislikes', 'as' => 'dislikes.'], function () {
-    Route::post('/{model}/store', [DislikeController::class, 'store'])->name('store');
-});
-
+// Tags
 Route::group(['middleware' => 'auth', 'prefix' => 'tags', 'as' => 'tags.'], function() {
    Route::get('/find', [TagController::class, 'find']);
    Route::get('/posts/{tag:name}', [TagController::class, 'filterPosts'])->name('posts');

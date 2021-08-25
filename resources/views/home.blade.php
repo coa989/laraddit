@@ -45,14 +45,16 @@
                                     <div class="post-description">
                                         <div class="stats">
                                             <div class="btn-group">
-                                                <form action="{{ route('likes.store', $post) }}" method="post">
+                                                <form action="{{ route('likes.store') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="class" value="App\Models\Post">
+                                                    <input type="hidden" name="id" value="{{ $post->id }}">
                                                     <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>
                                                 </form>
-                                                <form action="{{ route('dislikes.store', $post) }}" method="post">
+                                                <form action="{{ route('dislikes.store') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="class" value="App\Models\Post">
+                                                    <input type="hidden" name="id" value="{{ $post->id }}">
                                                     <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->dislikes_count }}</button>
                                                 </form>
                                                 <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
