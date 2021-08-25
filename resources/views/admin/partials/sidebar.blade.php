@@ -12,7 +12,7 @@
             </a>
             <div class="collapse" id="collapseUsers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{ route('admin.users') }}">All</a>
+                    <a class="nav-link" href="{{ route('admin.users.index') }}">All</a>
                     <a class="nav-link" href="{{ route('admin.users.guests') }}">Guests</a>
                     <a class="nav-link" href="{{ route('admin.users.authors') }}">Authors</a>
                 </nav>
@@ -24,7 +24,7 @@
             </a>
             <div class="collapse" id="collapsePosts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{ route('admin.posts') }}">All</a>
+                    <a class="nav-link" href="{{ route('admin.posts.index') }}">All</a>
                     <a class="nav-link" href="{{ route('admin.posts.approved') }}">Approved</a>
                     <a class="nav-link" href="{{ route('admin.posts.pending') }}">Pending</a>
                     <a class="nav-link" href="{{ route('admin.posts.rejected') }}">Rejected</a>
@@ -37,7 +37,7 @@
             </a>
             <div class="collapse" id="collapseDefinitions" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{ route('admin.definitions') }}">All</a>
+                    <a class="nav-link" href="{{ route('admin.definitions.index') }}">All</a>
                     <a class="nav-link" href="{{ route('admin.definitions.approved') }}">Approved</a>
                     <a class="nav-link" href="{{ route('admin.definitions.pending') }}">Pending</a>
                     <a class="nav-link" href="{{ route('admin.definitions.rejected') }}">Rejected</a>
@@ -50,7 +50,7 @@
             </a>
             <div class="collapse" id="collapseComments" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{ route('admin.comments') }}">All</a>
+                    <a class="nav-link" href="{{ route('admin.comments.index') }}">All</a>
                     <a class="nav-link" href="{{ route('admin.comments.approved') }}">Approved</a>
                     <a class="nav-link" href="{{ route('admin.comments.pending') }}">Pending</a>
                     <a class="nav-link" href="{{ route('admin.comments.rejected') }}">Rejected</a>

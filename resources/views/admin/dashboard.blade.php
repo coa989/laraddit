@@ -9,7 +9,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Post::all()) }}</h1>
                     <h5>ALL POSTS</h5>
-                    <a href="{{ route('admin.posts') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Definition::all()) }}</h1>
                     <h5>ALL DEFINITIONS</h5>
-                    <a href="{{ route('admin.definitions') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.definitions.index') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>
@@ -91,7 +91,7 @@
                 <div>
                     <h1>{{ count(\App\Models\Comment::all()) }}</h1>
                     <h5>ALL COMMENTS</h5>
-                    <a href="{{ route('admin.comments') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.comments.index') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>
@@ -132,7 +132,7 @@
                 <div>
                     <h1>{{ count(\App\Models\User::all()) }}</h1>
                     <h5>ALL USERS</h5>
-                    <a href="{{ route('admin.users') }}" class="btn btn-secondary">
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
                         View
                     </a>
                 </div>

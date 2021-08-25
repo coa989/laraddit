@@ -33,7 +33,7 @@ class DefinitionController extends Controller
 
         $definition->delete();
 
-        return redirect()->route('admin.definitions');
+        return redirect()->route('admin.definitions.index');
     }
 
     public function approve(Definition $definition)

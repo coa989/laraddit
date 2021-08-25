@@ -32,7 +32,7 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('admin.posts');
+        return redirect()->route('admin.posts.index');
     }
 
     public function approve(Post $post)
