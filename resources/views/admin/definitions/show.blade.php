@@ -81,7 +81,7 @@
                                             <div class="box-comment">
                                                 <div class="comment-text">
                                                     <span class="username">
-                                                        <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                        <a href="{{ route('users.show', $reply->user) }}">{{ $reply->user->name }}</a>
                                                     </span>
                                                     <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
                                                 </div>

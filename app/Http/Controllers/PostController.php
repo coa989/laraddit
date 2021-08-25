@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Components\FlashMessages;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
-    use FlashMessages;
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $posts = Post::where('approved', true)
@@ -26,6 +29,22 @@ class PostController extends Controller
         return view('home', ['posts' => $posts, 'tags' => $popularTags]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StorePostRequest $request)
     {
         if (auth()->user()->cannot('store', Post::class)) {
@@ -34,7 +53,7 @@ class PostController extends Controller
         }
 
         $image = $request->image;
-        $fileName = Str::random(25).'.'.$image->getClientOriginalExtension();
+        $fileName = Str::random(25) . '.' . $image->getClientOriginalExtension();
         $destinationPath = public_path('storage/images/');
 
         if (!file_exists($destinationPath)) {
@@ -43,19 +62,19 @@ class PostController extends Controller
 
         Image::make($image->getRealPath())
             ->fit(700, 900)
-            ->save($destinationPath. $fileName);
+            ->save($destinationPath . $fileName);
 
         $imagePath = 'storage/images/' . $fileName;
 
         Image::make($image->getRealPath())
-        ->fit(100, 100)
-        ->save($destinationPath. 'thumbnail' . $fileName);
+            ->fit(100, 100)
+            ->save($destinationPath . 'thumbnail' . $fileName);
 
         $thumbnail = 'storage/images/thumbnail' . $fileName;
 
         Image::make($image->getRealPath())
-        ->fit(500, 600)
-        ->save($destinationPath. 'medium' . $fileName);
+            ->fit(500, 600)
+            ->save($destinationPath . 'medium' . $fileName);
 
         $mediumImagePath = 'storage/images/medium' . $fileName;
 
@@ -79,6 +98,12 @@ class PostController extends Controller
         return redirect()->route('index');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param Post $post
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show(Post $post)
     {
         $comments = Comment::where('commentable_id', $post->id)->with('replies', 'user', 'replies.user')->get();
@@ -88,6 +113,36 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function destroy(Post $post)
     {
         $this->authorize('delete-post', $post);

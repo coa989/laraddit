@@ -11,7 +11,7 @@
                             <div class="post-heading">
                                 <div class="pull-left meta">
                                     <div class="title h6">
-                                        <a href="{{ route('user.profile', $post->user) }}"><b>{{ $post->user->name }}</b></a>
+                                        <a href="{{ route('users.show', $post->user) }}"><b>{{ $post->user->name }}</b></a>
                                         <a class="text-muted time">{{ $post->created_at->diffForHumans() }}</a>
                                     </div>
                                 </div>
@@ -23,14 +23,16 @@
                             <div class="post-description">
                                 <div class="stats">
                                     <div class="btn-group">
-                                        <form action="{{ route('likes.store', $post) }}" method="post">
+                                        <form action="{{ route('likes.store') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="class" value="App\Models\Post">
+                                            <input type="hidden" name="id" value="{{ $post->id }}">
                                             <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $post->likes_count }}</button>
                                         </form>
-                                        <form action="{{ route('dislikes.store', $post) }}" method="post">
+                                        <form action="{{ route('dislikes.store') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="class" value="App\Models\Post">
+                                            <input type="hidden" name="id" value="{{ $post->id }}">
                                             <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $post->dislikes_count }}</button>
                                         </form>
                                         <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
@@ -38,7 +40,7 @@
                                         <button class="btn">{{ $post->likes_count - $post->dislikes_count }}
                                             {{ Str::plural('point', $post->likes_count - $post->dislikes_count) }}
                                         </button>
-                                        @can('delete', $post)
+                                        @can('delete-post', $post)
                                             <form action="{{ route('posts.destroy', $post) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
@@ -56,11 +58,12 @@
                             </div>
                             <hr>
                             <div class="post-footer">
-                                <form action="{{ route('comments.store', $post) }}" method="post">
+                                <form action="{{ route('comments.store') }}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
                                         <input type="hidden" name="class" value="App\Models\Post">
+                                        <input type="hidden" name="id" value="{{ $post->id }}">
                                         @error('body')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -75,21 +78,23 @@
                                             <div class="box-comment">
                                                 <div class="comment-text">
                                                     <span class="username">
-                                                        <a href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a>
+                                                        <a href="{{ route('users.show', $comment->user) }}">{{ $comment->user->name }}</a>
                                                     </span>
                                                     <span class="text-muted pull-right">{{ $comment->created_at->diffForHumans() }}</span>
                                                 </div>
                                                 <span>{{ $comment->body }}</span>
                                             </div>
                                             <div class="btn-group">
-                                                <form action="{{ route('likes.store', $comment) }}" method="post">
+                                                <form action="{{ route('likes.store') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="class" value="App\Models\Comment">
+                                                    <input type="hidden" name="id" value="{{ $comment->id }}">
                                                     <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
                                                 </form>
-                                                <form action="{{ route('dislikes.store', $comment) }}" method="post">
+                                                <form action="{{ route('dislikes.store') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="class" value="App\Models\Comment">
+                                                    <input type="hidden" name="id" value="{{ $comment->id }}">
                                                     <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $comment->dislikes_count }}</button>
                                                 </form>
                                             </div>
@@ -98,10 +103,11 @@
                                                     <button class="btn btn-sm text-muted">Reply</button>
                                                 </div>
                                                 <div class="col-lg-12 reply" style="display: none">
-                                                    <form action="{{ route('comments.reply', $post) }}" method="post">
+                                                    <form action="{{ route('replies.store') }}" method="post">
                                                         @csrf
                                                         <div class="form-group">
                                                             <input type="hidden" value="{{ $comment->id }}" name="parentId">
+                                                            <input type="hidden" value="{{ $post->id }}" name="id">
                                                             <input type="hidden" value="App\Models\Post" name="class">
                                                             <textarea name="replyBody" class="form-control @error('replyBody') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
                                                             @error('replyBody')
@@ -120,21 +126,23 @@
                                                                 <div class="box-comment">
                                                                     <div class="comment-text">
                                                                         <span class="username">
-                                                                            <a href="{{ route('user.profile', $reply->user) }}">{{ $reply->user->name }}</a>
+                                                                            <a href="{{ route('users.show', $reply->user) }}">{{ $reply->user->name }}</a>
                                                                         </span>
                                                                         <span class="text-muted pull-right">{{ $reply->created_at->diffForHumans() }}</span>
                                                                     </div>
                                                                     <span>{{ $reply->body }}</span>
                                                                 </div>
                                                                 <div class="btn-group">
-                                                                    <form action="{{ route('likes.store', $reply) }}" method="post">
+                                                                    <form action="{{ route('likes.store') }}" method="post">
                                                                         @csrf
                                                                         <input type="hidden" name="class" value="App\Models\Comments">
+                                                                        <input type="hidden" name="id" value="{{ $reply->id }}">
                                                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
                                                                     </form>
-                                                                    <form action="{{ route('dislikes.store', $reply) }}" method="post">
+                                                                    <form action="{{ route('dislikes.store') }}" method="post">
                                                                         @csrf
                                                                         <input type="hidden" name="class" value="App\Models\Comment">
+                                                                        <input type="hidden" name="id" value="{{ $reply->id }}">
                                                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->dislikes_count }}</button>
                                                                     </form>
                                                                 </div>

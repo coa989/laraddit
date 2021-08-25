@@ -46,7 +46,7 @@ class LoginController extends Controller
                 return 'admin/dashboard';
                 break;
             case 'Editor':
-                return 'posts/home';
+                return 'posts';
                 break;
 
             default:

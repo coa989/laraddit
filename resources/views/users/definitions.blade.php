@@ -16,7 +16,7 @@
                         <div class="card my-4">
                             <div class="card-header">
                                 <a href="{{ route('definitions.show', $definition) }}"><h4>{{ $definition->title }}</h4></a>
-                                <a href="{{ route('user.profile', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
+                                <a href="{{ route('users.show', $definition->user) }}">{{ $definition->user->name }} &#183;</a>
                                 <a>{{ $definition->created_at->diffForHumans() }}</a>
                             </div>
                             <div class="card-body">
@@ -30,14 +30,16 @@
                                     </a>
                                 </p>
                                 <div class="btn-group">
-                                    <form action="{{ route('likes.store', $definition) }}" method="post">
+                                    <form action="{{ route('likes.store') }}" method="post">
                                         @csrf
                                         <input type="hidden" name="class" value="App\Models\Definition">
+                                        <input type="hidden" name="id" value="{{ $definition->id }}">
                                         <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
                                     </form>
-                                    <form action="{{ route('dislikes.store', $definition) }}" method="post">
+                                    <form action="{{ route('dislikes.store') }}" method="post">
                                         @csrf
                                         <input type="hidden" name="class" value="App\Models\Definition">
+                                        <input type="hidden" name="id" value="{{ $definition->id }}">
                                         <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->dislikes_count }}</button>
                                     </form>
                                 </div>

@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCommentReplyRequest;
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Comment;
 
 class CommentController extends Controller
 {
-    public function store(StoreCommentRequest $request, $id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * *
+     * @param StoreCommentRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(StoreCommentRequest $request)
     {
         Comment::create([
             'user_id' => auth()->id(),
-            'commentable_id' => $id,
+            'commentable_id' => $request->id,
             'body' => $request->body,
             'commentable_type' => $request->class
         ]);
@@ -21,19 +27,5 @@ class CommentController extends Controller
 
         return back();
     }
-
-    public function reply(StoreCommentReplyRequest $request, $id)
-    {
-        Comment::create([
-            'user_id' => auth()->id(),
-            'commentable_id' => $id,
-            'body' => $request->replyBody,
-            'commentable_type' => $request->class,
-            'parent_id' => $request->parentId
-        ]);
-
-        self::success('Your reply has been successfully added! It will be visible when admin approves it.');
-
-        return back();
-    }
 }
+

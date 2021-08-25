@@ -9,7 +9,7 @@ use App\Http\Controllers\DefinitionController;
 use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,49 +59,36 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'a
     Route::delete('/comments/destroy/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
 });
 
-Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
-    Route::get('/home', [PostController::class, 'index'])->name('index');
-    Route::get('/show/{post:slug}', [PostController::class, 'show'])->name('show');
+// Posts
+Route::group(['middleware' => 'auth'], function () {
+    Route::view('posts/create', 'posts.create')->middleware('can:create,App\Models/Post')->name('posts.create');
+    Route::get('posts/hot', [PostController::class, 'hot'])->name('posts.hot');
+    Route::resource('posts', PostController::class)->only(['store', 'destroy']);
+});
+Route::resource('posts', PostController::class)->only(['index', 'show']);
 
-    Route::group(['middleware' => 'auth'], function () {
-        Route::view('/create', 'posts.create')->middleware('can:create,App\Models\Post')->name('create');
-        Route::post('/store', [PostController::class, 'store'])->name('store');
-        Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
-        Route::get('/hot', [PostController::class, 'hot'])->name('hot');
-    });
+// Definitions
+Route::group(['middleware' => 'auth'], function() {
+    Route::view('definitions/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('definitions.create');
+    Route::get('definitions/hot', [DefinitionController::class, 'hot'])->name('definitions.hot');
+    Route::resource('definitions', DefinitionController::class)->only(['store', 'destroy']);
+});
+Route::resource('definitions', DefinitionController::class)->only(['index', 'show']);
+
+// Comments and Replies
+Route::group(['middleware' => 'auth'], function() {
+    Route::resource('comments', CommentController::class)->only('store');
+    Route::resource('replies', ReplyController::class)->only('store');
+    // Users
+    Route::get('/{user}/posts', [\App\Http\Controllers\UserController::class, 'posts'])->name('users.posts');
+    Route::get('/{user}/definitions', [\App\Http\Controllers\UserController::class, 'definitions'])->name('users.definitions');
+    Route::resource('users', \App\Http\Controllers\UserController::class)->only('show');
+    // Likes and Dislike
+    Route::resource('likes', LikeController::class)->only('store');
+    Route::resource('dislikes', DislikeController::class)->only('store');
 });
 
-Route::group(['prefix' => 'definitions', 'as' => 'definitions.'], function () {
-    Route::get('/', [DefinitionController::class, 'index'])->name('index');
-    Route::get('/show/{definition:slug}', [DefinitionController::class, 'show'])->name('show');
-
-    Route::group(['middleware' => 'auth'], function () {
-        Route::view('/create', 'definitions.create')->middleware('can:create,App\Models/Definition')->name('create');
-        Route::post('/store', [DefinitionController::class, 'store'])->name('store');
-        Route::delete('/destroy/{definition}', [DefinitionController::class, 'destroy'])->name('destroy');
-        Route::get('/hot', [DefinitionController::class, 'hot'])->name('hot');
-    });
-});
-
-Route::group(['middleware' => 'auth', 'prefix' => 'comments', 'as' => 'comments.'], function () {
-    Route::post('/store/{model}', [CommentController::class, 'store'])->name('store');
-    Route::post('/reply/{model}', [CommentController::class, 'reply'])->name('reply');
-});
-
-Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function () {
-    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile');
-    Route::get('/{user}/posts', [ProfileController::class, 'posts'])->name('posts');
-    Route::get('/{user}/definitions', [ProfileController::class, 'definitions'])->name('definitions');
-});
-
-Route::group(['middleware' => 'auth', 'prefix' => 'likes', 'as' => 'likes.'], function () {
-    Route::post('/{model}/store', [LikeController::class, 'store'])->name('store');
-});
-
-Route::group(['middleware' => 'auth', 'prefix' => 'dislikes', 'as' => 'dislikes.'], function () {
-    Route::post('/{model}/store', [DislikeController::class, 'store'])->name('store');
-});
-
+// Tags
 Route::group(['middleware' => 'auth', 'prefix' => 'tags', 'as' => 'tags.'], function() {
    Route::get('/find', [TagController::class, 'find']);
    Route::get('/posts/{tag:name}', [TagController::class, 'filterPosts'])->name('posts');

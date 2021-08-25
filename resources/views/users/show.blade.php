@@ -22,8 +22,8 @@
                         @endif
                     </div>
                     <div class="card-footer text-center">
-                        <a href="{{ route('user.posts', $user) }}"><button class="btn ">Posts</button></a>
-                        <a href="{{ route('user.definitions', $user) }}"><button class="btn ">Definitions</button></a>
+                        <a href="{{ route('users.posts', $user) }}"><button class="btn ">Posts</button></a>
+                        <a href="{{ route('users.definitions', $user) }}"><button class="btn ">Definitions</button></a>
                     </div>
                 </div>
             </div>
