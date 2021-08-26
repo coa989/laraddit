@@ -24,9 +24,11 @@ class StoreCommentReplyRequest extends FormRequest
     public function rules()
     {
         return [
-            'replyBody' => ['required', 'string'],
-            'parentId' => ['required'],
-            'class' => ['required']
+            'body' => ['required', 'string'],
+            'parent_id' => ['required'],
+            'commentable_type' => ['required'],
+            'commentable_id' => ['required'],
+            'user_id' => ['required']
         ];
     }
 }

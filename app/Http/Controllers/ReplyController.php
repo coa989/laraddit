@@ -15,13 +15,7 @@ class ReplyController extends Controller
      */
     public function store(StoreCommentReplyRequest $request)
     {
-        Comment::create([
-            'user_id' => auth()->id(),
-            'commentable_id' => $request->id,
-            'body' => $request->replyBody,
-            'commentable_type' => $request->class,
-            'parent_id' => $request->parentId
-        ]);
+        Comment::create($request->validated());
 
         self::success('Your reply has been successfully added! It will be visible when admin approves it.');
 

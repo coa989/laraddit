@@ -106,7 +106,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $comments = Comment::where('commentable_id', $post->id)->with('replies', 'user', 'replies.user')->get();
+        $comments = $post->comments()->with('user', 'replies','replies.user')->get();
         return view('posts.show', [
             'post' => $post,
             'comments' => $comments
