@@ -62,8 +62,9 @@
                                     @csrf
                                     <div class="form-group">
                                         <textarea name="body" class="form-control @error('body') is-invalid @enderror" placeholder="Write a comment...">{{ old('comment') }}</textarea>
-                                        <input type="hidden" name="class" value="App\Models\Post">
-                                        <input type="hidden" name="id" value="{{ $post->id }}">
+                                        <input type="hidden" name="commentable_type" value="App\Models\Post">
+                                        <input type="hidden" name="commentable_id" value="{{ $post->id }}">
+                                        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                                         @error('body')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -106,10 +107,11 @@
                                                     <form action="{{ route('replies.store') }}" method="post">
                                                         @csrf
                                                         <div class="form-group">
-                                                            <input type="hidden" value="{{ $comment->id }}" name="parentId">
-                                                            <input type="hidden" value="{{ $post->id }}" name="id">
-                                                            <input type="hidden" value="App\Models\Post" name="class">
-                                                            <textarea name="replyBody" class="form-control @error('replyBody') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
+                                                            <input type="hidden" value="{{ $comment->id }}" name="parent_id">
+                                                            <input type="hidden" name="commentable_type" value="App\Models\Post">
+                                                            <input type="hidden" name="commentable_id" value="{{ $post->id }}">
+                                                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                                                            <textarea name="body" class="form-control @error('replyBody') is-invalid @enderror" placeholder="Write a reply...">{{ old('comment') }}</textarea>
                                                             @error('replyBody')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}

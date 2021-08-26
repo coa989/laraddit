@@ -18,27 +18,26 @@ class UserController extends Controller
 
         $definitions = $user->definitions()->where('approved', true)->get();
 
-        // TODO:bug
         $postPoints = 0;
         if ($posts->first()) {
             foreach ($posts as $post) {
-                $points[] = $post->likes_count - $post->dislikes_count;
-                $postPoints = array_sum($points);
+                $pPoints[] = $post->likes_count - $post->dislikes_count;
+                $postPoints = array_sum($pPoints);
             }
         }
 
         $definitionPoints = 0;
         if ($definitions->first()) {
             foreach ($definitions as $definition) {
-                $points[] = $definition->likes_count - $definition->dislikes_count;
-                $definitionPoints = array_sum($points);
+                $bPoints[] = $definition->likes_count - $definition->dislikes_count;
+                $definitionPoints = array_sum($bPoints);
             }
         }
 
         return view('users.show', [
             'user' => $user,
-            'postsCount' => $posts->count(),
-            'definitionsCount' => $definitions->count(),
+            'posts' => $posts,
+            'definitions' => $definitions,
             'postPoints' => $postPoints,
             'definitionPoints' => $definitionPoints
         ]);

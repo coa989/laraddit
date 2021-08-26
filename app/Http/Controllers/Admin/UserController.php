@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
-use App\Models\Definition;
-use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $users = User::where('role_id', '<', 3)
@@ -17,49 +21,60 @@ class UserController extends Controller
             ->latest()
             ->paginate(20);
 
-        return view('admin.users.index', ['users'=> $users]);
+        return view('admin.users.index', ['users' => $users]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show(User $user)
     {
-        $userWith = User::where('id', $user->id)
-            ->with('posts', 'definitions', 'comments', 'likes')
-            ->first();
+        $posts = $user->posts()->where('approved', true)->latest()->paginate(15);
 
-        $posts = Post::where('approved', true)
-            ->where('user_id', $user->id)
-            ->latest()
-            ->paginate(15);
+        $definitions = $user->definitions()->where('approved', true)->latest()->paginate(15);
 
-        $definitions = Definition::where('approved', true)
-            ->where('user_id', $user->id)
-            ->latest()
-            ->paginate(15);
-
-        if ($definitions->first()) {
-            foreach ($definitions as $definition) {
-                $points[] = $definition
-                        ->likes_count - $definition
-                        ->dislikes_count;
-                $definitionPoints = array_sum($points);
-            }
-        } else {
-            $definitionPoints = 0;
-        }
-        ;
+        $postPoints = 0;
         if ($posts->first()) {
             foreach ($posts as $post) {
-                $points[] = $post
-                        ->likes_count - $post
-                        ->dislikes_count;
-                $postPoints = array_sum($points);
+                $pPoints[] = $post->likes_count - $post->dislikes_count;
+                $postPoints = array_sum($pPoints);
             }
-        } else {
-            $postPoints = 0;
+        }
+
+        $definitionPoints = 0;
+        if ($definitions->first()) {
+            foreach ($definitions as $definition) {
+                $bPoints[] = $definition->likes_count - $definition->dislikes_count;
+                $definitionPoints = array_sum($bPoints);
+            }
         }
 
         return view('admin.users.show', [
-            'user' => $userWith,
+            'user' => $user,
             'posts' => $posts,
             'definitions' => $definitions,
             'postPoints' => $postPoints,
@@ -67,31 +82,54 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(User $user)
     {
         $user->delete();
 
-        return redirect()->route('admin.users');
+        return redirect()->route('admin.users.index');
     }
 
     public function posts(User $user)
     {
-        $posts = Post::with('user', 'tags')
-            ->where('user_id', $user->id)
-            ->latest()
-            ->paginate(30);
-
-        return view('admin.users.posts', ['posts' => $posts]);
+        return view('admin.users.posts', [
+            'posts' => $user->posts()->with('user', 'tags')->latest()->paginate(30)
+        ]);
     }
 
     public function definitions(User $user)
     {
-        $definitions = Definition::with('user', 'tags')
-            ->where('user_id', $user->id)
-            ->latest()
-            ->paginate(30);
-
-        return view('admin.users.definitions', ['definitions' => $definitions]);
+        return view('admin.users.definitions', [
+            'definitions' => $user->definitions()->with('user', 'tags')->latest()->paginate(30)
+        ]);
     }
 
     public function comments(User $user)

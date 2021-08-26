@@ -52,13 +52,11 @@ class DefinitionController extends Controller
             return back();
         }
 
-        $slug = Str::slug($request->title);
-
         $definition = Definition::create([
             'user_id' => auth()->id(),
             'title' => $request->title,
             'body' => $request->body,
-            'slug' => $slug
+            'slug' => Str::slug($request->title)
         ]);
 
         if ($request->tag_list) {
@@ -78,7 +76,7 @@ class DefinitionController extends Controller
      */
     public function show(Definition $definition)
     {
-        $comments = Comment::where('commentable_id', $definition->id)->with('replies', 'user', 'replies.user')->get();
+        $comments = $definition->comments()->with('replies', 'user', 'replies.user')->get();
         return view('definitions.show', [
             'definition' => $definition,
             'comments' => $comments

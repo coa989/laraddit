@@ -16,12 +16,7 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        Comment::create([
-            'user_id' => auth()->id(),
-            'commentable_id' => $request->id,
-            'body' => $request->body,
-            'commentable_type' => $request->class
-        ]);
+        Comment::create($request->validated());
 
         self::success('Your comment has been successfully added! It will be visible when admin approves it.');
 

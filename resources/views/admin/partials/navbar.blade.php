@@ -1,6 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="{{ route('index') }}">Laraddit Admin Area</a>
+    <a class="navbar-brand ps-3" href="{{ route('posts.index') }}">Laraddit Admin Area</a>
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 {{--        <div class="input-group">--}}
@@ -10,7 +10,7 @@
     </form>
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-        <a class="nav-link" role="button" href="{{ route('admin.notifications') }}">
+        <a class="nav-link" role="button" href="{{ route('admin.notifications.index') }}">
             <i class="fas fa-envelope fa-lg"></i>
             <sup><span class="badge badge-success">{{ auth()->user()->unreadNotifications->count() }}</span></sup>
         </a>

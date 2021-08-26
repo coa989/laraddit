@@ -8,6 +8,11 @@ use Illuminate\Notifications\Notification;
 
 class NotificationController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $notifications = auth()->user()->unreadNotifications;
