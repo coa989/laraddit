@@ -7,10 +7,16 @@ use App\Events\CommentDelete;
 use App\Events\CommentReject;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $comments = Comment::with('user', 'replies')
@@ -18,6 +24,21 @@ class CommentController extends Controller
             ->paginate(20);
 
         return view('admin.comments.index', ['comments' => $comments]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Comment $comment
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Comment $comment)
+    {
+        $comment->delete();
+
+        CommentDelete::dispatch($comment);
+
+        return back();
     }
 
     public function approve(Comment $comment)
@@ -53,15 +74,6 @@ class CommentController extends Controller
         }
     }
 
-    public function destroy(Comment $comment)
-    {
-        $comment->delete();
-
-        CommentDelete::dispatch($comment);
-
-        return back();
-    }
-
     public function approved()
     {
         $comments = Comment::with('user')
@@ -93,3 +105,5 @@ class CommentController extends Controller
         return view('admin.comments.rejected', ['comments' => $comments]);
     }
 }
+
+

@@ -95,7 +95,7 @@ class PostController extends Controller
 
         self::success('Post created successfully! It will be visible when admin approves it.');
 
-        return redirect()->route('index');
+        return redirect('/');
     }
 
     /**

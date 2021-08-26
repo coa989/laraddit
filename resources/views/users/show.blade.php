@@ -10,13 +10,13 @@
                         <small class="card-subtitle mb-2 text">{{ $user->email }}</small>
                         <small class="card-subtitle mb-2 text-muted">{{ $user->created_at->diffForHumans() }}</small>
                         <p>{{ $definitionPoints + $postPoints }} points</p>
-                        @if($postsCount)
-                            <p>{{round($postPoints / $postsCount, 2) }} {{ Str::plural('point', $postPoints / $postsCount) }} per post</p>
+                        @if($posts->first())
+                            <p>{{round($postPoints / $posts->count(), 2) }} {{ Str::plural('point', $postPoints / $posts->count()) }} per post</p>
                         @else
                             <p>0 points per post</p>
                         @endif
-                        @if($definitionsCount)
-                            <p>{{ round($definitionPoints / $definitionsCount, 2) }} {{ Str::plural('point', $definitionPoints / $definitionsCount) }} per definition</p>
+                        @if($definitions->first())
+                            <p>{{ round($definitionPoints / $definitions->count(), 2) }} {{ Str::plural('point', $definitionPoints / $definitions->count()) }} per definition</p>
                         @else
                             <p>0 points per definition</p>
                         @endif
