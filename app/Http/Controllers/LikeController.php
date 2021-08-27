@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Components\FlashMessages;
+use App\Http\Requests\StoreLikeDislikeRequest;
 use App\Models\Like;
-use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
@@ -14,25 +14,21 @@ class LikeController extends Controller
      * Store a newly created resource in storage.
      *
      * *
-     * @param Request $request
+     * @param StoreLikeDislikeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreLikeDislikeRequest $request)
     {
-        if (Like::where('user_id', auth()->id())
-            ->where('likeable_id', $request->id)
-            ->where('likeable_type', $request->class)
+        if (Like::where('user_id', $request->user_id)
+            ->where('likeable_id', $request->likeable_id)
+            ->where('likeable_type', $request->likeable_type)
             ->first()) {
 
             self::danger('You have already voted!');
             return back();
         }
 
-        Like::create([
-            'user_id' => auth()->id(),
-            'likeable_id' => $request->id,
-            'likeable_type' => $request->class,
-        ]);
+        Like::create($request->validated());
 
         self::success('Your reaction has been recorded!');
         return back();

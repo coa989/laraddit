@@ -50,18 +50,7 @@
                                     </a>
                                 </p>
                                 <div class="btn-group">
-                                    <form action="{{ route('likes.store') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="class" value="App\Models\Definition">
-                                        <input type="hidden" name="id" value="{{ $definition->id }}">
-                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
-                                    </form>
-                                    <form action="{{ route('dislikes.store') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="class" value="App\Models\Definition">
-                                        <input type="hidden" name="id" value="{{ $definition->id }}">
-                                        <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->dislikes_count }}</button>
-                                    </form>
+                                    <x-like-dislike :model="$definition" likeable-type="App\Models\Definition"/>
                                 </div>
                                 <p class="mt-4">
                                     Tags:

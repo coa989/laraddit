@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\UploadImageAction;
 use App\Http\Requests\StorePostRequest;
-use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -42,51 +41,26 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StorePostRequest $request
+     * @param UploadImageAction $uploadImageAction
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request, UploadImageAction $uploadImageAction)
     {
         if (auth()->user()->cannot('store', Post::class)) {
             self::danger('You have reached daily post upload limit! Please try again later.');
             return back();
         }
 
-        $image = $request->image;
-        $fileName = Str::random(25) . '.' . $image->getClientOriginalExtension();
-        $destinationPath = public_path('storage/images/');
-
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 755, true);
-        }
-
-        Image::make($image->getRealPath())
-            ->fit(700, 900)
-            ->save($destinationPath . $fileName);
-
-        $imagePath = 'storage/images/' . $fileName;
-
-        Image::make($image->getRealPath())
-            ->fit(100, 100)
-            ->save($destinationPath . 'thumbnail' . $fileName);
-
-        $thumbnail = 'storage/images/thumbnail' . $fileName;
-
-        Image::make($image->getRealPath())
-            ->fit(500, 600)
-            ->save($destinationPath . 'medium' . $fileName);
-
-        $mediumImagePath = 'storage/images/medium' . $fileName;
-
-        $slug = Str::slug($request->title);
+        $paths = $uploadImageAction->execute($request);
 
         $post = Post::create([
             'user_id' => auth()->id(),
-            'image_path' => $imagePath,
+            'image_path' => $paths['imagePath'],
             'title' => $request->title,
-            'slug' => $slug,
-            'thumbnail' => $thumbnail,
-            'medium_image_path' => $mediumImagePath,
+            'slug' => Str::slug($request->title),
+            'thumbnail' => $paths['thumbnail'],
+            'medium_image_path' => $paths['mediumImagePath'],
         ]);
 
         if ($request->tag_list) {
@@ -95,7 +69,7 @@ class PostController extends Controller
 
         self::success('Post created successfully! It will be visible when admin approves it.');
 
-        return redirect('/');
+        return redirect()->route('posts.index');
     }
 
     /**

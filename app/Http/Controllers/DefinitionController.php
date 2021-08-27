@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDefinitionRequest;
-use App\Models\Comment;
 use App\Models\Definition;
 use App\Models\Tag;
 use Carbon\Carbon;
