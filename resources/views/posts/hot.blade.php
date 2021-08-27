@@ -46,8 +46,7 @@
                                     <div class="stats">
                                         <div class="btn-group">
                                             <x-like-dislike :model="$post" likeable-type="App\Models\Post"/>
-                                            <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
-                                                    {{ Str::plural('comment', $post->comments_count) }}</i></a></button>
+                                            <x-info :model="$post" />
                                         </div>
                                     </div>
                                     <p class="mt-2">

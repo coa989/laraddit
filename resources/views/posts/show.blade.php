@@ -18,26 +18,22 @@
                             </div>
                             <div class="post-image">
                                 <h4><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h4>
-                                <img src=""><img src="{{ asset($post->image_path) }}" class="image" alt="image post">
+                                <img src="{{ asset($post->image_path) }}" class="image" alt="image post">
                             </div>
                             <div class="post-description">
                                 <div class="stats">
                                     <div class="btn-group">
                                         <x-like-dislike :model="$post" likeable-type="App\Models\Post"/>
-                                        <button class="btn"><a href="{{ route('posts.show', $post) }}"><i class="fas fa-comment"></i> {{ $post->comments_count }}
-                                                {{ Str::plural('comment', $post->comments_count) }}</i></a></button>
-                                        <button class="btn">{{ $post->likes_count - $post->dislikes_count }}
-                                            {{ Str::plural('point', $post->likes_count - $post->dislikes_count) }}
-                                        </button>
-                                        @can('delete-post', $post)
-                                            <form action="{{ route('posts.destroy', $post) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger mt-1">Delete</button>
-                                            </form>
-                                        @endcan
+                                        <x-info :model="$post" />
                                     </div>
                                 </div>
+                                @can('delete-post', $post)
+                                    <form action="{{ route('posts.destroy', $post) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger mt-1">Delete</button>
+                                    </form>
+                                @endcan
                                 <p class="mt-2">
                                     Tags:
                                     @foreach($post->tags as $tag)

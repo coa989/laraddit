@@ -44,16 +44,9 @@
                                 <p>{{ $definition->body }}</p>
                             </div>
                             <div class="card-footer">
-                                <p>
-                                    <a href="">{{ $definition->likes_count - $definition->dislikes_count }}
-                                        {{ Str::plural('point', $definition->likes_count - $definition->dislikes_count) }} &#183;</a>
-                                    <a href="{{ route('definitions.show', $definition) }}">
-                                        <i class="fas fa-comment"></i> {{ $definition->comments_count }}
-                                        {{ Str::plural('comment', $definition->comments_count) }}
-                                    </a>
-                                </p>
                                 <div class="btn-group">
                                     <x-like-dislike :model="$definition" likeable-type="App\Models\Definition"/>
+                                    <x-info :model="$definition" />
                                 </div>
                                 <p class="mt-4">
                                     Tags:
