@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLikeDislikeRequest;
 use App\Models\Like;
-use Illuminate\Http\Request;
 
 class DislikeController extends Controller
 {
@@ -11,14 +11,14 @@ class DislikeController extends Controller
      * Store a newly created resource in storage.
      *
      * *
-     * @param Request $request
+     * @param StoreLikeDislikeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreLikeDislikeRequest $request)
     {
-        if (Like::where('user_id', auth()->id())
-            ->where('likeable_id', $request->id)
-            ->where('likeable_type', $request->class)
+        if (Like::where('user_id', $request->user_id)
+            ->where('likeable_id', $request->likeable_id)
+            ->where('likeable_type', $request->likeable_type)
             ->first()) {
 
             self::danger('You have already voted!');
@@ -26,9 +26,9 @@ class DislikeController extends Controller
         }
 
         Like::create([
-            'user_id' => auth()->id(),
-            'likeable_id' => $request->id,
-            'likeable_type' => $request->class,
+            'user_id' => $request->user_id,
+            'likeable_id' => $request->likeable_id,
+            'likeable_type' => $request->likeable_type,
             'is_dislike' => 1
         ]);
 
