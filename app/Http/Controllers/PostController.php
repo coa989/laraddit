@@ -54,13 +54,11 @@ class PostController extends Controller
 
         $paths = $uploadImageAction->execute($request);
 
-        $slug = Str::slug($request->title);
-
         $post = Post::create([
             'user_id' => auth()->id(),
             'image_path' => $paths['imagePath'],
             'title' => $request->title,
-            'slug' => $slug,
+            'slug' => Str::slug($request->title),
             'thumbnail' => $paths['thumbnail'],
             'medium_image_path' => $paths['mediumImagePath'],
         ]);

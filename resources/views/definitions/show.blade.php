@@ -24,19 +24,8 @@
                             </a>
                         </p>
                         <div class="btn-group">
-                            <form action="{{ route('likes.store') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="class" value="App\Models\Definition">
-                                <input type="hidden" name="id" value="{{ $definition->id }}">
-                                <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $definition->likes_count }}</button>
-                            </form>
-                            <form action="{{ route('dislikes.store') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="class" value="App\Models\Definition">
-                                <input type="hidden" name="id" value="{{ $definition->id }}">
-                                <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $definition->dislikes_count }}</button>
-                            </form>
-                            @can('delete', $definition)
+                            <x-like-dislike :model="$definition" likeable-type="App\Models\Definition"/>
+                        @can('delete', $definition)
                                 <form action="{{ route('definitions.destroy', $definition) }}" method="post">
                                     @csrf
                                     @method('DELETE')
@@ -81,18 +70,7 @@
                                     <span>{{ $comment->body }}</span>
                                 </div>
                                 <div class="btn-group">
-                                    <form action="{{ route('likes.store') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="class" value="App\Models\Comment">
-                                        <input type="hidden" name="id" value="{{ $comment->id }}">
-                                        <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $comment->likes_count }}</button>
-                                    </form>
-                                    <form action="{{ route('dislikes.store') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="class" value="App\Models\Comments">
-                                        <input type="hidden" name="id" value="{{ $comment->id }}">
-                                        <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $comment->dislikes_count }}</button>
-                                    </form>
+                                    <x-like-dislike :model="$comment" likeable-type="App\Models\Comment"/>
                                 </div>
                                 <div class="container">
                                     <div class="replybutton btn4 like mb-3">
@@ -130,18 +108,7 @@
                                                         <span>{{ $reply->body }}</span>
                                                     </div>
                                                     <div class="btn-group">
-                                                        <form action="{{ route('likes.store') }}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="class" value="App\Models\Comment">
-                                                            <input type="hidden" name="id" value="{{ $reply->id }}">
-                                                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i> {{ $reply->likes_count }}</button>
-                                                        </form>
-                                                        <form action="{{ route('dislikes.store') }}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="class" value="App\Models\Comment">
-                                                            <input type="hidden" name="id" value="{{ $reply->id }}">
-                                                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i> {{ $reply->dislikes_count }}</button>
-                                                        </form>
+                                                        <x-like-dislike :model="$reply" likeable-type="App\Models\Comment"/>
                                                     </div>
                                                 </div>
                                             @endif
